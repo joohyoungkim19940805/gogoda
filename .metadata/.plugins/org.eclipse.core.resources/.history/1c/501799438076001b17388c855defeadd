@@ -1,0 +1,36 @@
+package g.g.d.com.login.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import g.g.d.com.food.vo.FoodVO;
+import g.g.d.com.login.service.LoginService;
+import g.g.d.com.login.vo.MemberVO;
+import g.g.d.com.movie.vo.MovieListVO;
+
+
+@Controller
+@RequestMapping(value = "logincontroller")
+public class LoginController {
+
+	@RequestMapping(value="/loginpage",method=  RequestMethod.POST)
+	public String comple(HttpServletRequest hsr,Model model) {
+		
+		return "login/mainlogin";
+	}
+		
+	
+}

@@ -1,0 +1,40 @@
+package g.g.d.com.login.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import g.g.d.com.login.vo.MemberVO;
+
+@Repository
+public class LoginDAOImpl extends SqlSessionDaoSupport implements LoginDAO {
+	
+	@Autowired(required=false)
+	private SqlSession session;
+	
+	@Override
+	public List<MemberVO> login(MemberVO mvo) {
+		
+		return session.selectList("login");
+	}
+
+	@Override
+	public List<MemberVO> emailCheck(MemberVO mvo) {
+		
+		return getSqlSession().selectOne("emailCheck");
+	}
+
+	@Override
+	public List<MemberVO> idCheck(MemberVO mvo) {
+		
+		return getSqlSession().selectOne("idCheck");
+	}
+
+	
+
+	
+
+}

@@ -1,0 +1,5 @@
+package g.g.d.com.movie.service;
+
+public class MovieServiceDao {
+
+}

@@ -1,0 +1,11 @@
+import java.util.List;
+
+import com.spring.reply.vo.ReplyVO;
+
+public interface ReplyDao {
+	
+	public List<ReplyVO> replyList(Integer bnum);
+	public int replyInsert(ReplyVO rvo);
+	public int replyUpdate(ReplyVO rvo);
+	public int replyDelete(int rnum);
+}

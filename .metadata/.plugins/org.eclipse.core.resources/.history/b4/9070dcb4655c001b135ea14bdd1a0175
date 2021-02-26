@@ -1,0 +1,14 @@
+package com.spring.reply.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/*
+ * 참고 : @RestController (@Controller + @ResponseBody)
+ * 기존의 특정한 JSP와 같은 뷰를 만들어 내는 것이 목적이 아닌 REST 방식의 데이터 처리를
+ * 위해서 사용하는(데이터 자체를 반환) 어노테이션이다
+ * */
+
+@RequestMapping(value="/replies")
+public class ReplyController {
+	
+}

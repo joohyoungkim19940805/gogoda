@@ -1,0 +1,33 @@
+package g.g.d.com.movie.dao;
+
+import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import g.g.d.com.food.service.FoodServiceImpl;
+import g.g.d.com.food.vo.FoodVO;
+import org.apache.log4j.Logger;
+
+import g.g.d.com.movie.vo.MovieVO;
+
+@Repository
+public class MovieDaoImpl implements MovieDao  {
+	Logger logger = Logger.getLogger(MovieDaoImpl.class);
+	@Autowired(required=false)
+	private SqlSession session;
+	
+	@Override
+	public List<MovieVO> MovieSelectListDao(MovieVO mvvo) {
+		// TODO Auto-generated method stub
+		logger.info("movie select start");
+		return session.selectList(;
+	}
+
+	@Override
+	public int MovieInsertDao(MovieVO mvvo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

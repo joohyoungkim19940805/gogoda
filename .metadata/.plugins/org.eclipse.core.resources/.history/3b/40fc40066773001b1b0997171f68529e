@@ -1,0 +1,28 @@
+package g.g.d.com.movie.service;
+
+import java.util.List;
+
+import g.g.d.com.movie.vo.MovieVO;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.spring.board.dao.BoardDao;
+import com.spring.board.vo.BoardVO;
+
+public class MovieServiceImpl implements MovieService {
+
+	@Override
+	public List<MovieVO> MovieSelectListService(MovieVO mvvo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int MovieInsertService(MovieVO mvvo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

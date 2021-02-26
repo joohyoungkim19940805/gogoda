@@ -1,0 +1,11 @@
+package g.g.d.com.common;
+
+import g.g.d.com.movie.vo.MovieVO;
+
+public class NaverMovieApi {
+
+	public MovieVO mvvo returnMovieData() {
+		
+		
+	}
+}

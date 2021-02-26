@@ -1,0 +1,7 @@
+package com.spring.common.file;
+
+import org.apache.log4j.Logger;
+
+public class FileUploadUtil {
+	static Logger logger = Logger.getLogger(FileUploadUtil.class);
+}

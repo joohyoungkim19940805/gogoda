@@ -1,0 +1,49 @@
+package g.g.d.com.review.common;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import g.g.d.com.review.vo.ReviewVO;
+
+@Repository
+public class ReviewDAOImpl implements ReviewDAO {
+
+	private SqlSession sqlSession;
+	
+	@Override
+	public List<ReviewVO> reviewListAll(ReviewVO rvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("reviewListAll", rvo);
+	}
+
+	@Override
+	public List<ReviewVO> reviewList(ReviewVO rvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("reviewList", rvo);
+	}
+
+	@Override
+	public int reviewInsert(ReviewVO rvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("reviewInsert", rvo);
+	}
+
+	@Override
+	public int reviewUpdate(ReviewVO rvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("reviewUpdate", rvo);
+	}
+
+	@Override
+	public int reviewDelete(ReviewVO rvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("reviewDelete", rvo);
+	}
+
+	@Override
+	public List<ReviewVO> reviewRating(ReviewVO rvo){
+		return sqlSession.selectList("reviewRating", rvo);
+	}
+}

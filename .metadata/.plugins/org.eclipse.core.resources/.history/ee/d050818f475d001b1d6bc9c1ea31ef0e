@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.common.dao.ChabunDAO">
+
+<select id="getBoardChabun" resultType="board">
+	SELECT NVL(MAX(SUBSTR(A.BNUM, -4)), 0) + 1  BNUM FROM SPRINGBOARD A
+</select>
+
+<select id="getReplyChabun" resultType="reply">
+
+</select>
+</mapper>

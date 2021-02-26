@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="g.g.d.com.review.dao.ReviewDAO">
+
+<insert id="reviewInsert" parameterType="reviewVO">
+	INSERT INTO REVIEW_RES( KAKAOID, RENUM, RENICKNAME,
+    						REPASS, RECONTENT, REPHOTO,
+    						RERATING, REDELETEYN, REINSERTDATE,
+    						REUPDATEDATE)
+	VALUES(
+				    #{kakaoid,jdbcType=VARCHAR},
+				    #{renum,jdbcType=VARCHAR},
+				    #{renickname,jdbcType=VARCHAR},
+				    #{repass,jdbcType=VARCHAR},
+				    #{recontent,jdbcType=VARCHAR},
+				    #{rephoto,jdbcType=VARCHAR},
+				    #{rerating,jdbcType=VARCHAR},
+				    'Y',
+				    SYSDATE,
+				    SYSDATE)
+</insert>
+
+<select id="reviewListAll" parameterType="reviewVO" resultType="reviewVO">
+	SELECT  KAKAOID, RENUM, RENICKNAME,
+    		REPASS, RECONTENT, REPHOTO,
+    		RERATING, REDELETEYN, REINSERTDATE,
+    		REUPDATEDATE
+	FROM 	REVIEW_RES
+	WHERE 	KAKAOID = #{kakaoid, jdbcType=VARCHAR}
+		AND REDELETEYN = 'Y'
+	ORDER BY 2 DESC
+</select>
+
+<update id="reviewDelete" parameterType="reviewVO">
+	UPDATE REVIEW_RES SET REDELETEYN = 'N' WHERE RENUM = #{renum,jdbcType=VARCHAR} AND KAKAOID = #{kakaoid,jdbcType=VARCHAR}
+</update>
+
+<select id="reviewRating" parameterType="reviewVO" resultType="reviewVO">
+	SELECT 
+    	(SELECT NVL(AVG(A.RERATING), 0) FROM REVIEW_RES A WHERE KAKAOID = #{kakaoid, jdbcType=VARCHAR} AND REDELETEYN = 'Y') RATINGAVG,
+    	(SELECT COUNT(*) FROM REVIEW_RES WHERE KAKAOID = #{kakaoid, jdbcType=VARCHAR}  AND REDELETEYN = 'Y') AMOUNT 
+	FROM REVIEW_RES WHERE ROWNUM = 1
+</select>
+</mapper>

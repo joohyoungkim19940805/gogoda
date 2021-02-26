@@ -1,0 +1,159 @@
+package g.g.d.com.food.vo;
+
+public class FoodVO {
+
+	private String fdnum;
+	private String fdindex;
+	private String fdname;
+	private String fdoneserving;
+	private String fdkcal;
+	private String fdbitterness;
+	private String fdumami;
+	private String fdsalty;
+	private String fdsweetness;
+	private String fdsourtaste;
+	private String fsweetandsalty;
+	private String fsource;
+	
+	
+	public FoodVO(String fnum,String findex,String fname,
+					String foneserving,String fkcal,String fbitterness,
+					String fumami,String fsalty,String fsweetness,
+					String fsourtaste,String fsweetandsalty,String fsource) {
+		this.fdnum=fnum;
+		this.fdindex=findex;
+		this.fdname=fname;
+		this.fdoneserving=foneserving;
+		this.fdkcal=fkcal;
+		this.fdbitterness=fbitterness;
+		this.fdumami=fumami;
+		this.fdsalty=fsalty;
+		this.fdsweetness=fsweetness;
+		this.fdsourtaste=fsourtaste;
+		this.fsweetandsalty=fsweetandsalty;
+		this.fsource=fsource;
+	}
+	
+	public FoodVO() {}
+
+
+	public String getFdnum() {
+		return fdnum;
+	}
+
+
+	public String getFdindex() {
+		return fdindex;
+	}
+
+
+	public String getFdname() {
+		return fdname;
+	}
+
+
+	public String getFdoneserving() {
+		return fdoneserving;
+	}
+
+
+	public String getFdkcal() {
+		return fdkcal;
+	}
+
+
+	public String getFdbitterness() {
+		return fdbitterness;
+	}
+
+
+	public String getFdumami() {
+		return fdumami;
+	}
+
+
+	public String getFdsalty() {
+		return fdsalty;
+	}
+
+
+	public String getFdsweetness() {
+		return fdsweetness;
+	}
+
+
+	public String getFdsourtaste() {
+		return fdsourtaste;
+	}
+
+
+	public String getFsweetandsalty() {
+		return fsweetandsalty;
+	}
+
+
+	public String getFsource() {
+		return fsource;
+	}
+
+
+	public void setFdnum(String fnum) {
+		this.fdnum = fnum;
+	}
+
+
+	public void setFdindex(String findex) {
+		this.fdindex = findex;
+	}
+
+
+	public void setFdname(String fname) {
+		this.fdname = fname;
+	}
+
+
+	public void setFdoneserving(String foneserving) {
+		this.fdoneserving = foneserving;
+	}
+
+
+	public void setFdkcal(String fkcal) {
+		this.fdkcal = fkcal;
+	}
+
+
+	public void setFdbitterness(String fbitterness) {
+		this.fdbitterness = fbitterness;
+	}
+
+
+	public void setFdumami(String fumami) {
+		this.fdumami = fumami;
+	}
+
+
+	public void setFdsalty(String fsalty) {
+		this.fdsalty = fsalty;
+	}
+
+
+	public void setFdsweetness(String fsweetness) {
+		this.fdsweetness = fsweetness;
+	}
+
+
+	public void setFdsourtaste(String fsourtaste) {
+		this.fdsourtaste = fsourtaste;
+	}
+
+
+	public void setFsweetandsalty(String fsweetandsalty) {
+		this.fsweetandsalty = fsweetandsalty;
+	}
+
+
+	public void setFsource(String fsource) {
+		this.fsource = fsource;
+	}
+	
+}

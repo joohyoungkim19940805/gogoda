@@ -1,0 +1,34 @@
+package com.spring.board.vo;
+
+public class BoardVO {
+	
+	private String bnum;
+	private String bname;
+	private String btitle;
+	private String bcontent;
+	private String bfile;
+	private String bpwd;
+	private String bdelyn;
+	private String binsertdate;
+	private String bupdatedate;
+	
+	public BoardVO() {
+		
+	}
+	
+	public BoardVO(String bnum, String bname, String btitle, String bcontent, String bfile, String bpwd, String bdelyn,
+			String binsertdate, String bupdatedate) {
+		
+		this.bnum = bnum;
+		this.bname = bname;
+		this.btitle = btitle;
+		this.bcontent = bcontent;
+		this.bfile = bfile;
+		this.bpwd = bpwd;
+		this.bdelyn = bdelyn;
+		this.binsertdate = binsertdate;
+		this.bupdatedate = bupdatedate;
+	}
+	
+	
+}

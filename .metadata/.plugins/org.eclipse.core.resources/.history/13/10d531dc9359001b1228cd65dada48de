@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>default 페이지</title>
+<!-- <style>a{}</style>  -->
+<script type="text/javascript">
+	window.location.href="/board/boardList.sks";
+</script>
+</head>
+<body>
+	<!-- 추후 메뉴 내용이 추가될 것을 고려하여 아래 코드 추가한다. -->
+	<!--  -->
+</body>
+</html>

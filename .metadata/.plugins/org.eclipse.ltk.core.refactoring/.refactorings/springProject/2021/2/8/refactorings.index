@@ -1,0 +1,40 @@
+1613560107095	Delete element
+1613560167022	Delete element
+1613560223374	Delete element
+1613560524449	Rename type 'LoginController2'
+1613562101778	Delete element
+1613649057079	Rename package 'a.b.c.com.controller'
+1613721635866	Copy file
+1613723888058	Delete elements
+1613723897471	Delete elements
+1613815066246	Rename type 'movieVO'
+1613815326689	Rename field 'fnum'
+1613815361037	Rename field 'findex'
+1613815370544	Rename field 'fname'
+1613815380482	Rename field 'foneserving'
+1613815390779	Rename field 'fkcal'
+1613815403041	Rename field 'fbitterness'
+1613815410762	Rename field 'fumami'
+1613815418887	Rename field 'fsalty'
+1613815426035	Rename field 'fsweetness'
+1613815435281	Rename field 'fsourtaste'
+1613815444276	Rename field 'fsweetandsalty'
+1613815454728	Rename field 'fsource'
+1613815516560	Rename field 'title'
+1613815526329	Rename field 'link'
+1613815533901	Rename field 'image'
+1613815540750	Rename field 'pubDate'
+1613815547559	Rename field 'director'
+1613815553699	Rename field 'irector'
+1613815560247	Rename field 'actor'
+1613815566119	Rename field 'userRating'
+1613815573246	Rename field 'genre'
+1613815776391	Rename field 'mvtitle'
+1613815786909	Rename field 'mvlink'
+1613815794475	Rename field 'mvimage'
+1613815805634	Rename field 'mvpubDate'
+1613815815397	Rename field 'mvdirector'
+1613816581739	Rename field 'mvtitle'
+1613816733930	Rename type 'MovieServiceDao'
+1613817439820	Copy file
+1613818930264	Rename type 'MovieListVo'

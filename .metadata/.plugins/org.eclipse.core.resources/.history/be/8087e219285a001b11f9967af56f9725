@@ -1,0 +1,5 @@
+package com.spring.common.page;
+
+public class Paging {
+
+}

@@ -1,0 +1,8 @@
+package g.g.d.com.common.service;
+
+import g.g.d.com.review.vo.ReviewVO;
+
+public interface ChabunService {
+	
+	public ReviewVO getReviewChabun();
+}

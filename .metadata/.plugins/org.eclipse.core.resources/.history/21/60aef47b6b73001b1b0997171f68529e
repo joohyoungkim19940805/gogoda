@@ -1,0 +1,11 @@
+package g.g.d.com.movie.service;
+
+import java.util.List;
+import g.g.d.com.movie.vo.MovieVO;
+
+public interface MovieService {
+
+	public List<MovieVO> MovieSelectListService(MovieVO mvvo);
+	public int MovieInsertService(MovieVO mvvo);
+	
+}

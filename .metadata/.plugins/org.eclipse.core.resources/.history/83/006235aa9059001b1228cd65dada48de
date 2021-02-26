@@ -1,0 +1,55 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>글수정 화면</title>
+<link rel="stylesheet" type="text/css" href="/include/css/board.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="/include/js/common.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+		/*수정 버튼 클릭 시 처리 이벤트*/
+		$("#boardUpdate").click(function(){
+			// 입력값 체크
+			if(!chkSubmit($('#bname'),"이름을")) return;
+			else if (!chkSubmit($('#btitle'),"제목을")) return;
+			else if (!chkSubmit($('#bcontent'),"작성할 내용을")) return;
+			else{
+				if($('#file').val().indexOf(".")>-1){
+					var ext = $('#file').val().split('.').pop().toLowerCase();
+					if (jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+						alert('gif,png,jpg,jpeg 파일만 업로드 할 수 있습니다.');
+						return;
+					}
+				}
+				
+				// console.log("기본 파일명 : "+$('#bfile').val());
+				$("#f_writeForm").attr({
+					"method":"POST",
+					"action":"/board/boardUpdate.sks"
+				});
+				$("#f_writeForm").submit();
+			}
+		});
+		/*목록 버튼 클릭 시 처리 이벤트*/
+		$("#boardList").click(function(){
+				location.href="/board/boardList.sks";
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="boardTit"><h3>글수정</h3></div>
+	<form id="f_writeForm" name="f_writeForm" enctype="multipart/form-data">
+		<input type="hidden" id="bnum" name="bnum" value="${updateData.bnum}" />
+		<input type="hidden" id="bfile" name="bfile" value="${updateData.bfile}" />
+	</form>
+	<table id="boardWrite">
+	</table>
+</body>
+</html>

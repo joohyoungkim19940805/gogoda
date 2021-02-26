@@ -1,0 +1,18 @@
+@charset "UTF-8";
+/*공통 부분*/
+*{margin:0px; padding:opx;}
+body,td,input,select{font-family:'돋움';,font-size:12px;}
+a{text-decoration:none; color:#000000;}
+caption{display:none;}
+img{border:0px;}
+
+/*게시판 리스트 화면*/
+/*제목 부분*/
+#boardContainer{width:800px;}
+#boardTit{font-size: large; border-left:10px solid #000066;
+		  border-bottom: 1px solid #000066;
+		  padding: 10px; width:760px;}
+/*검색 부분*/
+#boardSearch table{width:780px; text-align:right; margin:10px; border-collapse:collapse;}
+#boardSearch #btd1{width:390px; text-align:left;}
+#boardSearch #btd2{width:390px; text-align:right;}

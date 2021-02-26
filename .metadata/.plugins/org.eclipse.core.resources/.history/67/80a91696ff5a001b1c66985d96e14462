@@ -1,0 +1,20 @@
+package com.spring.common.service;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.spring.board.vo.BoardVO;
+import com.spring.common.dao.ChabunDAO;
+
+@Service
+@Transactional
+public class ChabunServiceImpl implements ChabunService {
+	
+	private ChabunDAO chabunDAO;
+	
+	@Override
+	public BoardVO getBoardChabun() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

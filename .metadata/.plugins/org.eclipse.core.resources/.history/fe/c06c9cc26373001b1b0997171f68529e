@@ -1,0 +1,85 @@
+package g.g.d.com.movie.vo;
+
+public class MovieVO {
+	
+	private String mtitle;
+	private String mvlink;
+	private String mvimage;
+	private String mvpubDate;
+	private String mvdirector;
+	private String mvirector;
+	private String mvactor;
+	private String mvuserRating;
+	private String mvgenre;
+	public MovieVO() {}
+	
+	public MovieVO(String title, String link, String image,
+					String pubDate, String director, String irector,
+					String actor, String userRating, String genre) {
+		this.mtitle = title;
+		this.mvlink = link;
+		this.mvimage = image;
+		this.mvpubDate = pubDate;
+		this.mvdirector = director;
+		this.mvirector = irector;
+		this.mvactor = actor;
+		this.mvuserRating = userRating;
+		this.mvgenre=genre;
+	}
+	public String getMvgenre() {
+		return mvgenre;
+	}
+	public String getMtitle() {
+		return mtitle;
+	}
+	public String getMvlink() {
+		return mvlink;
+	}
+	public String getMvimage() {
+		return mvimage;
+	}
+	public String getMvpubDate() {
+		return mvpubDate;
+	}
+	public String getMvdirector() {
+		return mvdirector;
+	}
+	public String getMvirector() {
+		return mvirector;
+	}
+	public String getMvactor() {
+		return mvactor;
+	}
+	public String getMvuserRating() {
+		return mvuserRating;
+	}
+	public void setMtitle(String title) {
+		this.mtitle = title;
+	}
+	public void setMvlink(String link) {
+		this.mvlink = link;
+	}
+	public void setMvimage(String image) {
+		this.mvimage = image;
+	}
+	public void setMvpubDate(String pubDate) {
+		this.mvpubDate = pubDate;
+	}
+	public void setMvdirector(String director) {
+		this.mvdirector = director;
+	}
+	public void setMvirector(String irector) {
+		this.mvirector = irector;
+	}
+	public void setMvactor(String actor) {
+		this.mvactor = actor;
+	}
+	public void setMvuserRating(String userRating) {
+		this.mvuserRating = userRating;
+	}
+	public void setMvgenre(String genre) {
+		this.mvgenre=genre;
+	}
+
+	
+}

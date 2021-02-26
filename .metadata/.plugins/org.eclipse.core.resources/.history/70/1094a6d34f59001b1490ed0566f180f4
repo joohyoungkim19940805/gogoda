@@ -1,0 +1,48 @@
+package com.spring.board.dao;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.spring.board.vo.BoardVO;
+
+@Repository
+public class BoardDaoImpl implements BoardDao {
+
+	@Override
+	public List<BoardVO> boardList(BoardVO pvo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int boardInsert(BoardVO pvo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public BoardVO boardDetail(BoardVO pvo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int pwdConfirm(BoardVO pvo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int boardUpdate(BoardVO pvo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int boardDelete(int bnum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

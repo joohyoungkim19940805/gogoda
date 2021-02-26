@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="g.g.d.com.login.dao.LoginDAO">
+
+<resultMap type="g.g.d.com.login.vo.MemberVO" id="mvo">
+
+	<result property="mnum" column="MNUM"/>
+	<result property="mname" column="MNAME"/>
+	<result property="mid" column="MID"/>
+	<result property="mpw" column="MPW"/>
+	<result property="mbirth" column="MBIRTH"/>
+	<result property="mgenger" column="MGENGER"/>
+	<result property="mhp" column="MHP"/>
+	<result property="memail" column="MEMAIL"/>
+	<result property="mzipcode" column="MZIPCODE"/>
+	<result property="maddr" column="MADDR"/>
+	<result property="maddrdetail" column="MADDRDETAIL"/>
+	<result property="mgibun" column="MGIBUN"/>	
+	<result property="mdeleteyn" column="MDELETEYN"/>	
+	<result property="minsertdate" column="MINSERTDATE"/>	
+	<result property="mupdatedate" column="MUPDATEDATE"/>	
+		
+</resultMap>
+
+
+<select id="loginCompleteService" parameterType="memberVO" resultMap="memberVO">
+SELECT * FROM TUMEM WHERE MID=#{mid} AND MPW=#{mpw} AND
+</select>
+</mapper>

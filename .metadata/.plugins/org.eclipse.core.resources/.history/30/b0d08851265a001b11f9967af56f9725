@@ -1,0 +1,8 @@
+package com.spring.common.util;
+
+public class Util {
+	
+	public static int nvl(String text) {
+		return nvl(text, 0);
+	}
+}

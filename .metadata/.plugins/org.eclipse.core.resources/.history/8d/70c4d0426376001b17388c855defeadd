@@ -1,0 +1,48 @@
+package g.g.d.com.login.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import g.g.d.com.login.LoginDAO.;
+import g.g.d.com.login.vo.MemberVO;
+
+
+
+@Service
+@Transactional
+public class LoginServiceImpl implements LoginService {
+	
+	@Autowired
+	private LoginDAO loginDAO;
+			
+	@Override
+	public List<MemberVO> login(MemberVO mvo) {
+		System.out.println("ServiceImpl?�� login?��?�� 진입");
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		list = loginDAO.login(mvo);
+		
+		return list;
+	}
+
+	@Override
+	public List<MemberVO> idCheck(MemberVO mvo) {
+		System.out.println("ServiceImpl?�� searchID?��?�� 진입");
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		list = loginDAO.idCheck(mvo);
+		return list;
+	}
+
+
+	@Override
+	public List<MemberVO> emailCheck(MemberVO mvo) {
+		System.out.println("ServiceImpl?�� emailCheck?��?�� 진입");
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		return list = loginDAO.emailCheck(mvo);
+	}
+
+}

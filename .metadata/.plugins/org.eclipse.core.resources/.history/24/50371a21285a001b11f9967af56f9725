@@ -1,0 +1,7 @@
+package com.spring.common.page;
+
+public class Paging {
+	/*
+	 * 페이징을 위한 설정 작업
+	 * */
+}

@@ -1,0 +1,10 @@
+package com.spring.common.dao;
+
+import com.spring.board.vo.BoardVO;
+import com.spring.reply.vo.ReplyVO;
+
+public interface ChabunDAO {
+	
+	public BoardVO getBoardChabun();
+	public ReplyVO getReplyChabun();
+}

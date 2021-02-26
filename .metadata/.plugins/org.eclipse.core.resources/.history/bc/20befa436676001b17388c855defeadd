@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="g.g.d.com.LoginDAO">
+	<resultMap type="g.g.d.com.MemberVO" id="memberVO">
+		<result property="mnum" column="MNUM"/>
+		<result property="mname" column="MNAME"/>
+		<result property="mid" column="MID"/>
+		<result property="mpw" column="MPW"/>
+		<result property="mbirth" column="MBIRTH"/>
+		<result property="mgender" column="MGENDER"/>
+		<result property="mhp" column="MHP"/>
+		<result property="memail" column="MEMAIL"/>
+		<result property="mzipcode" column="MZIPCODE"/>
+		<result property="maddr" column="MADDR"/>
+		<result property="maddrdetail" column="MADDRDETAIL"/>
+		<result property="mgibun" column="MGIBUN"/>
+		<result property="mdeleteyn" column="MDELETEYN"/>
+		<result property="minsertdate" column="MINSERTDATE"/>
+		<result property="mupdatedate" column="MUPDATEDATE"/>
+		
+	</resultMap>
+	 
+	
+	
+	<select id="login" parameterType="MemberVO" resultMap="memberVO">
+		
+			SELECT MID, MUM
+				,MPW
+				,MNAME
+				,MGRADE
+				,MEMAIL
+			FROM TUMEM
+			WHERE MID=#{mid} AND
+				MPW=#{mpw} AND
+				MDELETEYN='Y'
+	</select>
+	<select id="emailCheck" parameterType="MemberVO" resultMap="memberVO">
+			SELECT MEMAIL
+			FROM TUMEM
+			WHERE MEMAIL=#{memail} AND
+				MDELETEYN='Y'
+				
+	</select>
+	<select id="idCheck" parameterType="MemberVO" resultMap="memberVO">
+			SELECT MID,MINSERTDATE
+			FROM TUMEM
+			WHERE MEMAIL=#{memail} AND
+				MDELETEYN='Y'
+				
+	</select>
+	<select id="searchPW" parameterType="MemberVO" resultMap="memberVO">
+			SELECT MPW
+			FROM TUMEM
+			WHERE MEMAIL=#{memail}
+				AND MID=#{mid} AND
+				MDELETEYN='Y'
+				
+	</select>
+	<update id="memberDelete" parameterType="MemberVO" >
+		UPDATE TUMEM
+		SET MDELETEYN='N',
+		MDELETEDATE = SYSDATE
+		WHERE MID=#{mid} AND
+		MDELETEYN='Y'
+		
+		
+				
+	</update>
+		
+</mapper>			

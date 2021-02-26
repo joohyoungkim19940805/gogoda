@@ -1,0 +1,16 @@
+package com.spring.board.dao;
+
+import java.util.List;
+
+import com.spring.board.vo.BoardVO;
+
+public interface BoardDao {
+	
+	public List<BoardVO> boardList(BoardVO pvo);
+	public int boardListCnt(BoardVO pvo);
+	public int boardInsert(BoardVO pvo);
+	public BoardVO boardDetail(BoardVO pvo);
+	public int pwdConfirm(BoardVO pvo);
+	public int boardUpdate(BoardVO pvo);
+	public int boardDelete(int bnum);
+}

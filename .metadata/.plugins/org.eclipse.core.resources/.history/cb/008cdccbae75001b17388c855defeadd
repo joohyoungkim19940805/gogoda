@@ -1,0 +1,19 @@
+package g.g.d.com.review.common;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import g.g.d.com.review.vo.ReviewVO;
+
+@Repository
+public class ChabunDAOImpl implements ChabunDAO {
+
+	private SqlSession sqlSession;
+	
+	@Override
+	public ReviewVO getReviewChabun() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getReviewChabun");
+	}
+
+}

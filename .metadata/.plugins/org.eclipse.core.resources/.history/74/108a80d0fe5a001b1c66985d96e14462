@@ -1,0 +1,6 @@
+package com.spring.common.dao;
+
+public interface ChabunDAO {
+	
+	public BoardVO getBoardChabun();
+}

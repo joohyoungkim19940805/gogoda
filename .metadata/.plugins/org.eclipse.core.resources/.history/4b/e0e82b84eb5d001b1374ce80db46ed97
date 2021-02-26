@@ -1,0 +1,39 @@
+package com.spring.common.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.spring.board.vo.BoardVO;
+import com.spring.common.dao.ChabunDAO;
+import com.spring.reply.vo.ReplyVO;
+
+@Service
+@Transactional
+public class ChabunServiceImpl implements ChabunService {
+	
+	private ChabunDAO chabunDAO;
+	
+	@Autowired(required=false)
+	public ChabunServiceImpl(ChabunDAO chabunDAO) {
+		this.chabunDAO = chabunDAO;
+	}
+	
+	@Override
+	public BoardVO getBoardChabun() {
+		// TODO Auto-generated method stub
+		return chabunDAO.getBoardChabun();
+	}
+
+	@Override
+	public ReplyVO getReplyChabun() {
+		// TODO Auto-generated method stub
+		return chabunDAO.getReplyChabun();
+	}
+
+	@Override
+	public ReplyVO getRboardChabun() {
+		// TODO Auto-generated method stub
+		return chabunDAO.getRboardChabun();
+	}
+}

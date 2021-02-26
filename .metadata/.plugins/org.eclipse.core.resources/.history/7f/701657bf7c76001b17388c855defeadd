@@ -1,0 +1,11 @@
+package g.g.d.com.login.dao;
+
+import java.util.List;
+
+import g.g.d.com.login.vo.MemberVO;
+
+
+public interface LoginDAO {
+	public List<MemberVO> login(MemberVO mvo);	
+
+}

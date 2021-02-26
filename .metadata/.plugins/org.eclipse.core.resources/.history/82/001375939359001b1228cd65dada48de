@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>default 페이지</title>
+<!--  -->
+<script type="text/javascript">
+	window.location.href="/board/boardList.sks";
+</script>
+</head>
+<body>
+
+</body>
+</html>

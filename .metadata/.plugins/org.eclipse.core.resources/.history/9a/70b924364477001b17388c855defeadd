@@ -1,0 +1,11 @@
+package g.g.d.com.login.service;
+
+import java.util.List;
+
+import g.g.d.com.login.vo.LoginVo;
+
+
+public interface LoginService {
+	public List<LoginVo> loginCompleteService(LoginVo mvo);
+	
+}

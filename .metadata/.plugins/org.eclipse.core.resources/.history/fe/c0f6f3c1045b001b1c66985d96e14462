@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.board.dao.BoardDao">
+	<sql id="boardCommon">
+		SELECT BNUM,BNAME,BTITLE,BINSERTDATE
+		FROM SPRINGBOARD
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="search=='btitle'">
+				<![CDATA[btitle LIKE '%'||#{keyword}||'%']]>
+			</if>
+			<if test="search=='bcontent'">
+				<![CDATA[AND bcontent LIKE '%'||#{keyword}||'%']]>
+			</if>
+			<if test="search=='bname'">
+				<![CDATA[AND bname LIKE '%'||#{keyword}||'%']]>
+			</if>
+		</trim>
+	</sql>
+	<!-- 게시물 기본 조회 
+	<select id="boardList" parameterType="board" resultType="board">
+		SELECT BNUM,BNAME,BTITLE,
+		TO_CHAR(BINSERTDATE,'YYYY-MM-DD') AS BINSERTDATE
+		FROM SPRINGBOARD
+	</select>-->
+	<!-- 게시물 목록 조회 -->
+	<select id="boardList" parameterType="board" resultType="board">
+		SELECT BNUM,BNAME,BTITLE,
+		TO_CHAR(BINSERTDATE, 'YYYY-MM-DD HH24:MI:SS') AS BINSERTDATE
+		FROM
+		(	SELECT list.*,ROWNUM AS RNUM
+			FROM(
+				<include refid="boardCommon"></include>
+				<choose>
+					<when test="order_by=='bnum'">
+						ORDER BY BNUM
+					</when>
+					<when test="order_by=='binsertdate'">
+						ORDER BY BINSERTDATE
+					</when>
+				</choose>
+				<choose>
+					<when test="order_sc=='ASC'">
+						ASC
+					</when>
+					<when test="order_sc=='DESC'">
+						DESC
+					</when>
+				</choose>
+			)list
+		)
+		<where>
+			<if test="start_row != null and start_row !=''">
+				<if test="end_row != null and end_row !=''">
+					RNUM BETWEEN #{start_row} AND #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="boardListCnt" parameterType="board" resultType="board">
+		SELECT NVL(COUNT(1),0) FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM(
+					<include refid="boardCommon"></include>
+					ORDER BY BNUM DESC
+			)list
+		)
+	</select>
+	<!--
+	<select id="boardList" parameterType="board" resultType="board">
+		SELECT BNUM,BTITLE,
+		TO_CHAR(BINSERTDATE, 'YYYY-MM-DD') AS BINSERTDATE
+		FROM SPRINGBOARD
+	</select>
+	
+	
+	<select id="boardDetail" parameterType="int" resultType="board">
+		SELECT
+				BNUM,
+				BNAME,
+				BTITLE,
+				BCONTENT,
+				BFILE,
+				TO_CHAR(BINSERTDATE, 'YYYY-MM-DD HH24:MI:SS') AS BINSERTDATE
+		FROM	SPRINGBOARD
+		WHERE	BNUM = #{bnum}
+	</select>
+	-->
+	<!-- 게시물 등록 -->
+	<insert id="boardInsert" parameterType="board">
+		<!--
+		<selectKey keyProperty="bnum" resultType="int" order="BEFORE">
+			SELECT SPRINGBOARD_SEQ.NEXTVLA FROM DUAL
+		</selectKey>
+		-->
+		INSERT INTO SPRINGBOARD(
+					BNUM,
+					BNAME,
+					BTITLE,
+					BCONTENT,
+					BFILE,
+					BPWD,
+					BDELYN,
+					BINSERTDATE,
+					BUPDATEDATE
+		)VALUES(
+					#{bnum},
+					#{bname},
+					#{btitle},
+					#{bcontent},
+					#{bfile},
+					#{bpwd},
+					'Y',
+					SYSDATE,
+					SYSDATE
+		)
+	</insert>
+	
+	<!-- 해당 번호의 비밀번호 확인 -->
+	<select id="pwdConfirm" parameterType="board" resultType="int">
+		SELECT NVL((SELECT 1 FROM SPRINGBOARD WHERE BNUM = #{bnum} AND bpwd = #{bpwd}),0) AS RESULT
+		FROM DUAL
+	</select>
+	
+	<!-- 게시물 수정 -->
+	<update id="boardUpdate" parameterType="board">
+		UPDATE SPRINGBOARD SET
+			 BTITLE = #{btitle}
+			,BNAME = #{bname}
+			,BCONTENT = #{bcontent}
+			,BUPDATEDATE = sysdate
+		<if test="bfile !=''">
+			,BFILE = #{bfile}
+		</if>
+		<if test="bpwd != null and bpwd !=''">
+				 ,BPWD = #{bpwd}
+		</if>
+		WHERE BNUM = #{bnum}
+	</update>
+	
+	<update id="boardDelete" parameterType="board">
+		UPDATE SPRINGBOARD SET BDELYN = 'N', BINSERTDATE = SYSDATE
+		WHERE BDELYN = 'Y' AND BNUM = #{bnum}
+	</update>
+</mapper>
