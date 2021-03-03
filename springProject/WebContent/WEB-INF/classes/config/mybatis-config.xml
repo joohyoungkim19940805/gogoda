@@ -13,5 +13,6 @@
 		<typeAlias alias="board" type="g.g.d.com.board.vo.BoardVO"/>
 		<typeAlias alias="rboard" type="g.g.d.com.rboard.vo.RboardVO"/>
 		<typeAlias type="g.g.d.com.mem.vo.MemberVO" alias="member"/>
+		<typeAlias type="g.g.d.com.movie.vo.MovieUserGenreVO" alias="mugvo"/>
 	</typeAliases>
 </configuration>

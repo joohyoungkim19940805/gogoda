@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="g.g.d.com.mem.common.TempPassword" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0
       maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <!-- 추가 -->
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <!------ Include the above in your HEAD tag ---------->
 
 <title>GOGODA 회원 가입</title>
@@ -42,7 +44,9 @@ $(document).ready(function(){
 
 	//*****************************************************
 	var oldmid='';
-	
+	var key='';
+	var mnum='';
+	var oldmemail='';
 	// mnum hidden
 	$('#mnum').hide();
 	
@@ -61,6 +65,18 @@ $(document).ready(function(){
 			}
 		}
     });
+	$("#memail").blur(function(){
+		if(oldmemail!=''){
+			if(oldmemail!=$('#memail').val()){
+				$('#code_check').text('이메일 내용이 변동되었습니다. 다시 체크해주세요'); 
+	            $('#code_check').css('color', 'red'); 
+			}
+			if(oldmemail==$('#memail').val()){
+				$('#code_check').text('인증 완료!'); 
+	            $('#code_check').css('color', 'green'); 
+			}
+		}
+	});
 	//*****************************************************
 	
 	//*****************************************************
@@ -113,53 +129,46 @@ $(document).ready(function(){
 /////////////////////////////////////////////////////////////////////////////////////
 //$(function() {
 	var isCertification = false;
-	var key = '<%=TempPassword.setTempPassWord(10)%>';
+
 	$("#memailbtn").click(function() {// 메일 입력 유효성 검사
 		var mail = $("#memail").val(); // 사용자의 이메일 입력값.
 		if (mail == "") {
 			alert("메일 주소가 입력되지 않았습니다.");
 		} else {
-			alert(mail);
+			alert("인증코드를 발송하였습니다.\n이메일을 확인하시기 바랍니다.");
 			//returnGetData(meail);
 			//mail = mail + "@" + $(".domain").val(); // 셀렉트 박스에 @뒤 값들을 더함.
 			$.ajax({
-				type : 'get',
+				type : "POST",
 				url : 'mailCheck.ggd',
-				dataType : 'json',
-				async : "false",
-
+				dataType : 'text',
+				async : false,
 				data : {
-					"mail" : mail,
-					"key" : key
+					"mail" : mail
 				},
-				success : function(data) {
-					alert(data);
-					console.log(data);					
-				}
+				success : whenSuccess,
+				error: whenError
 			});			
-			alert("인증코드를 발송하였습니다.\n이메일을 확인하시기 바랍니다.");
+			
 			$("#emcode").css("display", "block");
 			$("#code_check").css("display", "block");
+			function whenSuccess(keyData) {
+				key=keyData;
+				console.log(keyData);					
+			}
+			function whenError(){
+				
+			}
 		}
-		alert(key);
 	});
-	
-	async function returnGetData(email){
-		let data='';
-		data=await emaulCon(email);
-		alert(data);
-	}
-	
-	function emaulCon(email){
-		var sendURL="";		
-	}
 	
  //});   
       // 인증 키 일치여부 확인 
       $("#emcode").on("propertychange change keyup paste input", function() {
     	//alert("key>>>"+key);
   		if ($("#emcode").val() == key) {
-  			$("#code_check").text("인증 완료!").css("color", "black");
+  			$("#code_check").text("인증 완료!").css("color", "green");
+  			oldmemail=$("#memail").val();
   			isCertification = true;
   		} else {
   			$("#code_check").text("다시 확인하여 주시기 바랍니다.").css("color", "red");
@@ -169,20 +178,6 @@ $(document).ready(function(){
       
       // 회원 가입 전 메일 인증 여부 확인
       // 메일 인증이 되었다면 submit버튼을 클릭하면 서버측으로 사용자의 입력값이 전송됩니다.
-     $(".submit-btn").click(function(){
-  		if(isCertification==false){ //인증이 완료되지 않았다면
-  			alert("메일 인증이 완료되지 않았습니다.");
-  		}
-  	});
-  	
-  	// 인증이 잘 완료되면 ture를 리턴 아니면 false를 리턴해서 서버 측으로 데이터를 가지 못하도록 막는다.
-      $(".submit-btn").click(function submitCheck(){
-  		if(isCertification==false){
-  			alert("메일 인증이 완료되지 않았습니다.");
-  			return false;
-  		}else
-  			true;
-  	});
       
   /////////////////////////////////////////////////////////////////////////////////////	
 //*****************************************************
@@ -279,8 +274,7 @@ $(document).ready(function(){
            checkMember=checkMember+1;//11
         }
 
-        if(checkMember<=11){ // 유효성 모두 통과 
-        	
+		if(checkMember<=11){ // 유효성 모두 통과 
            	alert('고고다의 회원이 되어주셔서 감사합니다.'); 
            	let idcheckURL = "memberInsert.ggd";
 	    	let method = "POST";
@@ -295,11 +289,10 @@ $(document).ready(function(){
 	    	let maddr=$('#maddr').val();
 	    	let maddrdetail=$('#maddrdetail').val();
 	    	$.ajax({
-				type : 'post',
+				type : 'POST',
 				url : 'memberInsert.ggd',
-				dataType : 'json',
-				async : "false",
-
+				dataType : 'text',
+				async : false,
 				data : {
 					"mname":mname,
 	    			"mid":mid,
@@ -312,15 +305,35 @@ $(document).ready(function(){
 	    			"maddr":maddr,
 	    			"maddrdetail":maddrdetail
 				},
-				success : function(data) {
-					location.href="../index.jsp";
-					console.log(data);					
+				success : whenSuccess,
+				error : whenError});
+				
+	    		function whenSuccess(data) {
+	    			console.log(data);
+	    			mnum=data;
+	    			alert(mnum);
+					$.ajax({
+						type : 'POST',
+						url : 'moveSurvey.ggd',
+						dataType : "html",
+						data:mnum,
+						cache : false
+					})
+					.done(function(dataHtml){
+						alert(dataHtml);
+						dataHtml=dataHtml+"\n<input type='hidden' id='mnum' name='mnum' value='"+mnum+"'>";
+						$('#memForm').children().remove();
+						$('#memForm').html(dataHtml);
+						
+					});
+										
 				}
-			});	
-	    	location.href="../index.jsp";
+	    		function whenError(){
+	    			
+	    		}
         } else{ 
            	alert('정보를 다시 확인하세요.') 
-        } 
+        }
      });
   //*****************************************************
      $('#mid').blur(function() { 
@@ -429,6 +442,7 @@ $(document).ready(function(){
            $('#phone_check').css('color', 'red'); 
         } 
      });  
+     
 });
 
 

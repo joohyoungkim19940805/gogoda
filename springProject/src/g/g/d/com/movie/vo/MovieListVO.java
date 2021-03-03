@@ -6,14 +6,24 @@ public class MovieListVO {
 	private String mvname;
 	private String mvgenre;
 	private String mvpubdate;
+	private int moviecnt;
 	
 	public MovieListVO() {}
 
-	public MovieListVO(String mvnum, String mvname, String mvgenre, String mvpubdate) {
+	public MovieListVO(String mvnum, String mvname, String mvgenre, String mvpubdate,int moviecnt) {
 		this.mvnum = mvnum;
 		this.mvname = mvname;
 		this.mvgenre = mvgenre;
 		this.mvpubdate=mvpubdate;
+		this.moviecnt=moviecnt;
+	}
+	
+	public int getMoviecnt() {
+		return moviecnt;
+	}
+	
+	public void setMoviecnt(int moviecnt) {
+		this.moviecnt=moviecnt;
 	}
 	
 	public String getMvpubdate() {

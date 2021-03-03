@@ -1,7 +1,0 @@
-package g.g.d.com.common;
-
-import g.g.d.com.review.vo.ReviewVO;
-
-public interface ChabunDAO {
-	public ReviewVO getReviewChabun();
-}

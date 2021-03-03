@@ -13,5 +13,6 @@ import g.g.d.com.food.vo.FoodVO;
 public interface FoodDao {
 
 	public List<FoodVO> FoodSelectListDao(FoodVO fdvo);
-	
+	public int FoodCountDao(String fname);
+	public List<FoodVO> FoodRankDao(FoodVO fdvo);
 }

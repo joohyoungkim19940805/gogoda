@@ -24,6 +24,13 @@
 				#{rbnum},#{bnum},#{rbname},#{rbcontent},#{rbpw}
 			)
 	</insert>
+		
+		<!-- 댓글 갯수 카운트 -->
+	<update id="rboardCntService" parameterType="String">
+		UPDATE BOARD 
+			SET CNT=CNT+1 
+		WHERE BNUM=#{bnum}
+	</update>
 	
 	<update id="rboardUpdate" parameterType="rboard">
 		UPDATE RBOARD

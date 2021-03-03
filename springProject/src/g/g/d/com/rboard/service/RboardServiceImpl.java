@@ -17,6 +17,14 @@ public class RboardServiceImpl implements RboardService {
 	@Autowired(required=false)
 	private RboardDAO rboardDAO;
 	
+	@Override
+	public int rboardCntService(String bnum) {
+		System.out.println("================="+bnum);
+		int result =0;
+		result=rboardDAO.rboardCntDAO(bnum);
+		return result;
+	}
+	
 	// 글목록 구현
 	@Override
 	public List<RboardVO> rboardList(String bnum) {

@@ -57,7 +57,7 @@ public class RboardController {
 	@RequestMapping(value= "/rboardInsert")
 	public ResponseEntity<String> rboardInsert(@RequestBody RboardVO rvo){
 		logger.info("rboardInsert 호출 성공");
-		
+		int cnt;
 		// 댓글 번호 채번
 		String rbnum = BoardChabunUtil.getRboardChabun("N", chabunService.getRboardChabun().getRbnum());
 		logger.info("rboardInsert 호출 성공2");
@@ -76,6 +76,8 @@ public class RboardController {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
+		logger.info(rvo.getBnum());
+		cnt=rboardService.rboardCntService(rvo.getBnum().toString());
 		return entity;
 	}
 	

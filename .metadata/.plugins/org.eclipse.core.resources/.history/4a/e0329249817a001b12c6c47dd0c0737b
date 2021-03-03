@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="g.g.d.com.rboard.dao.RboardDAO">
+	<!-- 게시물 기본 조회 -->
+	<select id="rboardList" parameterType="rboard" resultType="rboard">
+		SELECT RBNUM,BNUM,RBNAME,RBCONTENT,RBPW,
+			TO_CHAR(RBDATE,'YYYY-MM-DD HH24:MI:SS') AS RBDATE
+		FROM RBOARD
+		WHERE BNUM = #{bnum}
+		ORDER BY RBNUM DESC
+	</select>
+	
+	<!-- 게시물 등록  -->
+	<insert id="rboardInsert" parameterType="rboard">
+		<!--
+		<selectKey keyProperty="rnum" resultType="int" order="BEFORE">
+			SELECT SPRING_REPLY_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		-->
+			INSERT INTO RBOARD(
+				RBNUM,BNUM,RBNAME,RBCONTENT,RBPW
+			)VALUES(
+				#{rbnum},#{bnum},#{rbname},#{rbcontent},#{rbpw}
+			)
+	</insert>
+	<!-- 댓글 갯수 카운트 -->
+	<update id="rboardCnt" parameterType="rboard">
+		UPDATE BOARD SET CNT=CNT+1 WHERE BNUM={bnum jdbcType=VARCHAR}
+	</update>
+	
+	<update id="rboardUpdate" parameterType="rboard">
+		UPDATE RBOARD
+		SET RBCONTENT = #{rbcontent},
+		RBDATE = SYSDATE
+		WHERE RBNUM = #{rbnum}
+	</update>
+	
+	<delete id="rboardDelete" parameterType="rboard">
+		DELETE FROM RBOARD WHERE RBNUM = #{rbnum}
+	</delete>
+</mapper>

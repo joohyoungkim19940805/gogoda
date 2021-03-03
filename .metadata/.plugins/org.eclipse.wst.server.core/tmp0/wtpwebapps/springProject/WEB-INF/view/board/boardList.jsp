@@ -53,7 +53,11 @@
 		
 		/* 글쓰기 버튼 클릭 시 처리 이벤트 */
 		$("#writeForm").click(function(){
-			location.href="writeForm.ggd";
+			if("${seName}"!=''){
+				location.href="writeForm.ggd";
+			}else{
+				alert("로그인 후 이용해주세요.");
+			}
 		});
 		
 		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
@@ -97,7 +101,7 @@
 <body>
 <div id="boardContainer" align="left">
 	<div id="boardtop">
-	<a href="http://google.com" target="_blank">
+	<a href="../../springProject/emotion/mainpage.ggd">
 		<img src="../images/common/gogoda.png" style="width:150px; height:100px">
 	</a>
 	</div>

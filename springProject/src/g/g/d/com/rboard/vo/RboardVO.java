@@ -8,7 +8,7 @@ public class RboardVO {
 	private String rbcontent;	// 내용
 	private String rbpw;		// 비밀번호
 	private String rbdate;		// 작성일
-
+	private int cnt;
 	public RboardVO() {
 		
 	}
@@ -23,6 +23,13 @@ public class RboardVO {
 		this.rbdate = rbdate;
 	}
 
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt=cnt;
+	}
+	
 	public String getRbnum() {
 		return rbnum;
 	}

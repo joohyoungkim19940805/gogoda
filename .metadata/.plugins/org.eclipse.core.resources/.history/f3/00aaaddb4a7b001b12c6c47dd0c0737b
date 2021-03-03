@@ -1,0 +1,11 @@
+package g.g.d.com.emotion.common;
+
+public class emotionRankUtil {
+
+	public static int emotionFood(String[] emotionData) {
+	
+		
+		return null;
+	}
+	
+}

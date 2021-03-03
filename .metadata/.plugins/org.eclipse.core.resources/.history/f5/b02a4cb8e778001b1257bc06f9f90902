@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="g.g.d.com.mem.dao.MemberDAO">
+
+	<resultMap id="memberResult" type="member">
+		<id property="mnum" column="MNUM" />
+		<result property="mname" column="MNAME" />
+		<result property="mid" column="MID" />
+		<result property="mpw" column="MPW" />
+		<result property="mbirth" column="MBIRTH" />
+		<result property="mgender" column="MGENDER" />
+		<result property="mhp" column="MHP" />
+		<result property="memail" column="MEMAIL" />
+		<result property="mzipcode" column="MZIPCODE" />
+		<result property="maddr" column="MADDR" />
+		<result property="maddrdetail" column="MADDRDETAIL" />
+		<result property="mdeleteyn" column="MDELETEYN" />
+		<result property="minsertdate" column="MINSERTDATE" />
+		<result property="mupdatedate" column="MUPDATEDATE" />
+		<result property="positivefood" column="POSITIVEFOOD"/>
+		<result property="negativefood" column="NEGATIVEFOOD"/>
+		<result property="movietaste" column="MOVIETASTE"/>
+	</resultMap>
+	
+	<insert id="memberInsert" parameterType="member">
+		<![CDATA[
+		INSERT INTO MEMBERTABLE(
+				MNUM, 
+				MNAME, 
+				MID, 
+				MPW, 
+				MBIRTH, 
+				MGENDER, 
+				MHP, 
+				MEMAIL,
+				MZIPCODE, 
+				MADDR, 
+				MADDRDETAIL,
+				MDELETEYN, 
+				MINSERTDATE, 
+				MUPDATEDATE,
+				POSITIVEFOOD,
+				NEGATIVEFOOD,
+				MOVIETASTE,)
+		VALUES(
+				#{mnum},
+				#{mname},
+				#{mid},
+				#{mpw},
+				#{mbirth},
+				#{mgender},
+				#{mhp},
+				#{memail},
+				#{mzipcode},
+				#{maddr},
+				#{maddrdetail},
+				'Y', 
+				SYSDATE, 
+				SYSDATE,
+				#{positivefood},
+				#{negativefood},
+				#{movietaste})
+		]]>
+	</insert>
+	
+	<update id="memberUpdate" parameterType="member">
+		UPDATE MEMBERTABLE SET
+			MPW = #{mpw},
+			MHP = #{mhp},
+			MEMAIL = #{memail},
+			MZIPCODE = #{mzipcode},
+			MADDR = #{maddr},
+			MADDRDETAIL = #{maddrdetail},
+			MUPDATEDATE = SYSDATE
+		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
+	</update>
+	
+	<delete id="memberDelete">
+		UPDATE MEMBERTABLE SET
+			MDELETEYN = 'N',
+			MUPDATEDATE = SYSDATE
+		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
+	</delete>
+	
+	<select id="memberSelect" resultType="member">
+		SELECT 
+			MNAME,
+			MID,
+			MPW,
+			MBIRTH,
+			MGENDER,
+			MHP,
+			MEMAIL,
+			MZIPCODE,
+			MADDR,
+			MADDRDETAIL,
+			TO_CHAR(MINSERTDATE, 'YYYY-MM-DD') AS MINSERTDATE,
+			TO_CHAR(MUPDATEDATE, 'YYYY-MM-DD') AS MUPDATEDATE
+		FROM MEMBERTABLE
+		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
+	</select>
+	
+	<select id="memberSelectAll" resultMap="memberResult">
+		SELECT
+			MNUM,
+			MNAME,
+			MID,
+			MPW,
+			MBIRTH,
+			MGENDER,
+			MHP,
+			MEMAIL,
+			MZIPCODE,
+			MADDR,
+			MADDRDETAIL,
+			TO_CHAR(MINSERTDATE, 'YYYY-MM-DD') AS MINSERTDATE,
+			TO_CHAR(MUPDATEDATE, 'YYYY-MM-DD') AS MUPDATEDATE
+		FROM MEMBERTABLE
+		WHERE MDELETEYN = 'Y'
+		ORDER BY MNUM DESC
+	</select>
+
+	<!-- 아이디 중복 확인 -->
+	<select id="idCheck" resultType="member">
+		SELECT MID 
+		FROM MEMBERTABLE
+		WHERE MDELETEYN = 'Y' AND MID = #{mid}
+	</select>
+
+	<!-- 비밀번호 체크 -->
+	<select id="pwCheck" resultType="int"> <!-- int ??? -->
+		SELECT 
+			COUNT(*) 
+		FROM MEMBERTABLE
+		WHERE MDELETEYN = 'Y' AND MPW = #{mpw}
+	</select>
+	
+	<!-- 이메일 중복 확인 -->
+	<select id="emailCheck" resultType="member">
+		SELECT MEMAIL 
+		FROM MEMBERTABLE
+		WHERE MDELETEYN = 'Y' AND MEMAIL = #{memail}
+	</select>
+	
+		<update id="surveyInsert">
+		UPDATE MEMBERTABLE SET
+			POSITIVEFOOD = #{positivefood},
+			NEGATIVEFOOD = #{negativefood},
+			MOVIETASTE = #{movietaste}
+		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
+	</update>
+</mapper>

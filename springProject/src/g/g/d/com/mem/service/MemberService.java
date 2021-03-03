@@ -14,6 +14,6 @@ public interface MemberService {
 	public List<MemberVO> memberSelectAll(MemberVO vo);  // 전체 회원 목록 조회
 	
 	public List<MemberVO> idCheck(MemberVO mvo);  // 아이디 중복 체크
-//	public boolean pwCheck(String mid, String mpw); // 회원 정보 수정 및 삭제를 위한 pw 체크/
-	
+	public int pwCheck(MemberVO mvo); // 회원 정보 수정 및 삭제를 위한 pw 체크
+	public int surveyInsert(MemberVO mvo); // 설문 조사 추가
 }

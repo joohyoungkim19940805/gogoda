@@ -1,0 +1,31 @@
+package g.g.d.com.emotion.common;
+
+public class emotionRankUtil {
+
+	public static int emotionFood(String[] emotionData) {
+	
+		int emotionInfo=2;
+		if(emotionData[0].indexOf("혐오")!=-1) {
+			emotionInfo=1;
+		}
+		if(emotionData[0].indexOf("분노")!=-1) {
+			emotionInfo=1;
+		}
+		if(emotionData[0].indexOf("슬픔")!=-1) {
+			emotionInfo=1;
+		}
+		if(emotionData[0].indexOf("공포")!=-1) {
+			emotionInfo=1;
+		}
+		if(emotionData[0].indexOf("놀람")!=-1) {
+			emotionInfo=0;
+		}
+		if(emotionData[0].indexOf("행복")!=-1) {
+			emotionInfo=0;
+		}
+		
+		
+		return 0;
+	}
+	
+}

@@ -10,7 +10,7 @@ import g.g.d.com.movie.vo.MovieVO;
 
 public class NaverMovieApi {
 
-	public static MovieVO returnMovieData(String movieName, String genre) {
+	public static MovieVO returnMovieData(String movieName, String genre, String movieNumber, int movieCnt) {
 		
 		//movieList.get(0).getMvname(),
 		String clientId = "Ms8QcIFQ4qWlcfeSxIp8";
@@ -92,6 +92,8 @@ public class NaverMovieApi {
             mvvo.setMvactor(actor.replaceAll("<b>", "").replaceAll("</b>",""));
             mvvo.setMvuserRating(userRating);
             mvvo.setMvgenre(genre);
+            mvvo.setMvnum(movieNumber);
+            mvvo.setMoviecnt(movieCnt);
             
 
     		
@@ -99,13 +101,15 @@ public class NaverMovieApi {
             System.out.println(e);
             mvvo=new MovieVO();
             mvvo.setMvname(movieName);
-            mvvo.setMvlink("-");
+            mvvo.setMvlink("");
             mvvo.setMvimage("-");
             mvvo.setMvpubDate("-");
             mvvo.setMvdirector("-");
             mvvo.setMvactor("-");
             mvvo.setMvuserRating("-");
             mvvo.setMvgenre(genre);
+            mvvo.setMvnum(movieNumber);
+            mvvo.setMoviecnt(movieCnt);
         }
 		
         return mvvo;

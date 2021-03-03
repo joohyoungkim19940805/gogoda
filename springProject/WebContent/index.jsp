@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +10,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+#ranking{
+
+float:right;
+text-align: right;
+vertical-align: middle;
+}
+
 li{
 	list-style:none;
 }
@@ -23,17 +34,18 @@ padding: 0px;
 .board-wi-he{
 width:10px;
 position: relative;
-left: 200px;
+left: 430px;
 }
 
 .rank-table-food{
 position:relative;
-left:700px;
+left:100px;
 }
 .rank-table-movie{
 position:relative;
-left:800px;
+left:150px;
 }
+
 
 .container-1 input#text{
 
@@ -80,27 +92,137 @@ transition: background .55s ease;
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var boardData;
 		//alert("ready");
+		$(window).load(function(){
+			if("${seName}"!=''){
+				$("#loginbtn").remove();
+				$("#meminsert").remove();
+				$("#memlogin").append("<a href='../../springProject/mem/memberSelect.ggd' style='color:black' id='' class='comlogin'>${seName}</a>님 환영합니다. &nbsp;&nbsp;&nbsp;");
+				$("#memlogin").append("<button type='button' class='comlogin' id='memlogout' onclick='logoutBtn()'>로그아웃</button>");
+			}
+			//게시판 최신순 조회
+			 $.ajax({
+	                url : '../../springProject/emotion/mainboard.ggd',
+	                type : 'POST',
+	                async:false,
+	                datatype:'json',
+	                success: function(data) {
+	                	boardData=data;
+	                	for(var i=0;i<boardData.length;i++){
+	                		if(boardData[i]["bsubject"].length<35){
+			                	var boardListData="<li>"+
+								"<a href='../../springProject/board/boardDetail.ggd?bnum="+boardData[i]["bnum"]+"' style='color:black;' id='a-none'>"+
+									"<span><b>"+boardData[i]["bname"]+"</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+								boardData[i]["bsubject"]+"<font color='#1551a4'>["+boardData[i]["cnt"]+"]</font></a>"+
+								"</li><br>";
+							}else{
+								var boardListData="<li>"+
+								"<a href='../../springProject/board/boardDetail.ggd?bnum="+boardData[i]["bnum"]+"' style='color:black;' id='a-none'>"+
+									"<span><b>"+boardData[i]["bname"]+"</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+								boardData[i]["bsubject"].substring(0,35)+"<font color='#1551a4'>["+boardData[i]["cnt"]+"]</font></a>"+
+								"</li><br>";
+							}
+		                	$("#boardlist-main").append(boardListData);
+	                	}
+	                },
+	                error: function(){}			
+			 });
+			 //음식 랭킹 조회
+			 $.ajax({
+	                url : '../../springProject/emotion/foodrank.ggd',
+	                type : 'POST',
+	                async:false,
+	                datatype:'json',
+	                success: function(data) {
+	                	foodData=data;
+	                	console.log(data);
+	                	console.log(foodData[0]["fname"]);
+	                	for(var i=0;i<10;i++){
+	                		
+	                		if(foodData[i]["fname"].length<7){
+	                		var foodListData="<li><a href='../review/test1.ggd?food="+foodData[i]["fname"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+foodData[i]["fname"]+
+								"</span>"+
+								"<span id='ranking'>"+foodData[i]["foodcnt"]+"&nbsp;<b style='color:red;'>↑</b></span></a>"+
+								"</li><br>"
+	                		}else{
+	                			var foodListData="<li><a href='../review/test1.ggd?food="+foodData[i]["fname"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+foodData[i]["fname"].substring(0,7)+"..."+
+								"</span>"+
+								"<span id='ranking'>"+foodData[i]["foodcnt"]+"&nbsp;<b align='right' style='color:red;'>↑</b></span></a>"+
+								"</li><br>"
+	                		}
+	                		$("#foodlist-rank").append(foodListData);
+	                	}
+	                },
+	                error: function(){}			
+			 });
+			 //영화 랭킹 조회
+			 $.ajax({
+	                url : '../../springProject/emotion/movierank.ggd',
+	                type : 'POST',
+	                async:false,
+	                datatype:'json',
+	                success: function(data) {
+	                	movieData=data;
+	                	console.log(data);
+	                	console.log(movieData[0]["mvname"]);
+	                	for(var i=0;i<10;i++){
+	                		//<a href='../emotion/moviecount.ggd?movieNum="+movieNum[i]+"&movieLink="+movieLink[i]+"' >"+
+	                		if(movieData[i]["mvname"].length<7){
+	                		var movieListData="<li><a href='../emotion/moviecount.ggd?movieNum="+movieData[i]["mvnum"]+"&movieLink="+movieData[i]["mvlink"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+movieData[i]["mvname"]+
+								"</span>"+
+								"<span id='ranking'>"+movieData[i]["moviecnt"]+"&nbsp;<b style='color:red;'>↑</b></span>"+
+								"</li><br>"
+	                		}else{
+	                			var movieListData="<li><a href='../emotion/moviecount.ggd?movieNum="+movieData[i]["mvnum"]+"&movieLink="+movieData[i]["mvlink"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+movieData[i]["mvname"].substring(0,7)+"..."+
+								"</span>"+
+								"<span id='ranking'>"+movieData[i]["moviecnt"]+"&nbsp;<b align='right' style='color:red;'>↑</b></span>"+
+								"</li><br>"
+	                		}
+	                		$("#movielist-rank").append(movieListData);
+	                	}
+	                },
+	                error: function(){}			
+			 });
+			 
+			 
+		}); 
+
+		
 		$(document).on("click",".icon",function(){
 			
-			$("#mainForm").attr("action","emotion/emotionSearch.ggd");
-			$("#mainForm").attr("method","GET");
-			$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
-			$("#mainForm").submit();
+			if("${seName}"!=''){
+			
+				$("#mainForm").attr("action","../../springProject/emotion/emotionSearch.ggd");
+				$("#mainForm").attr("method","GET");
+				$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
+				$("#mainForm").submit();
+			}else{
+				alert("로그인 후 이용해주십시오.");
+			}
 		});
 		$(document).on("click","#loginbtn",function(){
-			$("#mainForm").attr("action","logincontroller/loginpage.ggd");
+			$("#mainForm").attr("action","../../springProject/logincontroller/loginpage.ggd");
 			$("#mainForm").attr("method","POST");
 			$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
 			$("#mainForm").submit();
 		});
 		$(document).on("click","#meminsert",function(){
-			$("#mainForm").attr("action","mem/registerForm.ggd");
-			$("#mainForm").attr("method","GET");
+			$("#mainForm").attr("action","../../springProject/mem/registerForm.ggd");
+			$("#mainForm").attr("method","POST");
 			$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
 			$("#mainForm").submit();
 		});
 	});
+	
+	function logoutBtn(){
+		$("#mainForm").attr("action","../emotion/logout.ggd");
+		$("#mainForm").attr("method","POST");
+		$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
+		$("#mainForm").submit();
+		
+	}
+	
 </script>
 </head>
 <form name="mainForm" id="mainForm">
@@ -108,26 +230,28 @@ transition: background .55s ease;
 	<div>
 		<div id="topele">
 			<div align="right" id="memlogin">
-			<button type="button" id="loginbtn">로그인</button>
-			<button type="button" id="meminsert">회원가입</button>
+				<button type="button" id="loginbtn">로그인</button>
+				<button type="button" id="meminsert">회원가입</button>
 			</div>
-			
+			<br><br>
 			<div align="center">
 				<th>
 					<td>
 						<img src="/springProject/logo/pjimg.png" id="mainimg">
 					</td>	
+					&nbsp;&nbsp;&nbsp;
 					<td>
 						<img src="/springProject/logo/logo.png" id="mainimg2">
 					</td>
 
 				</th>
 			</div>
+			<br>
 			<div align="center">
 				<div class="box">
 					<div class="container-1">
 						<span class="icon"><i class="fa fa-search"></i></span>
-						<input type="text" id="text" name="text" style="width: 1450px; height:70px;'" placeholder="오늘 어떤 일이 있으셨나요?">
+						<input type="text" id="text" name="text" style="width: 810px; height:55px;'" placeholder="오늘 어떤 일이 있으셨나요?">
 					</div>
 				</div>
 			</div>
@@ -148,177 +272,25 @@ transition: background .55s ease;
 							<tr>
 								<td id="line-title"style="font-size:14px;font-weight:bold;" width="100%">
 									<span>게시글</span>
-									<a href="board/boardList.ggd" style="color:black" id="a-none"><span style="width: 400px; display: inline-block; float: right; font-size:12px;" align="right">더보기</span></a>
+									<a href='../../springProject/board/boardList.ggd' style='color:black' id='a-none'><span style="width: 500px; display: inline-block; float: right; font-size:12px;" align="right">더보기</span></a>
 								</td>
 
 								<td id="line-title" class="rank-table-food" style="font-size:14px;font-weight:bold;" width="100%">
-									<span style="width: 180px; display: inline-block; float: right;" align="right">음식 랭킹</span>
+									<span style="width: 180px; display: inline-block; float: left;" align="left">음식 랭킹</span>
 								</td>
 								<td id="line-title" class="rank-table-movie" style="font-size:14px;font-weight:bold;" width="100%">
-									<span style="width: 180px; display: inline-block; float: right;" align="right">영화 랭킹</span>
+									<span style="width: 180px; display: inline-block; float: left;" align="left">영화 랭킹</span>
 								</td>
 							</tr>
 							<tr>
-								<td style="width:50%;">
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자1</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										난... ㄱㅏ끔...<font color="#1551a4">[5]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자2</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										눈물을 흘린ㄷㅏ....<font color="#1551a4">[999]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자3</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										ㄱㅏ끔은 눈물을 참을 수 없는 ㄴㅐ가 별루ㄷㅏ...<font color="#1551a4">[7]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자4</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										맘이 ㅇㅏㅍㅏ서.... <font color="#1551a4">[1]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자5</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										소ㄹㅣ치며... 울 수 있ㄷㅏ는건....<font color="#1551a4"></font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자6</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										좋은ㄱㅓㅇㅑ.....<font color="#1551a4">[2]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자7</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										ㅁㅓ... 꼭 슬ㅍㅓㅇㅑ만 우는 건 ㅇㅏ니잖ㅇㅏ...^^<font color="#1551a4">[6]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자8</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										난...눈물ㅇㅣ.... 좋 다....<font color="#1551a4">[4]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자9</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										ㅇㅏ니...<font color="#1551a4">[7]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자10</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										ㅁㅓ리가ㅇㅏ닌....<font color="#1551a4">[100]</font></a>
-									</li><br>
-									<li>
-										<a href="" style="color:black;" id="a-none">
-											<span><b>작성자11</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										맘으로.....우는 ㄴㅐㄱㅏ좋ㄷㅏ.....<font color="#1551a4">[1000]</font></a>
-									</li><br>
+								<td style="width:50%;" id="boardlist-main" name="boardlist-main">
+									
 								</td>
-								<td class="rank-table-food" style="font-size:13px;" align="center">
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>2위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>12&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>1&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
+								<td class="rank-table-food" id="foodlist-rank" name="foodlist-rank" style="font-size:13px;" align="top">
+									
 								</td>
-								<td class="rank-table-movie" style="font-size:13px;" align="center">
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
-									<li>
-										<span><b>1위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가자미
-										</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span>100&nbsp;<b style="color:red;">↑</b></span>
-									</li><br>
+								<td class="rank-table-movie" id="movielist-rank"style="font-size:13px;" align="top">
+									
 								</td>
 							</tr>
 						</tbody>

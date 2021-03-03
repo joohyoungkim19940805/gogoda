@@ -23,6 +23,10 @@ public class MemberVO {
 	private String curpage;
 	private String totalcount;
 	
+	private String positivefood;
+	private String negativefood;
+	private String movietaste;
+	
 	public MemberVO() {}
 
 	public MemberVO(String mnum, String mname, String mid, String mpw, String mbirth, String mgender, String mhp,
@@ -187,6 +191,30 @@ public class MemberVO {
 
 	public String getTotalcount() {
 		return totalcount;
+	}
+
+	public String getPositivefood() {
+		return positivefood;
+	}
+
+	public void setPositivefood(String positivefood) {
+		this.positivefood = positivefood;
+	}
+
+	public String getNegativefood() {
+		return negativefood;
+	}
+
+	public void setNegativefood(String negativefood) {
+		this.negativefood = negativefood;
+	}
+
+	public String getMovietaste() {
+		return movietaste;
+	}
+
+	public void setMovietaste(String movietaste) {
+		this.movietaste = movietaste;
 	}
 
 	public void setTotalcount(String totalcount) {

@@ -19,7 +19,17 @@ public class FoodDaoImpl implements FoodDao{
 	@Override
 	public List<FoodVO> FoodSelectListDao(FoodVO fdvo){
 		logger.info("푸드DAO 시작");
-		return session.selectList("FoodSelectListService");
+		return session.selectList("FoodSelectListService",fdvo);
+	}
+	@Override
+	public int FoodCountDao(String fname) {
+		logger.info("푸드랭킹DAO"+fname);
+		return session.update("FoodCountService",fname);
+	}
+	@Override
+	public List<FoodVO> FoodRankDao(FoodVO fdvo){
+		logger.info("푸드랭킹산정DAO");
+		return session.selectList("FoodRankService");
 	}
 	
 }

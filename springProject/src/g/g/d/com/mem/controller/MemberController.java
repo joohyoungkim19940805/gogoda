@@ -3,6 +3,8 @@ package g.g.d.com.mem.controller;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,11 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import g.g.d.com.mem.common.ChabunService;
 import g.g.d.com.mem.common.ChabunUtil;
 import g.g.d.com.mem.common.MailSend;
+import g.g.d.com.mem.common.TempPassword;
 import g.g.d.com.mem.service.MemberService;
 import g.g.d.com.mem.vo.MemberVO;
 
@@ -35,12 +40,50 @@ public class MemberController {
 	private ChabunService chabunService;
 	
 	// 회원 가입 페이지로 이동
-	@RequestMapping(value="/registerForm", method = RequestMethod.GET)
+	@RequestMapping(value="/registerForm", method = RequestMethod.POST)
 	public String member() {
 		logger.info("registerForm 호출 성공 >>>");
 		return "member/registerForm";
 	}
 
+	@RequestMapping(value="/moveSurvey", method = RequestMethod.POST)
+	public String moveSurvey() {
+		return "member/surveyInsert";
+	}
+	
+	// 설문 조사 추가
+	@RequestMapping(value="/surveyInsert", method = RequestMethod.POST)
+	public String surveyInsert(@ModelAttribute MemberVO mvo, String positivefood, String negativefood, String movietaste) {
+		logger.info("surveyInsert 호출 성공");
+		logger.info("mvo.getMnum() >>> : " +  mvo.getMnum());
+		logger.info("mvo.getPositivefood() >>> : " +  mvo.getPositivefood());
+		logger.info("mvo.getNegativefood() >>> : " +  mvo.getNegativefood());
+		logger.info("mvo.getMovietaste() >>> : " +  mvo.getMovietaste());
+		logger.info("mvo.getPositivefood() >>> : " +  positivefood);
+		logger.info("mvo.getNegativefood() >>> : " +  negativefood);
+		logger.info("mvo.getMovietaste() >>> : " +  movietaste);
+		mvo.setPositivefood(positivefood);
+		mvo.setNegativefood(negativefood);
+		mvo.setMovietaste(movietaste);
+		
+		
+		int result = 0;
+		String url = "";
+		
+		result = memberService.surveyInsert(mvo);
+		logger.info("surveyInsert 호출 성공  "+ result);	
+		
+		// 아래 부분 수정 요 -> 화요일에 강사님 만나서 수정하겠음
+		if (result == 1) {
+			logger.info("surveyInsert 성공");
+			url = "member/memberSelectAll"; // 수정 후 상세 페이지로 이동
+			//url = "memberSelectAll.ggd"; // 수정 후 상세 페이지로 이동
+			return "../../index";
+		}else {
+			return "../../index";
+		}
+	}
+	
 	// 회원 등록 처리 후 회원 목록으로 리다이렉트
 	// @ModelAttribute 에 폼에서 입력한 데이터가 저장
 	
@@ -48,8 +91,10 @@ public class MemberController {
 	// public String memberInsert(HttpServlet request) {
 	// public String memberInsert(String mid, String mpw) {
 	// public String memberInsert(@ModelAttribute MemberVO mvo) {
-	@RequestMapping(value="/memberInsert", method = {RequestMethod.GET, RequestMethod.POST})
-	public String memberInsert(@ModelAttribute MemberVO mvo, HttpServletRequest request) throws IllegalStateException, IOException {
+	
+	@RequestMapping(value="/memberInsert", method = RequestMethod.POST)
+	@ResponseBody
+	public String memberInsert(@ModelAttribute MemberVO mvo, HttpServletRequest request, Model model) throws IllegalStateException, IOException {
 		logger.info("memberInsert 호출 성공");
 
 		String mnum = ChabunUtil.getMemChabun("N", chabunService.getChabun().getMnum());
@@ -58,6 +103,7 @@ public class MemberController {
 		logger.info("mname>>>"+mvo.getMname());
 		logger.info("maddr>>>"+mvo.getMaddr());
 		logger.info("maddrdetail>>>"+mvo.getMaddrdetail());
+		
 		//logger.info(request.getParameter("mname"));
 		//logger.info(request.getParameter("maddr"));
 		//logger.info(request.getParameter("maddrdetail"));
@@ -69,13 +115,13 @@ public class MemberController {
 		String url = "";
 		// 테이블에 레코드 입력		
 		result = memberService.memberInsert(mvo);
+		logger.info(">>>"+mnum);
 		
 		if (result == 0) {
-				System.out.println("");
-			 	url = "registerForm.ggd";
-				return "redirect:" + url;
+			return mnum;
 		}else {
-			return "index";
+			//return "index";			
+			return mnum;
 		}
 		
 	}
@@ -154,13 +200,25 @@ public class MemberController {
 	// 회원 정보 상세조회
 	@RequestMapping(value="/memberSelect", method = RequestMethod.GET)
 //	public String memberSelect(@RequestParaam String mid, Model model) {
-	public String memberSelect(@ModelAttribute MemberVO mvo, Model model) {
+	public String memberSelect(@ModelAttribute MemberVO mvo, Model model, HttpServletRequest hsr) {
 		logger.info("memberSelect 호출 성공");
-
+		String seNum="";
+		String seName="";
+		HttpSession session = hsr.getSession();
+		if(session.getAttribute("mid")!=null&&session.getAttribute("mnum")!=null) {
+			seName=session.getAttribute("mid").toString();
+			seNum=session.getAttribute("mnum").toString();
+			model.addAttribute("seName", seName);
+			model.addAttribute("seNum", seNum);
+		}
+		mvo.setMnum(seNum);
+		mvo.setMid(seName);
+		
 		logger.info("Mnum = " + mvo.getMnum());
 		String mnum=mvo.getMnum();
 		MemberVO detail = new MemberVO();
 		detail = memberService.memberSelect(mvo);
+		
 		// 회원 정보를 model 에 저장
 		//detail = memberService.memberSelect(mid);
 		if (detail !=null && (!detail.equals(""))) {
@@ -203,22 +261,45 @@ public class MemberController {
 		}
 		
 	}	
+	
+	@RequestMapping(value="pwCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean pwCheck(MemberVO mvo) {
+		logger.info("MemberController pwCheck >>> : " );
+		logger.info("MemberController pwCheck mvo.getMnum() >>> : " +  mvo.getMnum());
+		logger.info("MemberController pwCheck mvo.getMpw() >>> : " +  mvo.getMpw());
+		
+//		List<MemberVO> listAll = memberService.idCheck(mvo);
+		boolean result = false;
+		//boolean bool = memberService.pwCheck(mvo);
+		int nCnt = 0;
+		nCnt = memberService.pwCheck(mvo);
+		if(nCnt == 1) result = true;
+		else result = false;
+		/*
+		if (bool) {
+			result = true;
+		}else {
+			result = false;
+		}
+		*/
+		return result;
+	}
     
 	// 이메일 인증 
 //	@RequestMapping( value = "/member/auth.do" , method=RequestMethod.POST )
 //    public ModelAndView mailSending(HttpServletRequest request, String memail, HttpServletResponse response_email) throws IOException {
 
-	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
+	@RequestMapping(value="/mailCheck", method=RequestMethod.POST)
 	@ResponseBody
-	public String mailCheckGET(HttpServletRequest request, String mail, String key) throws Exception{
+	public String mailCheckGET(HttpServletRequest request, String mail, Model model) throws Exception{
 		
 		// 뷰(View)로부터 넘어온 데이터 확인 
 		logger.info("이메일 데이터 전송 확인");
 		logger.info("이메일 : " + mail);
-		logger.info("mail" + request.getParameter("mail"));
-		logger.info("이메일 : " + request.getParameter("key"));
+		String key=TempPassword.setTempPassWord(10);
 		new MailSend().MailSet(key, mail);
-		
+		model.addAttribute("key",key);
 		/*
 		// 인증번호(난수) 생성 
 		Random random = new Random();
@@ -254,8 +335,10 @@ public class MemberController {
 		//String num = Integer.toString(authnum);
 		//response.setHeader("Content-Type", "text/html;charset=utf-8");
 		
-		return "member/registerForm";
+		return key;
 		
 	}
+	
+	
 	
 }

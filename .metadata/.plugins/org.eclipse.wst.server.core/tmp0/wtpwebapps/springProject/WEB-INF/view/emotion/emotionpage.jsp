@@ -34,6 +34,7 @@
 	StringBuffer foodSweetAndSaltyData=new StringBuffer();//단짠//10
 	StringBuffer foodSourceData=new StringBuffer();//출처//11
 	/*음식*/
+	StringBuffer movieNumData=new StringBuffer();//1//<1
 	StringBuffer movieNameData=new StringBuffer();//1//<1
 	StringBuffer movieLinkData=new StringBuffer();//2영화정보링크
 	StringBuffer movieImageData=new StringBuffer();//3영화이미지링크
@@ -62,9 +63,9 @@
 
 	System.out.println("1==========================================================");
 	/*영화*/
-	System.out.println(movieList.get(0).getMvname());
+	System.out.println(movieList.get(0).getMvnum());
 	for(int i=0;i<movieList.size();i++){
-
+		movieNumData.append(movieList.get(i).getMvnum()+",");
 		movieNameData.append(movieList.get(i).getMvname()+",");
 		movieLinkData.append(movieList.get(i).getMvlink()+",");
 		movieImageData.append(movieList.get(i).getMvimage()+",");
@@ -92,6 +93,13 @@
 	#line3 > th > span > span > a >img{width:150px; height:200px;}
 #nameList{
 	font-size: 17px
+}
+
+#line-top {
+position: sticky;
+ top: 30px;
+  height: 80px;
+  background: blue;
 }
 
 #lineList {
@@ -238,7 +246,10 @@
 							barColor: '#3a89c9', value: emotionData[5].substring(emotionData[5].indexOf(':')+1,emotionData[5].length-1), orientation: 'v' });
 		emo_food();
 		emo_movie();
+		
 	});
+		
+		
 		
 	function emo_food(){
 		//var foods_emo= [["chicken", "pizza", "seolleongtang"], ["", "", ""], ["", "", ""]];
@@ -268,14 +279,14 @@
 		len = foodIndex.length;
 		for(var i=0; i<len; i++){
 			var food = foodName[i];
-			var foodInfo="<td align='left'><p><b><span id='lineList'><span id='nameList'>"+foodName[i]+"</span></span></b><br><br><span id='infoList'>1회 제공량 : "+foodOneserving[i]+"<br>칼로리(100g당) : "+foodKcal[i]+"kcal<br>쓴맛/담백함 : "+
-						foodBitterness[i]+"/5<br>감칠맛 : "+foodUmami[i]+"/5<br>짠맛 : "+foodSalty[i]+"/5<br>단맛 : "+
-						foodSweetness[i]+"/5<br>신맛 : "+foodSourtaste[i]+"/5</span></p></td>";
+			var foodInfo="<td align='left'><p><b><span id='lineList'><span id='nameList'>"+foodName[i]+"</span></span></b><br><br><span id='infoList'>&nbsp;1회 제공량 : "+foodOneserving[i]+"<br>&nbsp;칼로리(100g당) : "+foodKcal[i]+"kcal<br>&nbsp;쓴맛/담백함 : "+
+						foodBitterness[i]+"/5<br>&nbsp;감칠맛 : "+foodUmami[i]+"/5<br>&nbsp;짠맛 : "+foodSalty[i]+"/5<br>&nbsp;단맛 : "+
+						foodSweetness[i]+"/5<br>&nbsp;신맛 : "+foodSourtaste[i]+"/5</span></p></td>";
 			
 			var ss = "<th><span id='food_wrap'>" +
-				     	"<span id=food_wrapImg><a href='../review/test1.ggd?food="+food+"'>"+
+				     	"<span id=food_wrapImg><a href='../review/test1.ggd?food="+food+"' id='foodimg' value='"+foodName[i]+"'>"+
 							"<img src='/springProject/img/"+foodIndex[i]+".jpg' align='top'></a></span>"+
-							"<span id=food_text>"+foodInfo+"</span></th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";	
+							"<span id='food_text'>"+foodInfo+"</span></th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";	
 							//'spring:url value=/resources/img/'"+foods[i]+".jpg'>"+foods[i];
 								//'/img/"+foods[i]+".jpg'>"+foods[i]+
 			$("#line2").append(ss);
@@ -284,6 +295,7 @@
 	}
 	function emo_movie(){
 
+		var movieNum='<%=movieNumData%>';
 		var movieName='<%=movieNameData%>';
 		var movieLink='<%=movieLinkData%>';
 		var movieImage='<%=movieImageData%>';
@@ -293,6 +305,7 @@
 		var movieUserRating='<%=movieUserRatingData%>';
 		var movieGenre='<%=movieGenreData%>';
 		
+		movieNum=movieNum.substring(0,movieNum.length-1).split(',');
 		movieName=movieName.substring(0,movieName.length-1).split(',');
 		movieLink=movieLink.substring(0,movieLink.length-1).split(',');
 		movieImage=movieImage.substring(0,movieImage.length-1).split(',');
@@ -306,18 +319,23 @@
 		
 		for(var i=0; i<len; i++){
 			var movie = movieImage[i];
-			var movieInfo="<td align='left'><p><span id='nameList'><b><a href='"+movieLink[i]+"' style='color:black'>"+movieName[i]+"</a></b></span><br><span id='lineList'><span id='infoList'>"+movieGenre[i]+"<br></span></span><br><span id='infoList'>제작년도 : "+moviePubDate[i]+"<br>감독 : "+
-							movieDirector[i].replaceAll("|",",").substring(0,movieDirector[i].length-1)+"<br>출연진 : "+movieActor[i].replaceAll("|",",").substring(0,movieDirector[i].length-1)+"<br>평점 : "+movieUserRating[i]+"</span></p></td>";
-			
-			if(movieImage[i]==""){
-				movieImage[i]="/springProject/noimage/noimage.gif";
+			var oneActor=movieActor[i].split("|");
+			if(oneActor.length>1){
+				alert(oneActor[0]+" 외 "+oneActor.length+"인");
 			}
-
+			
+			var movieInfo="<td align='left'><p><span id='nameList'><b><a href='"+movieLink[i]+"' style='color:black'>"+movieName[i]+"</a></b></span><br><span id='lineList'><span id='infoList'>"+movieGenre[i]+"<br></span></span><br><span id='infoList'>제작년도 : "+moviePubDate[i]+"<br>감독 : "+
+							movieDirector[i].replaceAll("|",", ").substring(0,movieDirector[i].length-1)+"<br>출연진 : "+movieActor[i].replaceAll("|",", ").substring(0,movieActor[i].length)+"<br>평점 : "+movieUserRating[i]+"</span></p></td>";
+			
+			if(movieImage[i]==""||movieImage[i]=="-"){
+				movieImage[i]="../noimage/noimage.gif";
+			}
+			//String movieName, String movieLink ../review/test1.ggd?food=
 				var ss = "<th><span id='movie_wrap'>" +
-					     	"<span id=movie_wrapImg><a href='"+movieLink[i]+"' target='_blank'>"+
+					     	"<span id=movie_wrapImg><a href='../emotion/moviecount.ggd?movieNum="+movieNum[i]+"&movieLink="+movieLink[i]+"' >"+
 								"<img src='"+movieImage[i]+"' align='top'></a></span>"+
 								"<span id=movie_text>"+movieInfo+"</span></th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";						
-							//'spring:url value=/resources/img/'"+foods[i]+".jpg'>"+foods[i];
+								//'spring:url value=/resources/img/'"+foods[i]+".jpg'>"+foods[i];
 								//'/img/"+foods[i]+".jpg'>"+foods[i]+
 				$("#line3").append(ss);
 			if(i>3){break;}
@@ -329,8 +347,8 @@
 <body>
 
 	<hr>
-	<div align="center">
-		<h3>당신의 감정 구성</h3>
+	<div align="center" >
+		<h3>${seName}님의 감정 구성</h3>
 	</div>
 	<br><!-- 
 	<div align="center">
@@ -345,6 +363,7 @@
 		<div id="bar-5"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<div id="bar-6"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
+
 	<br><br><br><br><br><br><br>
 	<hr>
 	<br>

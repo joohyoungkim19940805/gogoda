@@ -12,12 +12,13 @@ public class MovieVO {
 	private String mvuserRating;
 	private String mvgenre;
 	private String mvinsertdate;
+	private int moviecnt;
 	public MovieVO() {}
 	
 	public MovieVO(String mvname, String mvlink, String mvimage,
 					String mvpubDate, String mvdirector,
 					String mvactor, String mvuserRating, String mvgenre, 
-					String mvnum, String mvinsertdate) {
+					String mvnum, String mvinsertdate, int moviecnt) {
 		this.mvname = mvname;
 		this.mvlink = mvlink;
 		this.mvimage = mvimage;
@@ -28,6 +29,13 @@ public class MovieVO {
 		this.mvgenre=mvgenre;
 		this.mvnum=mvnum;
 		this.mvinsertdate=mvinsertdate;
+		this.moviecnt=moviecnt;
+	}
+	public int getMoviecnt() {
+		return moviecnt;
+	}
+	public void setMoviecnt(int moviecnt) {
+		this.moviecnt=moviecnt;
 	}
 	public String getMvinsertdate() {
 		return mvinsertdate;

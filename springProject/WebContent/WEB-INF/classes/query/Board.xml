@@ -23,6 +23,10 @@
 		</trim>
 	</sql>
 	
+	<select id="boardListAllService" parameterType="board" resultType="board">
+		SELECT * FROM BOARD WHERE BDELYN='Y' ORDER BY BINSERTDATE DESC 
+	</select>
+	
 	<!-- 게시물 목록 조회 -->
 	<select id="boardList" parameterType="board" resultType="board">
 		SELECT BNUM,BNAME,BSUBJECT,BFILE,BHIT,
@@ -156,5 +160,7 @@
 		SET BHIT = BHIT + 1 
 		WHERE BNUM = #{bnum, jdbcType=VARCHAR}
 	</update>
+	
+
 	 
 </mapper>

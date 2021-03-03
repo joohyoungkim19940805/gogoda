@@ -18,6 +18,9 @@
 		<result property="mdeleteyn" column="MDELETEYN" />
 		<result property="minsertdate" column="MINSERTDATE" />
 		<result property="mupdatedate" column="MUPDATEDATE" />
+		<result property="positivefood" column="POSITIVEFOOD" />
+		<result property="negativefood" column="NEGATIVEFOOD" />
+		<result property="movietaste" column="MOVIETASTE" />
 	</resultMap>
 	
 	<insert id="memberInsert" parameterType="member">
@@ -87,9 +90,13 @@
 			MADDR,
 			MADDRDETAIL,
 			TO_CHAR(MINSERTDATE, 'YYYY-MM-DD') AS MINSERTDATE,
-			TO_CHAR(MUPDATEDATE, 'YYYY-MM-DD') AS MUPDATEDATE
+			TO_CHAR(MUPDATEDATE, 'YYYY-MM-DD') AS MUPDATEDATE,
+			POSITIVEFOOD,
+			NEGATIVEFOOD,
+			MOVIETASTE
+			
 		FROM MEMBERTABLE
-		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
+		WHERE MDELETEYN = 'Y' AND MID = #{mid}
 	</select>
 	
 	<select id="memberSelectAll" resultMap="memberResult">
@@ -120,11 +127,11 @@
 	</select>
 
 	<!-- 비밀번호 체크 -->
-	<select id="pwCheck" resultType="int"> <!-- int ??? -->
+	<select id="pwCheck" resultType="int"> <!-- COUNT 로 받기 때문에 -->
 		SELECT 
 			COUNT(*) 
 		FROM MEMBERTABLE
-		WHERE MDELETEYN = 'Y' AND MPW = #{mpw}
+		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum} AND MPW = #{mpw}
 	</select>
 	
 	<!-- 이메일 중복 확인 -->
@@ -133,4 +140,12 @@
 		FROM MEMBERTABLE
 		WHERE MDELETEYN = 'Y' AND MEMAIL = #{memail}
 	</select>
+	
+	<update id="surveyInsert">
+		UPDATE MEMBERTABLE SET
+			POSITIVEFOOD = #{positivefood},
+			NEGATIVEFOOD = #{negativefood},
+			MOVIETASTE = #{movietaste}
+		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
+	</update>
 </mapper>

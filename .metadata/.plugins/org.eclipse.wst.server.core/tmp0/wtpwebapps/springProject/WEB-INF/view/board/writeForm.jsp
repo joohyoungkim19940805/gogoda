@@ -79,7 +79,7 @@
 </head>
 <body>
 	<div id="writetop">
-	<a href="http://google.com" target="_blank">
+	<a href="../../springProject/emotion/mainpage.ggd">
 		<img src="../images/common/gogoda.png" style="width:150px; height:100px" />
 	</a>
 	</div>
@@ -88,7 +88,7 @@
 		<table id="boardWrite">
 			<tr>
 				<td>글쓴이</td>
-				<td><input type="text" name="bname" id="bname"></td>
+				<td><input type="text" name="bname" id="bname" value="${seName}" readonly></td>
 			</tr>
 			<tr>
 				<td>글제목</td>

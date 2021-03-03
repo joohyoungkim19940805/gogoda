@@ -13,6 +13,12 @@ public class RboardDAOImpl implements RboardDAO {
 	@Autowired(required=false)
 	private SqlSession session;
 	
+	@Override
+	public int rboardCntDAO(String bnum) {
+		System.out.println("================="+bnum);
+		return session.update("rboardCntService", bnum);
+	}
+	
 	// 글목록 구현
 	@Override
 	public List<RboardVO> rboardList(String bnum) {

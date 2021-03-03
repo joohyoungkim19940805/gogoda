@@ -18,6 +18,13 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired(required=false)
 	private BoardDAO boardDAO;
 	
+	@Override
+	public List<BoardVO> boardListAllService(BoardVO bvo){
+		List<BoardVO> boardList=null;
+		boardList=boardDAO.boardListAllDao(bvo);
+		return boardList;
+	}
+	
 	// 글목록 구현
 	@Override
 	public List<BoardVO> boardList(BoardVO pvo) {

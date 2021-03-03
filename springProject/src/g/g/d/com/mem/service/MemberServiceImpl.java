@@ -80,11 +80,27 @@ public class MemberServiceImpl implements MemberService {
 		logger.info("mvo >>> : " + mvo.getMid());
 		return memberDAO.idCheck(mvo);
 	}
-/*	
 	// 회원 정보 수정 및 삭제를 위한 pw 체크
 	@Override
-	public boolean pwCheck(String mid, String mpw) {
-		return memberDAO.pwCheck(mid, mpw);
+	public int pwCheck(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		logger.info("MemberServiceImpl pwCheck >>> : ");
+		logger.info("mvo >>> : " + mvo);
+		
+		int result = 0;
+		result = memberDAO.pwCheck(mvo);
+		return result;
 	}
-*/		
+	
+	// 설문 조사 추가
+	@Override
+	public int surveyInsert(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		logger.info("MemberServiceImpl surveyInsert >>> : ");
+		logger.info("mvo >>> : " + mvo);
+		
+		int result = 0;
+		result = memberDAO.surveyInsert(mvo);
+		return result;
+	}
 }

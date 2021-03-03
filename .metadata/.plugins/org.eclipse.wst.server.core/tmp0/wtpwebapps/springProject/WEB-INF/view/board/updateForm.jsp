@@ -78,7 +78,7 @@
 </head>
 <body>
 	<div id="updatetop">
-	<a href="http://google.com" target="_blank">
+	<a href="../../springProject/emotion/mainpage.ggd">
 		<img src="../images/common/gogoda.png" style="width:150px; height:100px" />
 	</a>
 	</div>

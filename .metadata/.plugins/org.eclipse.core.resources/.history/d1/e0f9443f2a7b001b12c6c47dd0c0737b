@@ -1,0 +1,27 @@
+package g.g.d.com.movie.vo;
+
+public class MoveUserGenre {
+
+	private String drama;
+	private String war;
+	private String action;
+	private String family;
+	private String adult;
+	private String crime;
+	private String mystery;
+	private String animation;
+	private String comedy;
+	private String horror;
+	private String romance;
+	private String SF;
+	private String documentary;
+	private String thriller;
+	private String musical;
+	private String opera;
+	private String fantasy;
+	private String adventure;
+	private String historical;
+	private String western;
+
+	
+}

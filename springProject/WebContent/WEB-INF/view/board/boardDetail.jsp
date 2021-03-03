@@ -32,19 +32,27 @@
 		
 		/*수정 버튼 클릭 시 처리 이벤트*/
 		$("#updateForm").click(function(){
-			$("#pwdChk").show();
-			$("#msg").text("비밀번호를 입력해 주세요.").css("color","#000099");
+			if("${seName}"!=''){
+				$("#pwdChk").show();
+				$("#msg").text("비밀번호를 입력해 주세요.").css("color","#000099");
+				butChk = 1;
+			}else{
+				alert("로그인 상태를 확인해주세요");
+			}
 			
-			butChk = 1;
 		});
 		
 
 		/*삭제 버튼 클릭 시 처리 이벤트*/
 		$("#boardDelete").click(function(){
-			$("#pwdChk").show();
-			$("#msg").text("비밀번호를 입력해 주세요.").css("color","#000099");
+			if("${seName}"!=''){
+				$("#pwdChk").show();
+				$("#msg").text("비밀번호를 입력해 주세요.").css("color","#000099");
+				butChk = 2;
+			}else{
+				alert("로그인 상태를 확인해주세요.");
+			}
 			
-			butChk = 2;
 		});
 		
 		/*비밀번호 확인 버튼 클릭 시 처리 이벤트*/
@@ -92,7 +100,7 @@
 </head>
 <body>
 	<div id="Detailtop">
-	<a href="http://google.com" target="_blank">
+	<a href="../../springProject/emotion/mainpage.ggd">
 		<img src="../images/common/gogoda.png" style="width:150px; height:100px" />
 	</a>
 	</div>

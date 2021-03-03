@@ -14,12 +14,14 @@ public class FoodVO {
 	private String fsourtaste;
 	private String fsweetandsalty;
 	private String fsource;
+	private int foodcnt;
+	private String foodtype;
 	
 	
 	public FoodVO(String fnum,String findex,String fname,
 					String foneserving,String fkcal,String fbitterness,
 					String fumami,String fsalty,String fsweetness,
-					String fsourtaste,String fsweetandsalty,String fsource) {
+					String fsourtaste,String fsweetandsalty,String fsource, int foodcnt, String foodtype) {
 		this.fnum=fnum;
 		this.findex=findex;
 		this.fname=fname;
@@ -32,10 +34,27 @@ public class FoodVO {
 		this.fsourtaste=fsourtaste;
 		this.fsweetandsalty=fsweetandsalty;
 		this.fsource=fsource;
+		this.foodcnt=foodcnt;
+		this.foodtype=foodtype;
 	}
 	
 	public FoodVO() {}
 
+	public void setFoodtype(String foodtype) {
+		this.foodtype=foodtype;
+	}
+	
+	public String getFoodtype() {
+		return foodtype;
+	}
+	
+	public void setFoodcnt(int foodcnt) {
+		this.foodcnt = foodcnt;
+	}
+	
+	public int getFoodcnt() {
+		return foodcnt;
+	}
 
 	public String getFnum() {
 		return fnum;

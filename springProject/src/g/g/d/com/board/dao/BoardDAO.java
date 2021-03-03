@@ -6,6 +6,7 @@ import g.g.d.com.board.vo.BoardVO;
 
 public interface BoardDAO {
 	
+	public List<BoardVO> boardListAllDao(BoardVO bvo);
 	public List<BoardVO> boardList(BoardVO pvo);
 	public int boardListCnt(BoardVO pvo);
 	public int boardInsert(BoardVO pvo);

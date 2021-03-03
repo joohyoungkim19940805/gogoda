@@ -1,0 +1,10 @@
+package g.g.d.com.emotion.common;
+import g.g.d.com.movie.vo.MovieUserGenreVO;
+
+public class MovieGenreUtil {
+
+	public MovieUserGenreVO MovieGenre(String[] genre) {
+		
+		return null;
+	}
+}

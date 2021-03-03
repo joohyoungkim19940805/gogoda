@@ -22,19 +22,23 @@ $(document).ready(function(){
 		alert("로그인 버튼 누름~" + id + "==" + pw);
 	
 		$.ajax({
-			url : "../logincontroller/loginresult.ggd",
+			url : "loginresult.ggd",
 			type : "GET",
+			async : false,
 			data : {
 				"mid" : id,
 				"mpw" : pw
 			},
-			dataType : "text",
+			dataType : 'text',
 			success : function(data) {
 				alert(data);
 				console.log("data : " + data);
 				if (data == "true") {
 					alert("로그인 성공. 메인페이지로 이동");
-					location.href="../index.jsp"
+					$("#loginForm").attr("action","../emotion/login.ggd");
+					$("#loginForm").attr("method","POST");
+					$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
+					$("#loginForm").submit();
 				} else if (data == "false") {
 					alert("일치하는 회원 정보가 없습니다. 다시 입력해주세요.");
 	
@@ -56,7 +60,7 @@ $(document).ready(function(){
 </head>
 
 <body>
-<form name="loginForm" id="LoginForm">
+<form name="loginForm" id="loginForm">
 		<div align="center" style="position:relative; left:0px; top:300px; width:100%; height:100%;">		
 			<div class="login">
 			<h1 class="logo"><img src=""  width="500px" alt="로고" /></h1>				

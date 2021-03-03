@@ -17,12 +17,34 @@
 	<result property="fsweetness" column="FSWEETNESS"/>
 	<result property="fsourtaste" column="FSOURTASTE"/>
 	<result property="fsweetandsalty" column="FSWEETANDSALTY"/>
-	<result property="fsource" column="FSOURCE"/>	
+	<result property="fsource" column="FSOURCE"/>
+	<result property="foodcnt" column="FOODCNT"/>	
 	
 </resultMap>
 
 <select id="FoodSelectListService" parameterType="food" resultType="food">
-	SELECT * FROM FOODTABLE
+	SELECT * FROM FOODTABLE 
+	<if test='foodtype=="1"'>
+   		WHERE FUMAMI>'4.25'
+	</if>
+	<if test='foodtype=="2"'>
+   		WHERE FSALTY>'4.90'
+	</if>
+	<if test='foodtype=="3"'>
+   		WHERE FSWEETANDSALTY>'8.9'
+	</if>
+	<if test='foodtype=="4"'>
+   		WHERE FBITTERNESS>'4.20'
+	</if>
 </select>
 
+<select id="FoodRankService" parameterType="food" resultType="food">
+	SELECT * FROM FOODTABLE WHERE FOODCNT>0 ORDER BY FOODCNT DESC
+</select>
+
+<update id="FoodCountService" parameterType="String">
+	UPDATE FOODTABLE 
+		SET FOODCNT = FOODCNT + 1 
+	WHERE FNAME = #{fname, jdbcType=VARCHAR}
+</update>
 </mapper>

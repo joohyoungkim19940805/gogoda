@@ -14,6 +14,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Autowired(required=false)
 	private SqlSession session;
 	
+	@Override
+	public List<BoardVO> boardListAllDao(BoardVO bvo){
+		return session.selectList("boardListAllService");
+	}
+	
 	// 글목록 구현
 	@Override
 	public List<BoardVO> boardList(BoardVO pvo) {

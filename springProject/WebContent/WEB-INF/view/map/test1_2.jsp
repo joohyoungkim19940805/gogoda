@@ -7,6 +7,11 @@
 	else if(food.equals("pizza")) food = "피자";
 	else if(food.equals("seolleongtang")) food = "설렁탕";
 	System.out.println("food >>> : " + food);
+	String mid="";
+	if(request.getAttribute("seName")!=null){
+		mid=request.getAttribute("seName").toString();
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -67,7 +72,7 @@ span.star-prototype, span.star-prototype > * {
     height: 17px; 
     background: url("http://i.imgur.com/YsyS5y8.png") 0 -16px repeat-x;
     width: 80px;
-    display: inline-block;
+    display: block;
 }
  
 span.star-prototype > * {
@@ -135,19 +140,31 @@ span.star-prototype > * {
   height: 20px;
   pointer-events: none;
 }
-#spanbtn{float:right;}
-#updateBtn{margin-right:20px;}
-#deleteBtn{margin-right:10px;}
 #popupClose2{float:right;}
 #reviewForm{margin-top:15px;margin-left:20px;}
 #insertBtn{float:right;margin-top:10px;}
 #recontent{margin-left:5px;}
+
+.popup-layer > p {margin-top:300px; margin-left:70px;}
+
+#starOne{margin-left: 80px;}
+
 </style>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=979d0cc4b8c4a11d3bd7378770fd582f&libraries=services"></script>
 </head>
 <body>
 <div class="">
-	<h2>메인뷰 이동</h2>
+	<div id="maptop">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="../images/common/gogoda.png" style="width:150px; height:100px">
+		</a>
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="../logo/logo.png" style="width:150px; height:100px">
+		</a>
+	</div>
+	<div>
+
+	</div>
 </div>
 <div class="">
 	<input type="text" id="newText" >
@@ -176,13 +193,18 @@ span.star-prototype > * {
 		
 	</span>
 </div>
+
+<script src="${pageContext.request.contextPath}/include/js/jquery-1.12.4.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=979d0cc4b8c4a11d3bd7378770fd582f"></script>
+<script src="${pageContext.request.contextPath}/include/js/reviewEvent.js"></script>
+<script src="${pageContext.request.contextPath}/include/js/kakaoMap.js"></script>
 <script>
 // 마커를 담을 배열입니다
 var xx = 0.0;
 var yy = 0.0;
-
+var mid = "<%=mid%>";
 var geocoder = new kakao.maps.services.Geocoder();
 
 $(document).ready(function(){
@@ -222,6 +244,7 @@ $(document).ready(function(){
 				searchPlaces();
 				//circle = null;
 				//circle.setMap(map);
+				removeCircle();
 				center();
 			});
 		}else{
@@ -240,7 +263,7 @@ $(document).ready(function(){
 		        
 		        searchPlaces();
 		       // circle = null;
-		       // circle.setMap(map);
+		        removeCircle();
 		        center();
 
 		    } 
@@ -258,6 +281,7 @@ $(document).ready(function(){
 		        xx = result[0].y;
 		        
 		        searchPlaces();
+		        removeCircle();
 		        center();
 
 		    } 
@@ -268,11 +292,76 @@ $(document).ready(function(){
 	// qwer = reBtn의 data
 	var qwer = "";
 	
+
+	
 });
+
+
+$(document).on("click","#delLi",function(){
+	$(".popup-layer2").remove();
+	//alert($(this).children(2).children(".renickname").text());
+	var renickname_s = $(this).find(".renickname").text().slice(0,-1);
+	console.log(renickname_s);
+	var bool = false;
+	bool = renickname_s == mid;
+	console.log
+	if(bool){
+
+		
+		var popupClose = $("<input>");
+		popupClose.attr({"type":"button","id":"popupClose2", "value":"닫기"});
+		
+		//var alink = $("<input>");
+		//alink.attr({"type":"button","id":"reviewInsBtn","value":"리뷰 등록"});
+		console.log($(this));
+		$("<div/>").addClass("popup-layer2").appendTo("body").fadeIn();
+		$(".popup-layer2").append(popupClose);
+		insertForm();
+		$("#renickname").val("<%=mid%>");
+		$("#renickname").prop("readonly",true);
+		$('#reviewForm').append('<input type="button" id="updateBtn" value="수정하기">');
+		$('#reviewForm').append('<input type="button" id="deleteBtn" value="삭제하기">');
+		$("#");
+		
+		let selectURL = "reviewSelect.ggd";
+		console.log(typeof(placeId));
+		let renum = $(this).find("#renum").val()
+		var form = new FormData($("#reviewForm")[0]);
+		form.append("kakaoid",placeId);
+		form.append("renum",renum);
+		console.log($(this).find("#renum").val());
+		$.ajax({
+			url:selectURL,
+			type:"POST",
+			data:form,
+//			enctype: 'multipart/form-data',
+			cache:false,
+			processData: false,
+	        contentType: false,	
+			success:whenSuccess,
+			error:whenError
+		});
+		function whenSuccess(resData){
+			console.log(resData);
+			var str = resData.split(",");
+			$("#renickname").val(str[0]);
+			$("input:radio[name='rerating']:radio[value='"+str[2]+"']").attr('checked', true);	
+			$("#recontent").val(str[1]);
+			$("#renumVal").val(str[3]);
+		}
+		function whenError(e){
+			console.log()
+		}
+		
+
+	}
+});
+
+
 function center(){
 	// 지도에 표시할 원을 생성합니다
 	//	var circle = new kakao.maps.Circle({
-		circle = new kakao.maps.Circle({
+	circle = new kakao.maps.Circle({
 	    center : new kakao.maps.LatLng(xx, yy),  // 원의 중심좌표 입니다 
 	    radius: 10, // 미터 단위의 원의 반지름입니다 
 	    strokeWeight: 1, // 선의 두께입니다 
@@ -285,6 +374,12 @@ function center(){
 
 	// 지도에 원을 표시합니다 
 	circle.setMap(map); 	
+}
+	
+function removeCircle() {
+	
+	console.log(">>> : " + circle);
+    circle.setMap(null);
 }
 
 
@@ -444,44 +539,7 @@ $(document).on("click","#place",function(){
 })
 
 
-function ratingRoad(placeId,index){
-	let ratingURL = "reviewRating.ggd";
-	let method = "GET";
-	let dataParam = {
-		kakaoid:placeId
-	}
-	$.ajax({
-		url : ratingURL,
-		type : method,
-		data : dataParam,
-		success : whenSuccess,
-		error : whenError
-	});
-	
-	function whenSuccess(resData){
-		console.log(resData);
-		var str = resData.split(",");
-		var ratingAvg = str[0].substr(0,3);
-		var amount ="(" + str[1] + ")";
-		
-		
-		var starImg = $("<img>");
- 		starImg.attr({"src":"https://upload.wikimedia.org/wikipedia/commons/e/e7/Empty_Star.svg", "id":"starOne"});
-		var avgSpan = $("<div>");
-		avgSpan.html(ratingAvg);
-		var amountSpan = $("<div>");
-		amountSpan.html(amount);
-		
-		console.log(index);
-		$('.review_'+(index+1)).append(starImg).append(avgSpan).append(amountSpan);
-		//console.log($('.markerbg marker_'+index+1).next().find(".review"));
-	}
-	
-	function whenError(e){
-		//alert("에러 발생 : " + e);
-		console.log(e);
-	}
-}
+
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
@@ -559,46 +617,7 @@ function removeAllChildNods(el) {
     }
 }
  
- 
-//지도에 클릭 이벤트를 등록합니다
-//지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
- 
- // 클릭한 위도, 경도 정보를 가져옵니다 
- var latlng = mouseEvent.latLng;
- 
- var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
- message += '경도는 ' + latlng.getLng() + ' 입니다';
- 
- var resultDiv = document.getElementById('result'); 
- resultDiv.innerHTML = message;
- 
-}); 
- 
 
-function reBtn(data){
-	alert("콩");
-	qwer = data;
-	console.log(data.parentElement.parentElement.children[0].textContent);
-	var placeName = data.parentElement.parentElement.children[0].textContent;
-	placeId = data.parentElement.parentElement.children[5].value;
-	console.log(placeId);
-	$(".popup-layer").remove();
-	
-	var popupClose = $("<input>");
-	popupClose.attr({"type":"button","id":"popupClose", "value":"닫기"});
-	
-	var alink = $("<input>");
-	alink.attr({"type":"button","id":"insertForm","value":"리뷰 등록"});
-	
-	$("<div/>").addClass("popup-layer").html(
-			$("<div/>").addClass("popup").html(
-				$(this).html()
-			)
-		).appendTo("body").fadeIn();
-	$(".popup-layer").append(alink).append(popupClose).append("<br>");
-	selectAll(placeId);
-}
 
 $(document).on("click", "#popupClose",function(){
 	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
@@ -609,104 +628,24 @@ $(document).on("click", "#map", function(){
 	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
 });
 
+$(document).on("click", "#newgio", function(){
+	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
+	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
+});
+
+$(document).on("click", "#nowgio", function(){
+	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
+	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
+});
+
+$(document).on("click", "#defaultgio", function(){
+	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
+	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
+});
+
 $(document).on("click", ".popup", function(e){
 	e.stopPropagation();
 });
-
-
-function selectAll(kakaoid){
-	alert(kakaoid);
-	let selectAllURL = "reviewListAll.ggd";
-	let method = "GET";
-	let dataParam = {
-		kakaoid : kakaoid
-	}
-	$.ajax({
-		url:selectAllURL,
-		type:method,
-		data:dataParam,
-		success:whenSuccess,
-		error:whenError
-	});
-	
-	function whenSuccess(resData){
-		listStr = resData.split("&");
-		for(var i=0; i<listStr.length-1; i++){
-			// alert(listStr[i]);
-			listReview = listStr[i].split(",");
-			var renum = listReview[0];
-			var renickname = listReview[1];
-			var recontent = listReview[2];
-			var rephoto = listReview[3];
-			var rerating = listReview[4];
-			var reinsertdate = listReview[5];
-			// alert(renum + reinsertdate);
-			selectList(renum, renickname, recontent, rephoto, rerating, reinsertdate);
-		}
-	}
-	
-	function whenError(e){
-		alert("오류 발생 : " + e);
-	}
-	
-	
-}
-
-function selectList(renum, renickname, recontent, rephoto, rerating, reinsertdate){
-	var liTag = $("<li>");
-	liTag.attr("id", "delLi");
-	var pTag1 = $("<p>");
-	var spanName = $("<span>");
-	spanName.html(renickname + "님");
-	
-	var spanDate = $("<span>");
-	spanDate.html(" / " + reinsertdate);
-	
-	var spanBtn = $("<span>")
-	spanBtn.attr({"id":"spanbtn"});
-	var updBtn = $("<input>");
-	updBtn.attr({"type":"button", "id":"updateBtn", "value":"수정"});
-	var delBtn = $("<input>");
-	delBtn.attr({"type":"button", "id":"deleteBtn", "value":"삭제"});
-	var renumTag = $("<input>");
-	renumTag.attr({"type":"hidden", "id":"renum", "value":renum});
-
-	var pTag2 = $("<p>");
-	
-	var imgSpan = $("<span>");
-	
-	var spanPa = $("<span>");
-	spanPa.attr({"id":"spanpa"});
-	
-	var spanRate = $("<span>");
-	spanRate.addClass("star-prototype");
-	spanRate.html(rerating);
-
-	
-	spanRate.html($('<span/>'))
-	spanRate.children().css('width',rerating*16);
-	var spanContent = $("<span>");
-	spanContent.addClass("recontent");
-	spanContent.html(recontent);
-	
-	spanBtn.append(updBtn).append(renumTag).append(delBtn);
-	
-	pTag1.append(spanPa).append(spanRate).append(spanBtn);
-
-	if(rephoto != "null"){
-		var imgTag = $("<img>");
-		imgTag.attr({"src":"${pageContext.request.contextPath}/reviewuploadstorage/"+rephoto, "id":"rephoto"});
-
-		
-		imgSpan.append(imgTag);		
-
-	}
-	//spanPa;
-	pTag2.append(spanContent).append(spanName).append(spanDate).append(imgSpan);
-	liTag.append(pTag1).append(pTag2);	
-	$(".popup-layer").append(liTag);
-	
-}
 
 
 
@@ -727,6 +666,10 @@ $(document).on("click","#insertForm",function(){
 		).appendTo("body").fadeIn();
 	$(".popup-layer2").append(popupClose).append("<br>");
 	insertForm();
+	$("#renickname").val("<%=mid%>");
+	$("#renickname").prop("readonly",true);
+	
+	$('#reviewForm').append('<input type="button" id="insertBtn" value="등록하기">');
 
 });
 
@@ -738,79 +681,15 @@ $(document).on("click", "#map", function(){
 	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
 });
 
+$(document).on("click", "#reBtn", function(){
+	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
+});
+
+
 $(document).on("click", ".popup", function(e){
 	e.stopPropagation();
 });
 
-function insertForm(){
-	var asdf =  '<form id="reviewForm" name="reviewForm" enctype="mutlipart/form-data">' +
-	'<table border="1">' +
-	'<tr>' +
-		'<td>작성자</td>' +
-		'<td><input type="text" id="renickname" name="renickname"></td>' +
-		'<td>비밀번호</td>' +
-		'<td><input type="text" id="repass" name="repass"></td>' +
-	'</tr>' +
-	'<tr>' +
-		'<td>평점</td>' +
-		'<td colspan="3">' +
-		'<div class="startRadio"> ' +
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="0.5"> '+
-		    '<span class="startRadio__img"><span class="blind">1</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="1"> '+
-		    '<span class="startRadio__img"><span class="blind">1.5</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="1.5"> '+
-		    '<span class="startRadio__img"><span class="blind">2</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="2"> '+
-		    '<span class="startRadio__img"><span class="blind">2.5</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="2.5"> '+
-		    '<span class="startRadio__img"><span class="blind">3</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="3"> '+
-		    '<span class="startRadio__img"><span class="blind">3.5</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="3.5"> '+
-		    '<span class="startRadio__img"><span class="blind">4</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="4.0"> '+
-		    '<span class="startRadio__img"><span class="blind">4.5</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="4.5"> '+
-		    '<span class="startRadio__img"><span class="blind">5</span></span> '+
-		  '</label> '+
-		  '<label class="startRadio__box"> '+
-		    '<input type="radio" name="rerating" id="rerating" value="5"> '+
-		    '<span class="startRadio__img"><span class="blind">5.5</span></span> '+
-		  '</label> '+
-		'</div> '+
-		'</td>' +
-	'</tr>' +
-	'<tr>' +
-		'<td>내용</td>' +
-		'<td colspan="3"> <textarea id="recontent" name="recontent" rows="3" cols="50"></textarea></td>' +
-	'</tr>' +
-	'<tr>' +
-		'<td>사진</td>' +
-		'<td colspan="3"><input type="file" id="file" name="file"></td>' +
-	'</tr>' +
-	'</table>' +
-		'<input type="button" id="insertBtn" value="등록하기">' +
-	'</form>';
-	$(".popup-layer2").append(asdf); 
-}
 
 // 리뷰 등록
 $(document).on("click","#insertBtn",function(){
@@ -831,7 +710,7 @@ $(document).on("click","#insertBtn",function(){
 	});
 	
 	function whenSuccess(resData){
-		// 리스트 조회 후 태그 생성함수 
+		// 리스트 조회 후 태그 생성 
 		alert(resData);
 		clearInsert();
 		$(".popup-layer *").remove();
@@ -850,53 +729,53 @@ $(document).on("click","#insertBtn",function(){
 	}
 });
 
+$(document).on("keyup","#recontent",function(){
+	
+	cut_200();
+});
+
+
+
+// 글자수 제한
+function cut_200(){
+//	console.log("콩");
+
+	var str = $("#recontent").val();
+	var strLeng = str.length;
+	console.log(strLeng);
+	while(getTextLength(str) > 200){
+		strLeng--;
+		str = str.substring(0,strLeng);
+		$("#recontent").val(str);
+	}
+	$(".bytes").text(getTextLength(str));
+}
+
+
+function getTextLength(str){
+	var len = 0;
+	for (var i=0; i<str.length; i++){
+		if(escape(str.charAt(i)).length == 6){
+			len++;
+		}
+		len++;
+	}
+	return len;
+}
+
+
+
 
 // 리뷰 수정
 $(document).on("click","#updateBtn",function(){
-	$(".popup-layer2").remove();
-	
-	var popupClose = $("<input>");
-	popupClose.attr({"type":"button","id":"popupClose2", "value":"닫기"});
-	
-	var alink = $("<input>");
-	alink.attr({"type":"button","id":"reviewInsBtn","value":"리뷰 등록"});
-	
-	$("<div/>").addClass("popup-layer2").html(
-			$("<div/>").addClass("popup").html(
-				$(this).html()
-			)
-		).appendTo("body").fadeIn();
-	$(".popup-layer2").append(popupClose);
-	insertForm();
-	$("#")
+	updateBtn();
 });
 
+
+
 // 리뷰 삭제
-$(document).on("click", "#deleteBtn", function(){
-	//console.log($(this).prev().val());
-	let deleteURL = "reviewDelete.ggd";
-	let method = "GET";
-	let dataParam = {
-			kakaoid : placeId,
-			renum : $(this).prev().val()
-	}
-	$.ajax({
-		url:deleteURL,
-		type:method,
-		data:dataParam,
-		success:whenSuccess,
-		error:whenError
-	});
-	
-	function whenSuccess(resData){
-		alert(resData);
-		reBtn(qwer);
-		$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
-	}
-	
-	function whenError(e){
-		alert("에러 발생 : " + e);
-	}
+$(document).on("click", "#deleteBtn", function(){	
+	deleteBtn();
 });
 
 </script>

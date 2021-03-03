@@ -1,0 +1,8 @@
+package g.g.d.com.movie.vo;
+
+public class MoveUserGenre {
+
+	private String genre;
+	
+	
+}

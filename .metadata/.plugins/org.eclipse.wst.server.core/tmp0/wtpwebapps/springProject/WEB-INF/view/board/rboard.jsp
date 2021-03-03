@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% 
+String str = (String)session.getAttribute("mid");
+if(str==null){
+	str="";
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +30,7 @@
 		/* 댓글 내용 저장 이벤트 */
 		$("#rboardInsert").click(function(){
 			// 작성자 이름에 대한 입력여부 검사
-			if(!chkSubmit($("#rbname"),"이름을")) return;
+			if(!chkSubmit($("#rbname"),"로그인 상태를")) return;
 			else if(!chkSubmit($("#rbcontent"),"내용을")) return;
 			else{
 				var insertUrl = "../rboard/rboardInsert.ggd";
@@ -197,7 +203,6 @@
 	
 	/* INPUT 태그들에 대한 초기화 함수 */
 	function dataReset(){
-		$("#rbname").val("");
 		$("#rbpw").val("");
 		$("#rbcontent").val("");
 	}
@@ -210,7 +215,7 @@
 			<form id="comment_form">
 				<div>
 					<label for="rbname">글쓴이</label>
-					<input type="text" name="rbname" id="rbname" />
+					<input type="text" name="rbname" id="rbname" value='<%=str %>'readonly/>
 					<label for="rbname">비밀번호</label>
 					<input type="password" name="rbpw" id="rbpw" />
 					<input type="button" id="rboardInsert" value="저장하기">

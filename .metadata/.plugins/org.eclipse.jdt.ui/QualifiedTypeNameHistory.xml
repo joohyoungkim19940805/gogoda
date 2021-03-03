@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.web.multipart.MultipartFile"/>
-    <fullyQualifiedTypeName name="java.io.File"/>
-    <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
-    <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
-    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
-    <fullyQualifiedTypeName name="com.spring.common.file.FileUploadUtil"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
     <fullyQualifiedTypeName name="com.spring.board.service.BoardService"/>
     <fullyQualifiedTypeName name="com.spring.common.vo.CommonVO"/>
     <fullyQualifiedTypeName name="com.spring.common.page.Paging"/>
@@ -38,9 +30,7 @@
     <fullyQualifiedTypeName name="g.g.d.com.food.dao.FoodDao"/>
     <fullyQualifiedTypeName name="g.g.d.com.food.dao.FoodDaoImpl"/>
     <fullyQualifiedTypeName name="com.spring.board.dao.BoardDao"/>
-    <fullyQualifiedTypeName name="g.g.d.com.food.vo.FoodVO"/>
     <fullyQualifiedTypeName name="java.util.logging.Logger"/>
-    <fullyQualifiedTypeName name="g.g.d.com.food.service.FoodService"/>
     <fullyQualifiedTypeName name="g.g.d.com.movie.dao.MovieDao"/>
     <fullyQualifiedTypeName name="g.g.d.com.movie.service.MovieService"/>
     <fullyQualifiedTypeName name="g.g.d.com.movie.service.MovieServiceImpl"/>
@@ -48,10 +38,26 @@
     <fullyQualifiedTypeName name="g.g.d.com.movie.vo.MovieVO"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="g.g.d.com.common.RandomNumbering"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="g.g.d.com.common.NaverMovieApi"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="g.g.d.com.mem.common.ChabunUtil"/>
     <fullyQualifiedTypeName name="g.g.d.com.mem.common.ChabunService"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="g.g.d.com.mem.common.TempPassword"/>
+    <fullyQualifiedTypeName name="org.springframework.web.servlet.mvc.support.RedirectAttributes"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
+    <fullyQualifiedTypeName name="g.g.d.com.board.vo.BoardVO"/>
+    <fullyQualifiedTypeName name="g.g.d.com.board.service.BoardService"/>
+    <fullyQualifiedTypeName name="g.g.d.com.food.vo.FoodVO"/>
+    <fullyQualifiedTypeName name="g.g.d.com.food.service.FoodService"/>
+    <fullyQualifiedTypeName name="g.g.d.com.mem.service.MemberService"/>
+    <fullyQualifiedTypeName name="g.g.d.com.mem.vo.MemberVO"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="oracle.net.aso.g"/>
+    <fullyQualifiedTypeName name="g.g.d.com.movie.vo.MovieUserGenreVO"/>
+    <fullyQualifiedTypeName name="g.g.d.com.emotion.common.MovieGenreUtil"/>
+    <fullyQualifiedTypeName name="g.g.d.com.emotion.common.emotionRankUtil"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
 </qualifiedTypeNameHistroy>
