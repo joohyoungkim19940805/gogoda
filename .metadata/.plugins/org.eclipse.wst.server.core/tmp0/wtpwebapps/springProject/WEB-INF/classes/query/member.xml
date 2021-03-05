@@ -96,7 +96,7 @@
 			MOVIETASTE
 			
 		FROM MEMBERTABLE
-		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
+		WHERE MDELETEYN = 'Y' AND MID = #{mid}
 	</select>
 	
 	<select id="memberSelectAll" resultMap="memberResult">

@@ -10,7 +10,10 @@
 	  maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 <meta http-equiv="X-UA-Compaible" content="IE=edge,chrome=1" />
 <title>글상세 보기</title>
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/board.css" />
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/common.js"></script>
 <script type="text/javascript">
@@ -99,12 +102,30 @@
 </script>
 </head>
 <body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		</a>
+	</div>
+</div><br><br><br><br><br><br>
+<!-- Header -->
+<header class="display-container" style="max-width:1500px;" id="home">
+	<img class="applepie-image" src="/springProject/logo/applepie.png" alt="Applepie" width="1500" height="1000">
+	<div class="board-display">
+
+
+<div id="boardContainer" align="left">
+<!-- 
 	<div id="Detailtop">
 	<a href="../../springProject/emotion/mainpage.ggd">
-		<img src="../images/common/gogoda.png" style="width:150px; height:100px" />
+		<img src="../images/common/gogoda.png" style="width:170px; height:170px" />
 	</a>
-	</div>
-	<div id="boardTit"><h3>글상세</h3></div>
+	</div>  -->
+	
+	<div id="boardTit"><h2><b>글 상세 조회</b></h2></div>
 	<form name="f_data" id="f_data" method="POST">
 		<input type="hidden" name="bnum" value="${detail.bnum}" />
 		<input type="hidden" name="bfile" id="bfile" value="${detail.bfile}" />
@@ -116,7 +137,7 @@
 				<div id="pwdChk">
 					<form name="f_pwd" id="f_pwd">
 						<input type="hidden" name="bnum" id="bnum" value="${detail.bnum}" />
-						<label for="bpw" id="l_pwd">비밀번호:</label>
+						<label for="bpw" id="l_pwd"></label>
 						<input type="password" name="bpw" id="bpw" />
 						<input type="button" id="pwdBut" value="확인" />
 						<span id="msg"></span>
@@ -136,10 +157,10 @@
 	<div id="boardDetail">
 		<table>
 			<colgroup>
-				<col width="25%" />
-				<col width="25%" />
-				<col width="25%" />
-				<col width="25%" />
+				<col width="20%" />
+				<col width="30%" />
+				<col width="20%" />
+				<col width="30%" />
 			</colgroup>
 			<tbody>
 				<tr>
@@ -165,5 +186,15 @@
 	</div>
 	<%--========================== 상세 정보 보여주기 종료 =========================--%>
 	<jsp:include page="rboard.jsp"></jsp:include>
+</div>
+
+	</div>
+		
+</header>
+<!-- Footer-->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+</footer>  
+
 </body>
 </html>

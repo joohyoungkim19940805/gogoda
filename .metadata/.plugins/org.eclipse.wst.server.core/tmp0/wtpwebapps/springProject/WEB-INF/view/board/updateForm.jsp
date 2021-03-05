@@ -11,9 +11,10 @@
 <meta http-equiv="X-UA-Compaible" content="IE=edge,chrome=1" />
 <title>글수정 화면</title>
 <style>
-	#updatetop{border-left:10px solid #ff0000; border-bottom: 1px solid #000066; padding: 10px; width:760px;}
+	/*#updatetop{border-left:10px solid #ff0000; border-bottom: 1px solid #000066; padding: 10px; width:760px;}*/
 </style>
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/board.css" />
 <!-- 웹에디터 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/se2/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
@@ -77,35 +78,53 @@
 </script>
 </head>
 <body>
-	<div id="updatetop">
-	<a href="../../springProject/emotion/mainpage.ggd">
-		<img src="../images/common/gogoda.png" style="width:150px; height:100px" />
-	</a>
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		</a>
 	</div>
-	<div id="boardTit"><h3>글수정</h3></div>
+</div><br><br><br><br><br><br><br>
+<header class="display-container" style="max-width:1500px;" id="home">
+	<img class="applepie-image" src="/springProject/logo/applepie.png" alt="Applepie" width="1500" height="800">
+	<div class="board-display">
+	
+<div id="boardContainer" align="left">
+
+<!-- <div id="updatetop">
+	<a href="../../springProject/emotion/mainpage.ggd">
+		<img src="../images/common/gogoda.png" style="width:170px; height:170px" />
+	</a>
+	</div> -->	
+	
+	<div id="boardTit"><h2><b>글수정</b></h2></div><br><br><br>
 	<form id="f_writeForm" name="f_writeForm" enctype="multipart/form-data">
 		<input type="hidden" id="bnum" name="bnum" value="${updateData.bnum}" />
 		<input type="hidden" id="bfile" name="bfile" value="${updateData.bfile}" />
 	<table id="boardWrite">
 		<tr>
-			<td>작성자</td>
+			<td style="font-weight: bold; text-align:center; background-color: #f2f2f2;">작성자</td>
 			<td><input type="text" name="bname" id="bname" value="${updateData.bname}" /></td>
 		</tr>
 		<tr>
-			<td>글제목</td>
+			<td style="font-weight: bold; text-align:center; background-color: #f2f2f2;">글제목</td>
 			<td><input type="text" name="bsubject" id="bsubject" value="${updateData.bsubject}" /></td>
 		</tr>
 		<tr>
-			<td>내용</td>
+			<td style="font-weight: bold; text-align:center; background-color: #f2f2f2;">내용</td>
 			<td height="200"><textarea name="bcontent" id="bcontent"
 			rows="10" cols="70">${updateData.bcontent}</textarea></td>
 		</tr>
 		<tr>
-			<td>첨부파일</td>
-			<td><input type="file" name="file" id="file"></td>
+			<td style="font-weight: bold; text-align:center; background-color: #f2f2f2;">첨부파일</td>
+			<td>
+			<label for="file" id="fileSelect">파일 선택</label>
+			<input type="file" name="file" id="file" style="display:none">
+			</td>
 		</tr>
 		<tr>
-			<td>비밀번호</td>
+			<td style="font-weight: bold; text-align:center; background-color: #f2f2f2;">비밀번호</td>
 			<td><input type="password" name="bpw" id="bpw">
 			<label>수정할 비밀번호를 입력해 주세요.</label></td>
 		</tr>
@@ -115,5 +134,12 @@
 		<input type="button" value="수정" class="but" id="boardUpdate" />
 		<input type="button" value="목록" class="but" id="boardList" />
 	</div>
+</div>
+</div>
+</header>
+<!-- Footer-->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+</footer> 
 </body>
 </html>

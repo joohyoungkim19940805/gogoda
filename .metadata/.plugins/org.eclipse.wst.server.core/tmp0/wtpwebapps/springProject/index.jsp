@@ -8,87 +8,14 @@
 <head>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-#ranking{
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- 디바이스에 최적화된 크기로 출력됨 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0
+      maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>GOGODA HOMEPAGE</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-float:right;
-text-align: right;
-vertical-align: middle;
-}
-
-li{
-	list-style:none;
-}
-
-#mainimg{
-width:150px; 
-height:200px;
-}
-#line-title{
-border-bottom: 1px solid Gainsboro ;
-padding: 0px;
-}
-#a-none { text-decoration:none } 
-
-.board-wi-he{
-width:10px;
-position: relative;
-left: 430px;
-}
-
-.rank-table-food{
-position:relative;
-left:100px;
-}
-.rank-table-movie{
-position:relative;
-left:150px;
-}
-
-
-.container-1 input#text{
-
-  font-size: 10pt;
-  color: #63717f;
-  padding-left: 45px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-transition: background .55s ease;
--moz-transition: background .55s ease;
--ms-transition: background .55s ease;
--o-transition: background .55s ease;
-transition: background .55s ease;
-}
-.container-1 input#text::-webkit-input-placeholder {
-   color: #65737e;
-}
- 
-.container-1 input#text:-moz-placeholder { /* Firefox 18- */
-   color: #65737e;  
-}
- 
-.container-1 input#text::-moz-placeholder {  /* Firefox 19+ */
-   color: #65737e;  
-}
- 
-.container-1 input#text:-ms-input-placeholder {  
-   color: #65737e;  
-}
-.container-1 .icon{
-  position: absolute;
-
-  margin-left: 17px;
-  margin-top:17px;
-  z-index: 1;
-  color: #4f5b66;
-}
-.container-1 input#text:hover, .container-1 input#text:focus, .container-1 input#text:active{
-    outline:none;
-    background: #E8F5FF;
-  }
-</style>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -227,43 +154,50 @@ transition: background .55s ease;
 </head>
 <form name="mainForm" id="mainForm">
 <body>
-	<div>
-		<div id="topele">
-			<div align="right" id="memlogin">
-				<button type="button" id="loginbtn">로그인</button>
-				<button type="button" id="meminsert">회원가입</button>
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		</a>
+		<!-- Float links to the right. Hide them on small screens -->
+<!--  	<div align="right" id="memlogin">
+			<button type="button" id="loginbtn">로그인</button>
+			<button type="button" id="meminsert">회원 가입</button>
+		</div>
+-->	
+		
+    <div class="w3-right w3-hide-small" id="memlogin">
+		<a href="#로그인" class="w3-bar-item w3-button" id="loginbtn">로그인</a>
+		<a href="#회원 가입" class="w3-bar-item w3-button" id="meminsert">회원가입</a>
+    </div>
+	</div>
+</div>
+<br>
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+	<img class="w3-image" src="/springProject/logo/applepie.png" alt="Applepie" width="1500" height="800">
+	<div class="w3-display-middle w3-margin-top w3-center">
+	<!-- 
+		<h1 class="w3-xxlarge w3-text-white"> <span class="w3-hide-small w3-text-light-grey">맛있</span><span class="w3-padding w3-black w3-opacity-min"><b>GO</b></span></h1>
+		<h1 class="w3-xxlarge w3-text-white"> <span class="w3-hide-small w3-text-light-grey">재밌</span><span class="w3-padding w3-black w3-opacity-min"><b>GO</b></span></h1>
+		<h1 class="w3-xxlarge w3-text-white"> <span class="w3-hide-small w3-text-light-grey">신난</span><span class="w3-padding w3-black w3-opacity-min"><b>DA</b></span></h1>
+	 -->
+	 	<div class="box" align="center">
+			<div class="container-1">
+				<span class="icon"><i class="fa fa-search"></i></span>
+				<input type="text" id="text" name="text" style="width: 700px; height:55px;'" placeholder="오늘 어떤 일이 있으셨나요?">
 			</div>
-			<br><br>
-			<div align="center">
-				<th>
-					<td>
-						<img src="/springProject/logo/pjimg.png" id="mainimg">
-					</td>	
-					&nbsp;&nbsp;&nbsp;
-					<td>
-						<img src="/springProject/logo/logo.png" id="mainimg2">
-					</td>
+		</div>
+	</div>
+		
+</header>
 
-				</th>
-			</div>
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px">
+	<div id="topboard" align="center" style="position: relative; z-index: 0; overflow: hidden; min-width: 100%; height: 100%; touch-action: pan-x; user-select: none; -webkit-user-drag: none; width: 210px;">
 			<br>
-			<div align="center">
-				<div class="box">
-					<div class="container-1">
-						<span class="icon"><i class="fa fa-search"></i></span>
-						<input type="text" id="text" name="text" style="width: 810px; height:55px;'" placeholder="오늘 어떤 일이 있으셨나요?">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="topboard" align="center" style="position: relative; z-index: 0; overflow: hidden; min-width: 100%; height: 100%; touch-action: pan-x; user-select: none; -webkit-user-drag: none; width: 210px;">
-			<br>
-			<br>
-			<br>
-		</div>
-		<br>
-		<br>
-		<div id="under">
+  <div id="under">
 			<tr>
 				<td id="under-table"><!-- white -->
 					<table class="board-wi-he" bgcolor="white" border='0'
@@ -271,7 +205,7 @@ transition: background .55s ease;
 						<tbody>
 							<tr>
 								<td id="line-title"style="font-size:14px;font-weight:bold;" width="100%">
-									<span>게시글</span>
+								<span>게시글</span>
 									<a href='../../springProject/board/boardList.ggd' style='color:black' id='a-none'><span style="width: 500px; display: inline-block; float: right; font-size:12px;" align="right">더보기</span></a>
 								</td>
 
@@ -299,6 +233,10 @@ transition: background .55s ease;
 			</tr>
 		</div>
 	</div>
+	<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+</footer>
 </body>
 </form>
 </html>

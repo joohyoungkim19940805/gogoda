@@ -11,7 +11,9 @@
 	  maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 <meta http-equiv="X-UA-Compaible" content="IE=edge,chrome=1" />
 <title>게시판</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/board.css" />
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/common.js"></script>
 <script type="text/javascript">
@@ -92,37 +94,94 @@
 		$("#page").val(page);
 		$("#f_search").attr({
 				"method":"get",
-				"action":"/boardList.ggd"
+				"action":"boardList.ggd"
 		});
 		$("#f_search").submit();
 	}
 </script>
 </head>
 <body>
-<div id="boardContainer" align="left">
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		</a>
+	</div>
+</div><br><br><br><br><br><br><br>
+<!-- Header -->
+<header class="display-container" style="max-width:1500px;" id="home">
+	<img class="applepie-image" src="/springProject/logo/applepie.png" alt="Applepie" width="1500" height="800">
+	<div class="board-display">
+	
+	 	<div id="boardContainer" align="left">
+<!-- 
 	<div id="boardtop">
 	<a href="../../springProject/emotion/mainpage.ggd">
-		<img src="../images/common/gogoda.png" style="width:150px; height:100px">
+		<img src="../images/common/gogoda.png" style="width:170px; height:170px">
 	</a>
 	</div>
-	<div id="boardTit"><h3>게시판</h3></div>
+ -->	
+	<div id="boardTit"><h2><b>GOGODA 게시판</b></h2></div>
 	<!-- 상세 페이지 이동을 위한 form -->
 	<form name="detailForm" id="detailForm">
 		<input type="hidden" name="bnum" id="bnum">
 		<input type="hidden" name="page" value="${data.page}">
 		<input type="hidden" name="pageSize" value="${data.pageSize}">
 	</form>
-
+	
+		<%--======================= 검색 기능 시작 ==============================--%>
+	<div id="boardSearch">
+		<form id="f_search" name="f_search">
+			<input type="hidden" id="page" name="page" value="${data.page}" />
+			<input type="hidden" id="order_by" name="order_by" value="${data.order_by}" />
+			<input type="hidden" id="order_sc" name="order_sc" value="${data.order_sc}" />
+			<table summary="검색">
+				
+				<colgroup>
+					<col width="70%"></col>
+					<col width="30%"></col>
+				</colgroup>
+				
+				<tr>
+					<td id="btd1" align="center">
+						<!-- 
+						<label>검색조건</label>
+						 -->
+						<select id="search" name="search">
+							<option value="all">전체</option>
+							<option value="bsubject">제목</option>
+							<option value="bcontent">내용</option>
+							<option value="bname">글쓴이</option>
+						</select>
+						<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요" />
+						<input type="button" value="검색" id="searchData">
+					</td>
+					<td id="btd2" align="right">한 페이지에
+						<select id="pageSize" name="pageSize">
+							<option value="10">10줄</option>
+							<option value="20">20줄</option>
+							<option value="30">30줄</option>
+							<option value="50">50줄</option>
+							<option value="70">70줄</option>
+							<option value="100">100줄</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<%--======================== 검색 기능 종료  ===============================--%>
 	<%--======================== 리스트 시작  ===============================--%>
 	<div id="boardList">
 	<table summary="게시판 리스트" >
 		<colgroup>
-			<col width="10%" />
+			<col width="12%" />
 			<col width="10%" />
 			<col width="39%" />
 			<col width="15%" />
-			<col width="13%" />
-			<col width="13%" />
+			<col width="10%" />
+			<col width="15%" />
 		</colgroup>
 		<thead>
 			<tr>
@@ -174,49 +233,7 @@
 	</table>
 	</div>
 	<%--========================= 리스트 종료 ================================= --%>
-	
-		<%--======================= 검색 기능 시작 ==============================--%>
-	<div id="boardSearch">
-		<form id="f_search" name="f_search">
-			<input type="hidden" id="page" name="page" value="${data.page}" />
-			<input type="hidden" id="order_by" name="order_by" value="${data.order_by}" />
-			<input type="hidden" id="order_sc" name="order_sc" value="${data.order_sc}" />
-			<table summary="검색">
-				
-				<colgroup>
-					<col width="70%"></col>
-					<col width="30%"></col>
-				</colgroup>
-				
-				<tr>
-					<td id="btd1" align="center">
-						<!-- 
-						<label>검색조건</label>
-						 -->
-						<select id="search" name="search">
-							<option value="all">전체</option>
-							<option value="bsubject">제목</option>
-							<option value="bcontent">내용</option>
-							<option value="bname">글쓴이</option>
-						</select>
-						<input type="text" name="keyword" id="keyword" value="검색어를 입력하세요" />
-						<input type="button" value="검색" id="searchData">
-					</td>
-					<td id="btd2" align="right">한페이지에
-						<select id="pageSize" name="pageSize">
-							<option value="10">10줄</option>
-							<option value="20">20줄</option>
-							<option value="30">30줄</option>
-							<option value="50">50줄</option>
-							<option value="70">70줄</option>
-							<option value="100">100줄</option>
-						</select>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
-	<%--======================== 검색 기능 종료  ===============================--%>
+
 	
 	<%--======================== 글쓰기 버튼 출력 시작 =========================== --%>
 	<div id="boardBut" >
@@ -228,6 +245,15 @@
 		<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}" />
 	</div>
 	<%--======================== 페이지 네비게이션 종료  =========================== --%>
+	
+	
 </div>
+	</div>
+		
+</header>
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+</footer>
 </body>
 </html>

@@ -22,13 +22,29 @@ public class LoginServiceImpl implements LoginService {
 	private LoginDAO loginDao;
 	
 	@Override
-	public List<MemberVO> loginCompleteService(MemberVO mvo) {
+	public MemberVO loginCompleteService(MemberVO mvo) {
 		// TODO Auto-generated method stub
 		logger.info("로그인서비스 시작==="+mvo.getMpw()+mvo.getMid());
-		List<MemberVO> memberList=null;
-		memberList=loginDao.loginCompleteDao(mvo);
-		logger.info(memberList);
-		return memberList;
+		MemberVO memberData=null;
+		memberData=loginDao.loginCompleteDao(mvo);
+		logger.info(memberData);
+		return memberData;
 	}
-	
+	@Override
+	public MemberVO loginFindIdService(MemberVO mvo) {
+		
+		logger.info("아이디찾기 서비스 시ㅈ"+mvo.getMname()+"<>"+mvo.getMemail());
+		MemberVO findIdData=null;
+		findIdData=loginDao.loginFindIdDao(mvo);
+		logger.info(findIdData);
+		return findIdData;
+	}
+	@Override
+	public MemberVO loginFindPwService(MemberVO mvo) {
+		logger.info("아이디찾기 서비스 시ㅈ"+mvo.getMid()+"<>"+mvo.getMemail());
+		MemberVO findPwData=null;
+		findPwData=loginDao.loginFindIdDao(mvo);
+		logger.info(findPwData);
+		return findPwData;
+	}
 }

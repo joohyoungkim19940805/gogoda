@@ -13,10 +13,12 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
 <!------ Include the above in your HEAD tag ---------->
 
 <title>GOGODA 회원 가입</title>
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
+
 
 <!-- daum 도로명주소 찾기 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -502,17 +504,24 @@ $(document).ready(function(){
 <form class="form-horizontal" id="memForm" name="memForm">
 <!-- ***************************************************** -->
 <body>
-
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		</a>
+	</div>
+</div><br><br><br><br><br>
 <!--  -->
-<div class="container">
+<div class="container" style="width:70%;">
 	<div class="row">
 	<div class="col-md-8">
 		<section>      
-        <h1 class="entry-title"><span>Sign Up</span> </h1>
+        <h1 class="entry-title"><span><b>Sign Up</b></span> </h1>
         <hr><!-- onsubmit="return submitCheck() -->
         
 		
-		<div class="form-group">
+		<div class="form-group" style="display:none">
           	<label class="control-label col-sm-3">회원번호 <span class="text-danger">*</span></label>
        		<div class="col-md-8 col-sm-9">
         		<input type="text" class="form-control" name="mnum" id="mnum" placeholder="회원 번호" readonly />
@@ -653,7 +662,10 @@ $(document).ready(function(){
     </div>
 	</div>
 </div>
-
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+</footer>
 </body>
 </form>
 </html>

@@ -6,6 +6,7 @@ import g.g.d.com.mem.vo.MemberVO;
 
 
 public interface LoginService {
-	public List<MemberVO> loginCompleteService(MemberVO mvo);
-	
+	public MemberVO loginCompleteService(MemberVO mvo);
+	public MemberVO loginFindIdService(MemberVO mvo);	
+	public MemberVO loginFindPwService(MemberVO mvo);	
 }

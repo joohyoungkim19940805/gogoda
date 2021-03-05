@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Naver"/>
+		<item key="selection" value="Header"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="Naver"/>
-			<item value="입력창"/>
-			<item value="입력"/>
-			<item value="d"/>
-			<item value="&lt;!-- //입력 --&gt;"/>
-			<item value="se2_bi"/>
-			<item value="smart_editor2_content"/>
-			<item value="글쓰기영역으로 바로가기"/>
-			<item value="src="/>
-			<item value="src=&quot;/springProject/include/js/jquery-1.12.4.min.js&quot;&gt;"/>
-			<item value="c=&quot;/springProject/include/js/jquery-1.12.4.min.js&quot;&gt;"/>
-			<item value="button"/>
-			<item value="fdvo"/>
-			<item value="&gt;"/>
-			<item value="getMvaction"/>
+			<item value="header"/>
+			<item value="파일 선택"/>
+			<item value="#boardWrite #fileSelect"/>
+			<item value=".container-1 input#text"/>
+			<item value="bpw"/>
+			<item value="file"/>
+			<item value="ranking"/>
+			<item value="회원번호"/>
+			<item value="더보기"/>
+			<item value="loginCompleteService"/>
+			<item value="loginresult"/>
+			<item value="login"/>
+			<item value="boardList.ggd"/>
+			<item value="listings"/>
+			<item value="contextPath"/>
 		</list>
 		<list key="replacehistory">
 			<item value="&lt;="/>

@@ -10,14 +10,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0
       maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <!-- 추가 -->
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
+
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <title>회원 정보 상세 페이지</title>
+
 <!-- daum 도로명주소 찾기 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
 <%
 String mnum=request.getAttribute("mnum").toString();
 //System.out.println("====================================="+mnum);
@@ -251,11 +254,20 @@ function execPostCode() {
 <!-- ***************************************************** -->
 <body>
 <!--  -->
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		</a>
+	</div>
+</div><br><br><br><br><br><br><br>
 <div class="container">
 	<div class="row">
 	<div class="col-md-8">
 		<section>      
-        <h1 class="entry-title"><span>${detail.mname}님의 상세 정보</span> </h1>
+        <h1 class="entry-title"><span><b>${detail.mname}</b>님의 상세 정보</span> </h1>
         <hr>
 			<input type="hidden" class="form-control" name="mnum" id="mnum" value='<%=mnum%>' readonly />
         
@@ -390,9 +402,13 @@ function execPostCode() {
           </div>
         </div>
       </section>
-    </div>
+     </div>
 	</div>
 </div>
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by&nbsp;<a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green"><b>GOGODA</b></a></p>
+</footer>
 </body>
 </form>
 </html>

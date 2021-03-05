@@ -7,10 +7,15 @@
 <%! String memail = ""; %>
 <%!	HttpSession hs = null; %>	    
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>LoginForm</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Login_Form</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/login.css" />
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -23,7 +28,7 @@ $(document).ready(function(){
 	
 		$.ajax({
 			url : "loginresult.ggd",
-			type : "GET",
+			type : "POST",
 			async : false,
 			data : {
 				"mid" : id,
@@ -33,17 +38,17 @@ $(document).ready(function(){
 			success : function(data) {
 				alert(data);
 				console.log("data : " + data);
-				if (data == "true") {
+				if (data == "login_ok") {
 					alert("로그인 성공. 메인페이지로 이동");
 					$("#loginForm").attr("action","../emotion/login.ggd");
 					$("#loginForm").attr("method","POST");
 					$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
 					$("#loginForm").submit();
-				} else if (data == "false") {
-					alert("일치하는 회원 정보가 없습니다. 다시 입력해주세요.");
+				} else if (data == "not_find_id") {
+					alert("일치하는 아이디가 없습니다. 다시 입력해주세요.");
 	
-				} else {
-					console.log("컨트롤러 에러");
+				} else{
+					alert(data);
 				}
 			},
 			error : function(data) {
@@ -56,41 +61,34 @@ $(document).ready(function(){
 });
 
 </script>
-
 </head>
-
 <body>
-<form name="loginForm" id="loginForm">
-		<div align="center" style="position:relative; left:0px; top:300px; width:100%; height:100%;">		
-			<div class="login">
-			<h1 class="logo"><img src=""  width="500px" alt="로고" /></h1>				
-			
-			<div class="entry_ipt">	
-				<div class="user_id">
-					<label for="mid"><img src=""  width="300" height="200" alt=" 아이디  " />&nbsp;&nbsp;&nbsp;&nbsp;</label>
-					<input type="text" id="mid" placeholder="아이디를 입력하세요">
-				</div> 
-				<p></p>	
-				<div class="user_pwd">
-					<label for="mpw"><img src=""  width="300" height="200" alt="비밀번호" />&nbsp;</label>
-					<input type="password" id="mpw" placeholder="비밀번호를 입력하세요">
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:15%; height:15%">
+		</a>
+	</div>
+</div>
+	<form name="loginForm" id="loginForm">
+		<div class="box">
+			<h1>Log in</h1><br>
+				<div class="inputBox">
+					<input type="text" name="mid" id="mid" required onkeyup="this.setAttribute('value', this.value);"  value="">
+					<label>ID</label>
 				</div>
-				<p></p>	
-				<div class="login_btn" align="center">
-					<input type="submit" style="width:200pt; height:20pt;"
-					   id="login_btn" alt="로그인" value="로그인"><!-- css에서 모양 수정 -->
+				<div class="inputBox">
+					<input type="password" name="mpw" id="mpw" required onkeyup="this.setAttribute('value', this.value);" value="">
+					<label>Password</label>
 				</div>
-				<p></p>		
-				<div class="link_look">
-					<a href="idFind.ggd">아이디 찾기</a>&nbsp;
-					<a href="pwFind.ggd">비밀번호  찾기</a>&nbsp;
-					<a href="ss" class="link_look">회원가입</a>
-				</div>
-				
-			</div> 
-			</div> <!-- //login -->
-		</div> <!-- //end of style -->
-</form>
+			<input type="submit" name="login_btn" id="login_btn" value="Log In"><br><br><br>
+			<div class="link_look">
+				<a href="idFind.ggd">아이디 찾기</a>&nbsp;
+				<a href="pwFind.ggd">비밀번호  찾기</a>&nbsp;
+				<a href="registerForm.ggd">회원가입</a>
+			</div>
+		</div>
+	</form>
 </body>
-
 </html>

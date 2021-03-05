@@ -1,32 +1,69 @@
 @charset "UTF-8";
 ul{list-style:none;}
-	#rboardContainer{width:770px;height:300px;margin:10px;}
 
+#rboardContainer{
+	width:710px;
+	height:300px;
+	margin:auto;
+}
 #rboardContainer h1{
-	font-size:10px; width: auto;
-	border-bottom: 1px solid #000066; padding-top:10px; 
+	font-size:10px; 
+	width:auto;
+	padding-top:10px; 
 }
-
 #rboardContainer > #comment_write{
-	padding: 10px 15px; border-bottom: 1px solid #000066;
+	padding:5px 35px 15px 35px;
+	border-bottom:1px solid #bebebe;
 }
-
-#rboardContainer > #comment_write label{
-	display: inline-block; width: 80px;
-	font-size: 14px; font-weight: bold; margin-bottom: 10px;
+#rboardContainer #comment_write label{
+	display:inline-block; 
+	width:80px;
+	font-size:12px;
+	font-weight:bold;
+	margin-left:8px;
+	margin-bottom:10px;
 }
-
 #rboardContainer > #comment_write input[type='text'],
 #rboardContainer > #comment_write input[type='password'],
 #rboardContainer > #comment_write textarea{
-	border: 1px solid #ccc; vertical-align: middle;
-	padding: 3px 10px; font-size: 12px; line-height: 120%;
+	border:1px solid #c0c0c0; 
+	border-radius:4px;
+	vertical-align:middle;
+	font-size:12px; 
+	line-height:120%;
+	margin-right:22px;
+}
+#rboardContainer > #comment_write input[type='text'],
+#rboardContainer > #comment_write input[type='password']{
+	width:150px; 
+	height:30px;	
+}
+textarea {
+	width:515px; 
+	height:50px;
+	margin-top:10px;
+}
+#rboardInsert{
+	background-color: #6495ED;
+	border: none;
+	border-radius: 4px;
+    color: white;
+    padding: 10px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    width: 62px;
+    cursor: pointer;
 }
 
-textarea {width:480px; height:30px; vertical-align:middle; }
 .comment_item{
-	font-size: 13px; color: #333; line-height:150%;
-	padding: 10px 15px; border-bottom: 1px dotted #000066;
+	font-size: 13px; 
+	color: #333; 
+	line-height:150%;
+	padding: 10px 15px; 
+	border-bottom: 1px dotted #000066;
 }
 .comment_item.writer{
 	color:#555; line-height:150px; margin-bottom:5px;

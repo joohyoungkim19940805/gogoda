@@ -17,6 +17,7 @@ if(str==null){
 <title>comment</title>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/board.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/rboard.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/common.js"></script>
 <script type="text/javascript">
@@ -206,29 +207,29 @@ if(str==null){
 		$("#rbpw").val("");
 		$("#rbcontent").val("");
 	}
-</script>
-</head>
-<body>
-	<div id="rboardContainer">
-		<h1></h1>
-		<div id="comment_write">
-			<form id="comment_form">
-				<div>
-					<label for="rbname">글쓴이</label>
-					<input type="text" name="rbname" id="rbname" value='<%=str %>'readonly/>
-					<label for="rbname">비밀번호</label>
-					<input type="password" name="rbpw" id="rbpw" />
-					<input type="button" id="rboardInsert" value="저장하기">
-				</div>
-				<div>
-					<label for="rbcontent">댓글 내용</label>
-					<textarea name="rbcontent" id="rbcontent"></textarea>
-				</div>
-			</form>
+	</script>
+	</head>
+	<body>
+		<div id="rboardContainer">
+			<h1></h1>
+			<div id="comment_write">
+				<form id="comment_form">
+					<div>
+						<label for="rbname">글쓴이</label>
+						<input type="text" name="rbname" id="rbname" value='<%=str %>'readonly/>
+						<label for="rbname">비밀번호</label>
+						<input type="password" name="rbpw" id="rbpw" />
+						<input type="button" id="rboardInsert" value="저장">
+					</div>
+					<div>
+						<label for="rbcontent">댓글 내용</label>
+						<textarea name="rbcontent" id="rbcontent"></textarea>
+					</div>
+				</form>
+			</div>
+			<ul id="comment_list">
+				<!-- 여기에 동적 생성 요소가 들어가게 됩니다. -->
+			</ul>
 		</div>
-		<ul id="comment_list">
-			<!-- 여기에 동적 생성 요소가 들어가게 됩니다. -->
-		</ul>
-	</div>
-</body>
-</html>
+	</body>
+	</html>

@@ -82,6 +82,8 @@
 <html>
 <meta charset="EUC-KR">
 <head>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
 <title>testProject</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- 디바이스에 최적화된 크기로 출력됨 -->
@@ -321,7 +323,7 @@ position: sticky;
 			var movie = movieImage[i];
 			var oneActor=movieActor[i].split("|");
 			if(oneActor.length>1){
-				alert(oneActor[0]+" 외 "+oneActor.length+"인");
+				movieActor[i]=(oneActor[0]+" 외 "+oneActor.length+"인");
 			}
 			
 			var movieInfo="<td align='left'><p><span id='nameList'><b><a href='"+movieLink[i]+"' style='color:black'>"+movieName[i]+"</a></b></span><br><span id='lineList'><span id='infoList'>"+movieGenre[i]+"<br></span></span><br><span id='infoList'>제작년도 : "+moviePubDate[i]+"<br>감독 : "+
@@ -345,7 +347,18 @@ position: sticky;
 </script>	
 </head>
 <body>
-
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../springProject/emotion/mainpage.ggd">
+			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		</a>
+	</div>
+</div><br><br><br><br><br><br><br>
+<!-- Header -->
+<header class="display-container" style="max-width:1500px;" id="home">
+	<div class="board-display">
+	
+	 	<div id="boardContainer" align="left">
 	<hr>
 	<div align="center" >
 		<h3>${seName}님의 감정 구성</h3>
@@ -390,5 +403,12 @@ position: sticky;
 	<div id="line3" align="center">
 		<br>
 	</div>
+
+
+</header>
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+</footer>
 </body>
 </html>

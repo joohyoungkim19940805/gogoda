@@ -151,10 +151,16 @@ public class EmotionController {
 			model.addAttribute("textData",textData);
 			System.out.println(emotionText+"==================");
 			HttpSession session = hsr.getSession();
-			String seName=session.getAttribute("mid").toString();
-			String seNum=session.getAttribute("mnum").toString();
-			model.addAttribute("seName", seName);
-			model.addAttribute("seNum", seNum);
+			String seName="";
+			String seNum="";
+			if(session.getAttribute("mid")!=null&&session.getAttribute("mnum")!=null) {
+				seName=session.getAttribute("mid").toString();
+				seNum=session.getAttribute("mnum").toString();
+				model.addAttribute("seName", seName);
+				model.addAttribute("seNum", seNum);
+			}else {
+				return "redirect:logout.ggd";
+			}
 		    //=============this Emotion_thisName Method Start
 			String emotionUrl = "http://192.168.219.128:5000/tospring?TextData=";
 			String emotionSb = "";
@@ -199,6 +205,7 @@ public class EmotionController {
 			MemberVO mvo=null;
 			mvo=new MemberVO();
 			mvo.setMnum(seNum);
+			mvo.setMid(seName);
 			logger.info(seNum);
 			mvo=memberSelect.memberSelect(mvo);
 			
@@ -453,15 +460,17 @@ public class EmotionController {
 			
 			
 			List<FoodVO> foodList=foodService.FoodSelectListService(fdvo);
+				
 			
 			if(foodList != null && foodList.size() > 0) {
+				int foodNumber[]=new RandomNumbering().RandomNumber(10, foodList);
 				for(int i=0; i<foodList.size(); i++) {
-					logger.info("foodList >>>>>>>>>>>>>: " + foodList.get(i).getFname());					
-					logger.info("foodList >>>>>>>>>>>>>: " + foodList.get(i).getFindex());
+					logger.info("foodList >>>>>>>>>>>>>: " + foodList.get(foodNumber[i]).getFname());					
+					logger.info("foodList >>>>>>>>>>>>>: " + foodList.get(foodNumber[i]).getFindex());
 					JSONObject jsonfood = null;
 					jsonfood = new JSONObject();
-					jsonfood.put("food", foodList.get(i).getFname());
-					jsonfood.put("foodImg", foodList.get(i).getFindex());
+					jsonfood.put("food", foodList.get(foodNumber[i]).getFname());
+					jsonfood.put("foodImg", foodList.get(foodNumber[i]).getFindex());
 					jsonArrayF.add(jsonfood);
 				}
 			}
@@ -511,12 +520,16 @@ public class EmotionController {
 			
 		}
 		
+		
+		
 		@RequestMapping(value="/androidMovieSearch",method= {RequestMethod.GET , RequestMethod.POST})
 		@ResponseBody
 		public JSONObject movieSearchAnd(HttpServletRequest request,Model model, FoodVO fdvo, @ModelAttribute MovieListVO mvlvo) {
 			
 			String andId=request.getParameter("id");
-			
+			//if 
+				//return
+						
 			MemberVO mvo=null;
 			mvo=new MemberVO();
 			mvo.setMid(andId);
@@ -549,8 +562,8 @@ public class EmotionController {
 					logger.info(mmmvo.getMvimage());
 					JSONObject jsonMovie = null;
 					jsonMovie = new JSONObject();
-					jsonMovie.put("movie", mmmvo.getMvname());
-					jsonMovie.put("movieImg",mmmvo.getMvimage());
+					jsonMovie.put("movielink", mmmvo.getMvname());
+					jsonMovie.put("movieimg",mmmvo.getMvimage());
 					jsonArrayM.add(jsonMovie);
 				}
 			}

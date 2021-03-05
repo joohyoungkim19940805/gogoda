@@ -10,6 +10,9 @@ import g.g.d.com.mem.vo.MemberVO;
 
 
 public interface LoginDAO {
-	public List<MemberVO> loginCompleteDao(MemberVO mvo);	
+	public MemberVO loginCompleteDao(MemberVO mvo);	
+	public MemberVO loginFindIdDao(MemberVO mvo);	
+	public MemberVO loginFindPwDao(MemberVO mvo);	
+	
 
 }
