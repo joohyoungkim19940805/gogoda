@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,33 +20,45 @@
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var url=window.location.href.toString();
+		//alert(url);
+		//alert(url.indexOf());
+		if(url.indexOf('.jsp')!=-1){
+			$("#mainForm").attr("action","../../emotion/mainpage.ggd");
+			$("#mainForm").attr("method","POST");
+			$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
+			$("#mainForm").submit();
+			
+		}
 		var boardData;
 		//alert("ready");
 		$(window).load(function(){
 			if("${seName}"!=''){
 				$("#loginbtn").remove();
 				$("#meminsert").remove();
-				$("#memlogin").append("<a href='../../springProject/mem/memberSelect.ggd' style='color:black' id='' class='comlogin'>${seName}</a>님 환영합니다. &nbsp;&nbsp;&nbsp;");
+				$("#memlogin").append("<a href='../../mem/memberSelect.ggd' style='color:black' id='' class='comlogin'>${seName}</a>님 환영합니다. &nbsp;&nbsp;&nbsp;");
 				$("#memlogin").append("<button type='button' class='comlogin' id='memlogout' onclick='logoutBtn()'>로그아웃</button>");
 			}
 			//게시판 최신순 조회
 			 $.ajax({
-	                url : '../../springProject/emotion/mainboard.ggd',
+	                url : '../../emotion/mainboard.ggd',
 	                type : 'POST',
 	                async:false,
 	                datatype:'json',
 	                success: function(data) {
 	                	boardData=data;
 	                	for(var i=0;i<boardData.length;i++){
+	                		//
+	                		if(i>10){break;}
 	                		if(boardData[i]["bsubject"].length<35){
 			                	var boardListData="<li>"+
-								"<a href='../../springProject/board/boardDetail.ggd?bnum="+boardData[i]["bnum"]+"' style='color:black;' id='a-none'>"+
-									"<span><b>"+boardData[i]["bname"]+"</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-								boardData[i]["bsubject"]+"<font color='#1551a4'>["+boardData[i]["cnt"]+"]</font></a>"+
+								"<a href='../../board/boardDetail.ggd?bnum="+boardData[i]["bnum"]+"' style='color:black;' id='a-none'>"+
+									"<td><b>"+boardData[i]["bname"]+"</td></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td>"+
+								boardData[i]["bsubject"]+"</td><font color='#1551a4'<td>["+boardData[i]["cnt"]+"]</td></font></a>"+
 								"</li><br>";
 							}else{
 								var boardListData="<li>"+
-								"<a href='../../springProject/board/boardDetail.ggd?bnum="+boardData[i]["bnum"]+"' style='color:black;' id='a-none'>"+
+								"<a href='../../board/boardDetail.ggd?bnum="+boardData[i]["bnum"]+"' style='color:black;' id='a-none'>"+
 									"<span><b>"+boardData[i]["bname"]+"</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 								boardData[i]["bsubject"].substring(0,35)+"<font color='#1551a4'>["+boardData[i]["cnt"]+"]</font></a>"+
 								"</li><br>";
@@ -57,7 +70,7 @@
 			 });
 			 //음식 랭킹 조회
 			 $.ajax({
-	                url : '../../springProject/emotion/foodrank.ggd',
+	                url : '../../emotion/foodrank.ggd',
 	                type : 'POST',
 	                async:false,
 	                datatype:'json',
@@ -68,12 +81,12 @@
 	                	for(var i=0;i<10;i++){
 	                		
 	                		if(foodData[i]["fname"].length<7){
-	                		var foodListData="<li><a href='../review/test1.ggd?food="+foodData[i]["fname"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+foodData[i]["fname"]+
+	                		var foodListData="<li><a href='../review/map.ggd?food="+foodData[i]["fname"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+foodData[i]["fname"]+
 								"</span>"+
 								"<span id='ranking'>"+foodData[i]["foodcnt"]+"&nbsp;<b style='color:red;'>↑</b></span></a>"+
 								"</li><br>"
 	                		}else{
-	                			var foodListData="<li><a href='../review/test1.ggd?food="+foodData[i]["fname"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+foodData[i]["fname"].substring(0,7)+"..."+
+	                			var foodListData="<li><a href='../review/map.ggd?food="+foodData[i]["fname"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+foodData[i]["fname"].substring(0,6)+"..."+
 								"</span>"+
 								"<span id='ranking'>"+foodData[i]["foodcnt"]+"&nbsp;<b align='right' style='color:red;'>↑</b></span></a>"+
 								"</li><br>"
@@ -85,7 +98,7 @@
 			 });
 			 //영화 랭킹 조회
 			 $.ajax({
-	                url : '../../springProject/emotion/movierank.ggd',
+	                url : '../../emotion/movierank.ggd',
 	                type : 'POST',
 	                async:false,
 	                datatype:'json',
@@ -101,7 +114,7 @@
 								"<span id='ranking'>"+movieData[i]["moviecnt"]+"&nbsp;<b style='color:red;'>↑</b></span>"+
 								"</li><br>"
 	                		}else{
-	                			var movieListData="<li><a href='../emotion/moviecount.ggd?movieNum="+movieData[i]["mvnum"]+"&movieLink="+movieData[i]["mvlink"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+movieData[i]["mvname"].substring(0,7)+"..."+
+	                			var movieListData="<li><a href='../emotion/moviecount.ggd?movieNum="+movieData[i]["mvnum"]+"&movieLink="+movieData[i]["mvlink"]+"'style='color:black;' id='a-none'><span><b>"+(i+1)+"위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+movieData[i]["mvname"].substring(0,6)+"..."+
 								"</span>"+
 								"<span id='ranking'>"+movieData[i]["moviecnt"]+"&nbsp;<b align='right' style='color:red;'>↑</b></span>"+
 								"</li><br>"
@@ -120,8 +133,8 @@
 			
 			if("${seName}"!=''){
 			
-				$("#mainForm").attr("action","../../springProject/emotion/emotionSearch.ggd");
-				$("#mainForm").attr("method","GET");
+				$("#mainForm").attr("action","../../emotion/emotionSearch.ggd");
+				$("#mainForm").attr("method","POST");
 				$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
 				$("#mainForm").submit();
 			}else{
@@ -129,13 +142,13 @@
 			}
 		});
 		$(document).on("click","#loginbtn",function(){
-			$("#mainForm").attr("action","../../springProject/logincontroller/loginpage.ggd");
+			$("#mainForm").attr("action","../../logincontroller/login.ggd");
 			$("#mainForm").attr("method","POST");
 			$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
 			$("#mainForm").submit();
 		});
 		$(document).on("click","#meminsert",function(){
-			$("#mainForm").attr("action","../../springProject/mem/registerForm.ggd");
+			$("#mainForm").attr("action","../../mem/registerForm.ggd");
 			$("#mainForm").attr("method","POST");
 			$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
 			$("#mainForm").submit();
@@ -143,7 +156,7 @@
 	});
 	
 	function logoutBtn(){
-		$("#mainForm").attr("action","../emotion/logout.ggd");
+		$("#mainForm").attr("action","../../emotion/logout.ggd");
 		$("#mainForm").attr("method","POST");
 		$("#mainForm").attr("enctype","application/x-www-form-urlencoded");
 		$("#mainForm").submit();
@@ -157,8 +170,8 @@
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:12%; height:12%">
 		</a>
 		<!-- Float links to the right. Hide them on small screens -->
 <!--  	<div align="right" id="memlogin">
@@ -176,7 +189,7 @@
 <br>
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
-	<img class="w3-image" src="/springProject/logo/applepie.png" alt="Applepie" width="1500" height="800">
+	<img class="w3-image" src="/logo/applepie.png" alt="Applepie" width="1500" height="800">
 	<div class="w3-display-middle w3-margin-top w3-center">
 	<!-- 
 		<h1 class="w3-xxlarge w3-text-white"> <span class="w3-hide-small w3-text-light-grey">맛있</span><span class="w3-padding w3-black w3-opacity-min"><b>GO</b></span></h1>
@@ -202,40 +215,53 @@
 				<td id="under-table"><!-- white -->
 					<table class="board-wi-he" bgcolor="white" border='0'
 							style="border-style:solid;border-width:0px;border-color:#c2c1c6; margin-bottom: 5px; " >
-						<tbody>
+					
 							<tr>
-								<td id="line-title"style="font-size:14px;font-weight:bold;" width="100%">
+								<th colspan="" id="line-title"style="font-size:14px;font-weight:bold;" width="100%">
 								<span>게시글</span>
-									<a href='../../springProject/board/boardList.ggd' style='color:black' id='a-none'><span style="width: 500px; display: inline-block; float: right; font-size:12px;" align="right">더보기</span></a>
-								</td>
+									<a href='../../board/boardList.ggd' style='color:black' id='a-none'><span style="width: 500px; display: inline-block; float: right; font-size:12px;" align="right">더보기</span></a>
+								</th>
+									
+								<th>
+								</th>
 
-								<td id="line-title" class="rank-table-food" style="font-size:14px;font-weight:bold;" width="100%">
-									<span style="width: 180px; display: inline-block; float: left;" align="left">음식 랭킹</span>
-								</td>
-								<td id="line-title" class="rank-table-movie" style="font-size:14px;font-weight:bold;" width="100%">
-									<span style="width: 180px; display: inline-block; float: left;" align="left">영화 랭킹</span>
-								</td>
+								<th id="line-title" class="rank-table-food" style="font-size:14px;font-weight:bold;" width="100%">
+									<span style="width: 180px; display: inline-block; float: left; margin-bottom:12px;" align="left" >음식 랭킹</span>
+								</th>
+								<th>
+								</th>
+								
+								<th id="line-title" class="rank-table-movie" style="font-size:14px;font-weight:bold;" width="100%">
+									<span style="width: 180px; display: inline-block; float: left; margin-bottom:12px;" align="left">영화 랭킹</span>
+								</th>
 							</tr>
-							<tr>
+							<tbody>
 								<td style="width:50%;" id="boardlist-main" name="boardlist-main">
+						
+								</td>
+								
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+								
+								<td class="rank-table-food" id="foodlist-rank" name="foodlist-rank" style="font-size:13px; vertical-align:top;">
 									
 								</td>
-								<td class="rank-table-food" id="foodlist-rank" name="foodlist-rank" style="font-size:13px;" align="top">
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+								
+								<td class="rank-table-movie" id="movielist-rank"style="font-size:13px; vertical-align:top;">
 									
 								</td>
-								<td class="rank-table-movie" id="movielist-rank"style="font-size:13px;" align="top">
-									
-								</td>
-							</tr>
-						</tbody>
+							</tbody>
 					</table>
 				</td>
 			</tr>
 		</div>
 	</div>
+</div>
 	<!-- Footer -->
 <footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+  <p>Powered by <a href="../../emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
 </footer>
 </body>
 </form>

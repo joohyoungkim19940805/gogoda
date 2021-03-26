@@ -18,7 +18,30 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/common.js"></script>
 <script type="text/javascript">
 	
+$(window).load(function(){
+	
+	//var detailCount=$("#count").length;
+	//$('#under_footer').css('margin-top',(detailCount*25)+'px');
+	//$('.applepie-image').css('height',(800+(detailCount*305))+'px');
+
+});
+	
 	$(function(){
+		
+		
+		
+		if("${seName}"!=''){
+			$("#loginbtn").remove();
+			$("#meminsert").remove();
+			$("#memlogin").append("<a href='../../mem/memberSelect.ggd' style='color:black' id='' class='comlogin'>${seName}</a>님 환영합니다. &nbsp;&nbsp;&nbsp;");
+			$("#memlogin").append("<button type='button' class='comlogin' id='memlogout' onclick='logoutBtn()'>로그아웃</button>");
+		}
+		$(document).on("click","#loginbtn",function(){
+			$("#loginForm").attr("action","../../logincontroller/login.ggd");
+			$("#loginForm").attr("method","POST");
+			$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
+			$("#loginForm").submit();
+		});
 		/* 검색 후 검색 대상과 검색 단어 출력 */
 		if ("<c:out value='${data.keyword}' />"!="") {
 				$("#keyword").val("<c:out value='${data.keyword}' />");
@@ -98,26 +121,40 @@
 		});
 		$("#f_search").submit();
 	}
+	function logoutBtn(){
+		$("#loginForm").attr("action","../emotion/logout.ggd");
+		$("#loginForm").attr("method","POST");
+		$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
+		$("#loginForm").submit();
+		
+	}
 </script>
 </head>
 <body>
 <!-- Navbar (sit on top) -->
+<form name="loginForm" id="loginForm">
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:12%; height:12%">
 		</a>
+	<div class="w3-right w3-hide-small" id="memlogin">
+		<a href="#로그인" class="w3-bar-item w3-button" id="loginbtn">로그인</a>
+		<a href="#회원 가입" class="w3-bar-item w3-button" id="meminsert">회원가입</a>
+    </div>
 	</div>
-</div><br><br><br><br><br><br><br>
+</div>
+</form><br><br><br><br><br>
 <!-- Header -->
-<header class="display-container" style="max-width:1500px;" id="home">
-	<img class="applepie-image" src="/springProject/logo/applepie.png" alt="Applepie" width="1500" height="800">
-	<div class="board-display">
-	
-	 	<div id="boardContainer" align="left">
+<header class="display-container" style="max-width:1500px; " id="home">
+   <img class="applepie-image" src="/logo/applepie.png" alt="Applepie" width="1500">
+   <img class="applepie-image" src="/logo/applepie.png" alt="Applepie" width="1500">
+   <div class="board-display">
+   
+       <div id="boardContainer" align="left">
 <!-- 
 	<div id="boardtop">
-	<a href="../../springProject/emotion/mainpage.ggd">
+	<a href="../../emotion/mainpage.ggd">
 		<img src="../images/common/gogoda.png" style="width:170px; height:170px">
 	</a>
 	</div>
@@ -185,7 +222,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th><a href="javascript:setOrder('bnum');">글번호
+				<th><a href="javascript:setOrder('bnum');" style="font-size:12px; color:black; text-decoration:none;">글번호
 				<c:choose>
 					<c:when test="${data.order_by=='bnum' and data.order_sc=='ASC'}">▲</c:when>
 					<c:when test="${data.order_by=='bnum' and data.order_sc=='DESC'}">▼</c:when>
@@ -195,7 +232,7 @@
 				<th>제목</th>
 				<th>사진</th>
 				<th>조회수</th>
-				<th><a href="javascript:setOrder('binsertdate');">작성일
+				<th><a href="javascript:setOrder('binsertdate');" style="font-size:12px; color:black; text-decoration:none;">작성일
 				<c:choose>
 					<c:when test="${data.order_by=='binsertdate' and data.order_sc=='ASC'}">▲</c:when>
 					<c:when test="${data.order_by=='binsertdate' and data.order_sc=='DESC'}">▼</c:when>
@@ -213,13 +250,13 @@
 				<c:forEach var="board" items="${boardList}" varStatus="status">
 					<tr align="center" data-num="${board.bnum}">
 						<td>${count - (status.count-1)}</td>
-						<td>${board.bname}</td>
+						<td id="count">${board.bname}</td>
 						<td align="left">
 						<span class="goDetail">${board.bsubject}</span>
 						</td>
 						<td><img src="${pageContext.request.contextPath}/uploadStorage/${board.bfile}"  width="50" height="50" ></td>
 						<td>${board.bhit}</td>
-						<td>${board.binsertdate}</td>
+						<td>${board.binsertdate.substring(0,11)}</td>
 					</tr>
 				</c:forEach>
 			</c:when>
@@ -252,8 +289,8 @@
 		
 </header>
 <!-- Footer -->
-<footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+<footer class="w3-center w3-black w3-padding-16" id="under_footer">
+  <p>Powered by <a href="../../emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
 </footer>
 </body>
 </html>

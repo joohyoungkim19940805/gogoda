@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Header"/>
+		<item key="selection" value="테스트"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="header"/>
-			<item value="파일 선택"/>
-			<item value="#boardWrite #fileSelect"/>
-			<item value=".container-1 input#text"/>
-			<item value="bpw"/>
-			<item value="file"/>
-			<item value="ranking"/>
-			<item value="회원번호"/>
-			<item value="더보기"/>
-			<item value="loginCompleteService"/>
-			<item value="loginresult"/>
-			<item value="login"/>
-			<item value="boardList.ggd"/>
-			<item value="listings"/>
-			<item value="contextPath"/>
+			<item value="테스트"/>
+			<item value="writer"/>
+			<item value="comment"/>
+			<item value="comment_write"/>
+			<item value="h1"/>
+			<item value="delete_btn"/>
+			<item value="container"/>
+			<item value="rboardInsert"/>
+			<item value="alert"/>
+			<item value="#"/>
+			<item value="null"/>
+			<item value="count"/>
+			<item value="td"/>
+			<item value="data"/>
+			<item value="a-none"/>
 		</list>
 		<list key="replacehistory">
+			<item value="//alert"/>
 			<item value="&lt;="/>
 			<item value=""/>
 			<item value=","/>
@@ -33,8 +34,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="221"/>
-		<item key="DIALOG_Y_ORIGIN" value="318"/>
+		<item key="DIALOG_X_ORIGIN" value="40"/>
+		<item key="DIALOG_Y_ORIGIN" value="8"/>
 		<item key="DIALOG_WIDTH" value="288"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

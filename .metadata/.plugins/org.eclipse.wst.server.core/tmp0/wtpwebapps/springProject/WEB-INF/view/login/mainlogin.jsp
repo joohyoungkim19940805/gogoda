@@ -24,7 +24,7 @@ $(document).ready(function(){
 		
 		var id = $("#mid").val();
 		var pw = $("#mpw").val();
-		alert("로그인 버튼 누름~" + id + "==" + pw);
+		//alert("로그인 버튼 누름~" + id + "==" + pw);
 	
 		$.ajax({
 			url : "loginresult.ggd",
@@ -36,7 +36,7 @@ $(document).ready(function(){
 			},
 			dataType : 'text',
 			success : function(data) {
-				alert(data);
+				//alert(data);
 				console.log("data : " + data);
 				if (data == "login_ok") {
 					alert("로그인 성공. 메인페이지로 이동");
@@ -48,7 +48,7 @@ $(document).ready(function(){
 					alert("일치하는 아이디가 없습니다. 다시 입력해주세요.");
 	
 				} else{
-					alert(data);
+					//alert(data);
 				}
 			},
 			error : function(data) {
@@ -66,8 +66,8 @@ $(document).ready(function(){
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:15%; height:15%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:15%; height:15%">
 		</a>
 	</div>
 </div>
@@ -82,13 +82,26 @@ $(document).ready(function(){
 					<input type="password" name="mpw" id="mpw" required onkeyup="this.setAttribute('value', this.value);" value="">
 					<label>Password</label>
 				</div>
-			<input type="submit" name="login_btn" id="login_btn" value="Log In"><br><br><br>
+			<div>
+			</div>	
+			<br>
+			<!-- 네이버 로그인 창으로 이동 -->
+			<div id="naver_id_login" style="text-align:left"><a href="${url}">
+			<img width="190" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a>
+			<input type="submit" name="login_btn" id="login_btn" value="Log In" style="text-align:right; margin-right:17px"><br><br><br></div>
 			<div class="link_look">
 				<a href="idFind.ggd">아이디 찾기</a>&nbsp;
 				<a href="pwFind.ggd">비밀번호  찾기</a>&nbsp;
-				<a href="registerForm.ggd">회원가입</a>
+				<a href="../../mem/registerForm.ggd" id="memberhover">회원가입</a>
 			</div>
+		
 		</div>
 	</form>
+	
+	
+
+			
+
+	
 </body>
 </html>

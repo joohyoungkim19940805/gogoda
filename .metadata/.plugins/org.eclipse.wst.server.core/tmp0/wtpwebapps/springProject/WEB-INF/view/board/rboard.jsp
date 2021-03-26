@@ -22,6 +22,12 @@ if(str==null){
 <script type="text/javascript" src="${pageContext.request.contextPath}/include/js/common.js"></script>
 <script type="text/javascript">
 	
+$(window).load(function(){
+	
+	var detailCount=$(".comment_item").length;
+	$('#under_footer').css('margin-top',(detailCount*80)+'px');
+	//$('.applepie-image').css('height',(800+(detailCount*280))+'px');
+});
 	$(function(){
 		/* 기본 댓글 목록 불러오기 */
 		var bnum = "<c:out value='${detail.bnum}' />";
@@ -170,6 +176,9 @@ if(str==null){
 		
 		// 작성자 정보가 지정될 <p>태그
 		var writer_p = $("<p>");
+		writer_p.css("margin-top","0px");
+		writer_p.css("margin-bottom","0px");
+		writer_p.css("margin-left","30px");
 		writer_p.addClass("writer");
 		
 		// 작성자 정보의 이름
@@ -183,6 +192,7 @@ if(str==null){
 		
 		// 수정하기 버튼
 		var up_input = $("<input>");
+		up_input.css("margin-left","220px");
 		up_input.attr({"type":"button","value":"수정하기"});
 		up_input.addClass("update_form");
 		
@@ -193,6 +203,9 @@ if(str==null){
 		
 		// 내용
 		var content_p = $("<p>");
+		content_p.css("margin-top","0px");
+		content_p.css("margin-bottom","0px");
+		content_p.css("margin-left","30px");
 		content_p.addClass("con");
 		content_p.html(rbcontent);
 		
@@ -231,5 +244,8 @@ if(str==null){
 				<!-- 여기에 동적 생성 요소가 들어가게 됩니다. -->
 			</ul>
 		</div>
+		<footer class="w3-center w3-black w3-padding-16" id="under_footer" >
+			<p>Powered by <a href="../../emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green" >GOGODA</a></p>
+		</footer> 
 	</body>
 	</html>

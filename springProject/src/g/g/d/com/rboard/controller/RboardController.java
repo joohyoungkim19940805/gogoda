@@ -3,6 +3,8 @@ package g.g.d.com.rboard.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import g.g.d.com.board.common.BoardChabunUtil;
 import g.g.d.com.board.common.BoardChabunService;
+import g.g.d.com.board.common.BoardChabunUtil;
 import g.g.d.com.rboard.service.RboardService;
 import g.g.d.com.rboard.vo.RboardVO;
 
@@ -122,5 +125,32 @@ public class RboardController {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return entity;
+	}
+	
+
+	// 안드로이드 댓글
+	@ResponseBody
+	@RequestMapping(value = "/all2/{bnum}.ggd", method = RequestMethod.GET, produces ="application/text; charset=utf8")
+	public String list2(@PathVariable("bnum") String bnum) {
+
+		List<RboardVO> rboards = rboardService.rboardList(bnum);
+		JSONObject json = new JSONObject();
+		JSONArray jArray = new JSONArray();
+		for (int i=0;i<rboards.size(); i++)
+		{
+			RboardVO avo = rboards.get(i);
+			JSONObject jobj = new JSONObject();
+
+			jobj.put("rbname", avo.getRbname());
+			jobj.put("rbcontent", avo.getRbcontent());
+			jobj.put("rbdate", avo.getRbdate());
+
+			jArray.add(i, jobj);
+		}
+		
+		json.put("rboard", jArray);
+		logger.info(json);
+
+		return json.toString();
 	}
 }

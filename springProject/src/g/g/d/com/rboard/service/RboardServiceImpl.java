@@ -56,4 +56,12 @@ public class RboardServiceImpl implements RboardService {
 		result = rboardDAO.rboardDelete(rbnum);
 		return result;
 	}
+	
+	// 안드로이드 글목록 구현
+	@Override
+	public List<RboardVO> rboardList2(RboardVO rvo) {
+		List<RboardVO> myList = null;
+		myList = rboardDAO.rboardList2(rvo);
+		return myList;
+	}
 }

@@ -42,4 +42,11 @@
 	<delete id="rboardDelete" parameterType="rboard">
 		DELETE FROM RBOARD WHERE RBNUM = #{rbnum}
 	</delete>
+	
+			<!-- 안드로이드 게시물 기본 조회 -->
+	<select id="rboardList2" parameterType="rboard" resultType="rboard">
+		SELECT RBNUM,BNUM,RBNAME,RBCONTENT,RBPW,
+			TO_CHAR(RBDATE,'YYYY-MM-DD HH24:MI:SS') AS RBDATE
+		FROM RBOARD
+	</select>
 </mapper>

@@ -71,7 +71,7 @@ public class MailSend {
 			 * */
 
             // 메일의 제목 지정 , encoding 타입 설정
-            msg.setSubject("메일 테스트", "UTF-8");	            
+            msg.setSubject("GOGODA에서 왔습니다.", "UTF-8");	            
 
             // 메일의 내용 입력, encoding 타입 설정
             msg.setText("인증번호는...\n"+newPw+"입니다.\n", "UTF-8");

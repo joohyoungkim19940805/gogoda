@@ -1,6 +1,6 @@
 function ratingRoad(placeId,index){
 	let ratingURL = "reviewRating.ggd";
-	let method = "GET";
+	let method = "POST";
 	let dataParam = {
 		kakaoid:placeId
 	}

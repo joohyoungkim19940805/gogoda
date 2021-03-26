@@ -16,7 +16,7 @@
 //체크박스 체크 확인하기 
 
 $(document).ready(function(){
-	alert(">>>"+mnum);
+	//alert(">>>"+mnum);
 	$("#I").click(function(){
 		
 		var positivefood=$("input[name='positivefood']:checked").val();
@@ -48,7 +48,7 @@ $(document).ready(function(){
 	function aaa(){
 		var flag = false;
 		var values = document.getElementsByName("movietaste");
-		alert(values.length);
+		//alert(values.length);
 		var count = 0;
 		var movietaste="";
 		for(var i=0; i<values.length; i++){
@@ -61,7 +61,7 @@ $(document).ready(function(){
 		if(count < 2){
 			alert("2개 이상 선택해야 합니다.");
 		}else{
-			alert(count + " 개가 선택되었습니다.");
+			alert("GOGODA의 회원이 되신 것을 진심으로 환영합니다.!");
 			flag = true;
 		}
 		return movietaste;
@@ -75,8 +75,8 @@ $(document).ready(function(){
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:12%; height:12%">
 		</a>
 	</div>
 </div><br><br><br><br><br>
@@ -214,7 +214,7 @@ $(document).ready(function(){
 	</div>
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+  <p>Powered by <a href="../../emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
 </footer>
 </body>
 </html>

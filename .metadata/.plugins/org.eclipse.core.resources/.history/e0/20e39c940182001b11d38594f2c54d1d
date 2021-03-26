@@ -1,0 +1,66 @@
+import java.util.Scanner;
+
+public class TestMobigenStrcmp {
+
+	public static int strcmp(String x, String y) {
+		//System.out.println((int)"ÿ".charAt(0));
+		int result=0;
+		int len=0;
+		/*
+		x+="\0";
+		y+="\0";
+		*/
+		x+="ÿ";
+		y+="ÿ";
+		
+		if (x.length()<y.length()){
+			len = x.length();
+		}else if(x.length()>y.length()) {
+			len = y.length();
+		}else {
+			try {
+			len=(x.length()+y.length())/2;
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				len=x.length();
+			}
+		}
+		//System.out.println(len);
+		for(int i=0;i<len;i++) {
+			if((int)x.charAt(i)==(int)y.charAt(i)) {
+				result=0;
+			}else {
+				if((int)x.charAt(i)<(int)y.charAt(i)) {
+					result=-1;
+					return result;
+				}
+				if((int)x.charAt(i)>(int)y.charAt(i)) {
+					//System.out.println((int)x.charAt(i));
+					//System.out.println((int)y.charAt(i));
+					result=1;
+					return result;
+				}
+			}
+		}
+		return result;
+
+	}
+	
+	public static void main(String args[]) {
+		Scanner sc= new Scanner(System.in);
+		
+		//String x=sc.next();
+		//String y=sc.next();
+		
+		//int result=strcmp(x,y);
+		//System.out.println(result);
+	
+		//==>Test Method
+		String[] x={"abc","cbc","abcde"};
+		String[] y={"cbc","abc","abc"};
+		for(int i=0;i<x.length;i++) {
+			System.out.println(x[i]+", "+y[i]+"="+strcmp(x[i],y[i]));
+		}
+	}
+}

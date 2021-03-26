@@ -20,6 +20,17 @@
 				    SYSDATE)
 </insert>
 
+<select id="reviewList" parameterType="reviewVO" resultType="reviewVO">
+	SELECT  KAKAOID, RENUM, RENICKNAME,
+    		REPASS, RECONTENT, REPHOTO,
+    		RERATING, REDELETEYN, REINSERTDATE,
+    		REUPDATEDATE
+	FROM 	REVIEW_RES
+	WHERE 	KAKAOID = #{kakaoid, jdbcType=VARCHAR}
+	AND RENUM = #{renum, jdbcType=VARCHAR}	
+	AND REDELETEYN = 'Y'
+</select>
+
 <select id="reviewListAll" parameterType="reviewVO" resultType="reviewVO">
 	SELECT  KAKAOID, RENUM, RENICKNAME,
     		REPASS, RECONTENT, REPHOTO,
@@ -30,6 +41,16 @@
 		AND REDELETEYN = 'Y'
 	ORDER BY 2 DESC
 </select>
+
+<update id="reviewUpdate" parameterType="reviewVO">
+	UPDATE REVIEW_RES
+	SET		RECONTENT = #{recontent, jdbcType=VARCHAR},
+			RERATING = #{rerating, jdbcType=VARCHAR}
+		<if test="rephoto != null">
+			,REPHOTO = #{rephoto, jdbcType=VARCHAR}
+		</if>
+	WHERE RENUM = #{renum, jdbcType=VARCHAR}
+</update>
 
 <update id="reviewDelete" parameterType="reviewVO">
 	UPDATE REVIEW_RES SET REDELETEYN = 'N' WHERE RENUM = #{renum,jdbcType=VARCHAR} AND KAKAOID = #{kakaoid,jdbcType=VARCHAR}

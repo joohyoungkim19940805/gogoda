@@ -94,9 +94,9 @@ public class BoardPagingTag extends TagSupport {
 		for (int j = currentFirst; j<currentFirst+page_size && j<=lastPage; j++) {
 			if (j <= currentlast) {
 				if (j == page) {
-					ret += "<a href='#' class='on textAn'>"+j+"</a>";
+					ret += "<a href='#' class='on textAn' style='text-decoration:none' >"+j+"</a>";
 				} else {
-					ret += "<a href=\"javascript:goPage('"+j+"');\"class='textAn'>"+j+"</a>";
+					ret += "<a href=\"javascript:goPage('"+j+"');\"class='textAn' style='text-decoration:none'>"+j+"</a>";
 				}
 			}
 		}

@@ -8,19 +8,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import g.g.d.com.review.common.ReviewChabunUtil;
-import g.g.d.com.review.common.ReviewFileUploadUtil;
 import g.g.d.com.food.service.FoodService;
 import g.g.d.com.food.vo.FoodVO;
+import g.g.d.com.mem.service.MemberService;
+import g.g.d.com.mem.vo.MemberVO;
 import g.g.d.com.review.common.ReviewChabunService;
+import g.g.d.com.review.common.ReviewChabunUtil;
+import g.g.d.com.review.common.ReviewFileUploadUtil;
 import g.g.d.com.review.service.ReviewService;
 import g.g.d.com.review.vo.ReviewVO;
 
@@ -32,12 +35,14 @@ public class ReviewController {
 	private ReviewService reviewService;
 	private ReviewChabunService chabunService;
 	private FoodService foodService;
+	private MemberService memberService;
 	
 	@Autowired(required=false)
-	public ReviewController(ReviewService reviewService, ReviewChabunService chabunService, FoodService foodService) {
+	public ReviewController(ReviewService reviewService, ReviewChabunService chabunService, FoodService foodService, MemberService memberService) {
 		this.reviewService = reviewService;
 		this.chabunService = chabunService;
 		this.foodService=foodService;
+		this.memberService=memberService;
 	}
 	
 	@RequestMapping(value="/reviewList")
@@ -48,7 +53,7 @@ public class ReviewController {
 		return "review/reviewList_2";
 	}
 	
-	// ���� ��ü ��ȸ
+	// review SelectAll
 	@RequestMapping(value="reviewListAll", method=RequestMethod.GET, produces ="application/text; charset=utf8")
 	@ResponseBody
 	public String reviewListAll(ReviewVO rvo, Model m) {
@@ -99,6 +104,11 @@ public class ReviewController {
 		String kakaoid = request.getParameter("kakaoid");
 		System.out.println(kakaoid);
 		
+		logger.info(">>>> : " + rvo.getRerating());
+		if(rvo.getRerating() == null) {
+			rvo.setRerating("0.0");
+		}
+		
 		String str = "";
 		str = "BAD";
 		int nCnt = 0;
@@ -114,20 +124,23 @@ public class ReviewController {
 	}
 	
 	
-	
-	@RequestMapping(value="reviewSelect", method=RequestMethod.POST)
+	// review Select
+	@RequestMapping(value="reviewSelect", method=RequestMethod.POST, produces ="application/text; charset=utf8")
 	@ResponseBody
 	public String reviewSelect(ReviewVO rvo) {
 		
 		
 		System.out.println(rvo.getKakaoid());
 		System.out.println(rvo.getRenum());
+
 		List<ReviewVO> aList = null;
 		aList =	reviewService.reviewList(rvo);
+		
 		ReviewVO _rvo = null;
 		_rvo = aList.get(0);
-		
-		return _rvo.getRenickname() + "," + _rvo.getRecontent() + "," + _rvo.getRerating() + "," + _rvo.getRenum(); 
+		System.out.println(_rvo.getRecontent());
+				
+		return _rvo.getRenickname() + "," + _rvo.getRecontent().toString()+ "," + _rvo.getRerating() + "," + _rvo.getRenum(); 
 	}
 	
 	
@@ -141,7 +154,7 @@ public class ReviewController {
 		
 		System.out.println(rvo.getFile());
 		System.out.println(rvo.getKakaoid());
-		System.out.println(rvo.getRecontent());
+		System.out.println(rvo.getRecontent()+"<<<<<<<<<<<<<<<<<");
 		
 
 		System.out.println(rvo.getRenum());
@@ -184,7 +197,7 @@ public class ReviewController {
 	
 	
 	// rating select
-	@RequestMapping(value="reviewRating", method=RequestMethod.GET)
+	@RequestMapping(value="reviewRating", method=RequestMethod.POST)
 	@ResponseBody
 	public String reviewRating(ReviewVO rvo) {
 		System.out.println("reviewRating");
@@ -198,26 +211,64 @@ public class ReviewController {
  		return str;
 	}
 	
-	@RequestMapping(value="reviewAndroidSelect", method=RequestMethod.POST)
-	public String reviewAndroid(String kakaoid, Model model) {
-		
-		
-		ReviewVO rvo = new ReviewVO();
-		rvo.setKakaoid(kakaoid);
-		
-		System.out.println("kakaoid >>> : " + rvo.getKakaoid());
+   @RequestMapping(value="reviewAndroidSelect", method=RequestMethod.POST)
+   @ResponseBody
+   public String reviewAndroidSelect(String kakaoid) {
+      
+      
+      ReviewVO rvo = new ReviewVO();
+      rvo.setKakaoid(kakaoid);
+      
+      System.out.println("kakaoid >>> : " + rvo.getKakaoid());
 
-		List<ReviewVO> listAll = null;
-		listAll = reviewService.reviewListAll(rvo);
+      List<ReviewVO> listAll = null;
+      listAll = reviewService.reviewListAll(rvo);
+      
 
-		model.addAttribute("listAll", listAll);
-		
-		return "map/androidDB";
-	}
+      JSONObject jsonObject = new JSONObject();
+      JSONArray req_array = null;
+      req_array = new JSONArray();
+
+      try {
+          if(listAll != null && listAll.size()>0){
+              for(int i=0; i<listAll.size(); i++){
+                 ReviewVO _rvo = null;
+                 JSONObject data = null; 
+                 data = new JSONObject();
+                 _rvo = listAll.get(i);
+                 data.put("kakaoid",_rvo.getKakaoid());
+                 data.put("renum",_rvo.getRenum());
+                 data.put("renickname",_rvo.getRenickname());
+                 data.put("repass",_rvo.getRepass());
+                 data.put("recontent",_rvo.getRecontent());
+                 data.put("rephoto",_rvo.getRephoto());
+                 data.put("rerating",_rvo.getRerating());
+                 data.put("reinsertdate",_rvo.getReinsertdate());
+                 data.put("reupdatedate",_rvo.getReupdatedate());
+                 
+
+                 req_array.add(data);
+              }
+           }
+      }catch(Exception e) {
+    	  e.printStackTrace();
+      }
+         
+
+      jsonObject.put("review_VO", req_array);
+
+//	      model.addAttribute("listAll", listAll);
+      
+      return jsonObject.toString();
+    }
 	
 	@RequestMapping(value="reviewAndroidInsert", method=RequestMethod.POST)
-	public String reviewAndroid2(ReviewVO rvo, Model model, HttpServletResponse response) {
+	@ResponseBody
+	public String reviewAndroidInsert(ReviewVO rvo, Model model, HttpServletResponse response) {
 		
+//		ReviewVO _rvo = null;
+//		_rvo = new ReviewVO();
+//		_rvo = EncodeReview.encodeF(rvo);
 		
 		System.out.println("kakaoid >>> : " + rvo.getKakaoid());
 		System.out.println("renickname >>> : " + rvo.getRenickname());
@@ -229,6 +280,8 @@ public class ReviewController {
 		String rephoto = "";
 		rvo.setRephoto(rephoto);
 
+
+		
 		String result = "";
 		result = "BAD";
 		int nCnt = 0;
@@ -238,12 +291,38 @@ public class ReviewController {
 			result = "GOOD";
 		}
 
-		model.addAttribute("result", result);
+//		model.addAttribute("result", result);
 		
-		return "map/androidDB2";
+		return result;
 	}
 	
+	
+	@RequestMapping(value="reviewAndroidUpdate", method=RequestMethod.POST)
+	@ResponseBody
+	public String reviewAndroidUpdate(ReviewVO rvo, Model model, HttpServletResponse response) {
+		
+		
+		System.out.println("kakaoid >>> : " + rvo.getKakaoid());
+		System.out.println("renum >>> : " + rvo.getRenum());
+		
+		String result = "";
+		result = "BAD";
+		int nCnt = 0;
+		nCnt = reviewService.reviewUpdate(rvo);
+		
+		if(nCnt == 1) {
+			result = "GOOD";
+		}
+
+//		model.addAttribute("result", result);
+		
+		return result;
+	}
+	
+	
+	
 	@RequestMapping(value="reviewAndroidDelete", method=RequestMethod.POST)
+	@ResponseBody
 	public String reviewAndroidDelete(ReviewVO rvo, Model model, HttpServletResponse response) {
 		
 		
@@ -259,26 +338,61 @@ public class ReviewController {
 			result = "GOOD";
 		}
 
-		model.addAttribute("result", result);
+//		model.addAttribute("result", result);
 		
-		return "map/androidDB2";
+		return result;
 	}
-	@RequestMapping(value="test1", method=RequestMethod.GET)
-	public String test1(HttpServletRequest hsr, Model model, String food, FoodVO fdvo) {
+	
+	// 안드로이드에서 회원주소 가져오기
+	@RequestMapping(value="memAddrSelect", method=RequestMethod.POST)
+	@ResponseBody
+	public String mapAddr(MemberVO mvo){
+
+		String mid = "";
+		String maddr = "";
+		try{
+			mid = new String(mvo.getMid().getBytes("8859_1"), "UTF-8");
+
+		mvo.setMid(mid);
+		logger.info("Review Controller mapAddr >>>>>> : ");
+		logger.info("mvo.getMid() >>>>>>>>>> : " + mvo.getMid());
+
+		MemberVO _mvo = null;
+		_mvo = memberService.memberAddress(mvo);
+
+			if(_mvo != null){
+				maddr = new String(_mvo.getMaddr().getBytes("UTF-8"),"8859_1");;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return maddr;
+	}
+	
+	
+	@RequestMapping(value="map", method=RequestMethod.GET)
+	public String map(HttpServletRequest hsr, Model model, String food, FoodVO fdvo) {
 		
 		logger.info(food);
 		String fname=food;
 		int result=0;
 		result = foodService.FoodCountService(fname);
-		
+
+	
 		HttpSession session = hsr.getSession();
 		logger.info(session);
 		logger.info(session.getAttribute("mid"));
+		
+		MemberVO mvo = null;
+		mvo = new MemberVO();
+		mvo.setMid(session.getAttribute("mid").toString());
+		
 		if(session.getAttribute("mid")!=null&&session.getAttribute("mnum")!=null) {
 			String seName=session.getAttribute("mid").toString();
 			String seNum=session.getAttribute("mnum").toString();
 			model.addAttribute("seName", seName);
 			model.addAttribute("seNum", seNum);
+			model.addAttribute("memAddr", memberService.memberAddress(mvo).getMaddr());
 		}
 		
 		return "map/test1_2";

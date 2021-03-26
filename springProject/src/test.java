@@ -22,8 +22,8 @@ public class test {
         int display = 1;
  
         try {
-            String text = URLEncoder.encode("부산행", "utf-8");
-            String apiURL = "https://openapi.naver.com/v1/search/movie?query=" + text + "&display=" + display + "&";
+            String text = URLEncoder.encode("리얼", "utf-8");
+            String apiURL = "https://openapi.naver.com/v1/search/movie?query=" + text + "&";
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");

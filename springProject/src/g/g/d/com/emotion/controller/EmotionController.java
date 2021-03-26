@@ -30,6 +30,7 @@ import g.g.d.com.emotion.common.RandomNumbering;
 import g.g.d.com.emotion.common.emotionRankUtil;
 import g.g.d.com.food.service.FoodService;
 import g.g.d.com.food.vo.FoodVO;
+import g.g.d.com.mem.common.Encode;
 import g.g.d.com.mem.service.MemberService;
 import g.g.d.com.mem.vo.MemberVO;
 import g.g.d.com.movie.service.MovieService;
@@ -62,8 +63,8 @@ public class EmotionController {
 			movicnt=movieService.MovieCountService(mvnum);
 			logger.info(movicnt);
 			
-			if(movieLink.equals("")) {
-				return "redirect:";
+			if(movieLink.equals("")&&movieLink.equals("-")) {
+				return "redirect:emotionSearch";
 			}else {
 				return "redirect:"+movieLink;
 			}
@@ -103,7 +104,7 @@ public class EmotionController {
 			List<MovieVO> movieList=new ArrayList<>();
 			if(movieRankList.size()>0) {
 				for(int i=0;i<movieRankList.size();i++) {
-					movieList.add(NaverMovieApi.returnMovieData(movieRankList.get(i).getMvname(), genre, movieRankList.get(i).getMvnum(), movieRankList.get(i).getMoviecnt()));	
+					movieList.add(NaverMovieApi.returnMovieData(movieRankList.get(i).getMvname(), genre, movieRankList.get(i).getMvnum(), movieRankList.get(i).getMoviecnt(), null));	
 				}
 			}
 			
@@ -146,7 +147,7 @@ public class EmotionController {
 		@RequestMapping(value="/emotionSearch",method= {RequestMethod.GET , RequestMethod.POST})
 		public String search(HttpServletRequest hsr,Model model, FoodVO fdvo, @ModelAttribute MovieListVO mvlvo) {
 			
-			String emotionText=hsr.getParameter("text");
+			String emotionText=Encode.utf8(hsr.getParameter("text").toString());
 			String textData=emotionText;
 			model.addAttribute("textData",textData);
 			System.out.println(emotionText+"==================");
@@ -209,9 +210,6 @@ public class EmotionController {
 			logger.info(seNum);
 			mvo=memberSelect.memberSelect(mvo);
 			
-			//============== this Emotion_thisName Method End
-			
-			//============== this Food_thisName Method Start
 			logger.info("푸드 시작");
 			
 			String[] emotionRank=emotionSb.toString().replaceAll("'", "").split(",");
@@ -251,20 +249,53 @@ public class EmotionController {
 			logger.info(mugvo.getMvadventure());
 			logger.info(mugvo.getMvcrime());
 			logger.info(mugvo.getMvfantasy());
+			logger.info(mugvo.getMvmystery());
+			logger.info(mugvo.getMvromance());
+			logger.info(mugvo.getMvdocumentary());
+			
 			List<MovieListVO> movieListData=movieService.MovieSelectListService(mugvo);
 			logger.info("사이즈>>>>>>"+movieListData.size());
 			logger.info("영화 제목>>>"+movieListData.get(0).getMvname());
 			logger.info("영화 넘버>>>"+movieListData.get(0).getMvnum());
 			logger.info("영화 넘버>>>"+movieListData.get(0).getMvgenre());
+			
 			List<MovieVO> movieList=new ArrayList<MovieVO>();
+			MovieVO mvo_test=new MovieVO();
+			String movieName="";
 			if(movieListData.size()>0) {
-				int movieNumber[]=new RandomNumbering().RandomNumber(10, movieListData);
+				int movieNumber[]=new RandomNumbering().RandomNumber(100, movieListData);
 				for(int i=0;i<movieNumber.length;i++) {
 					logger.info("넘버>>>"+movieNumber[i]+">>>"+i+"번쨰");
+					logger.info(">>>"+movieListData.get(movieNumber[i]).getMvpubdate());
 					logger.info(">>>"+movieListData.get(movieNumber[i]).getMvname());
 					logger.info(">>>"+movieListData.get(movieNumber[i]).getMvnum());
 					logger.info(">>>"+movieListData.get(movieNumber[i]).getMvgenre());
-					movieList.add(NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0));	
+					mvo_test=(NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0, movieListData.get(i)));	
+					
+					if(mvo_test.getMvname().equals(movieListData.get(movieNumber[i]).getMvname())) {
+						movieList.add(mvo_test);
+					}else {
+						movieName=mvo_test.getMvname();
+						for(int j=0;mvo_test.getMvname().equals(movieListData.get(movieNumber[i]).getMvname())==false;j++) {
+							movieNumber[i]=movieNumber[i]+1;
+							if(movieListData.size()<movieNumber[i]){
+								movieNumber[i]=0;
+								if(j>movieListData.size()) {
+									break;
+								}
+							}
+							mvo_test=(NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0, movieListData.get(i)));
+							if(mvo_test.getMvname().equals(movieName)) {
+								for(int k=0;k<movieList.size();k++) {
+									if(movieList.get(k).getMvname().equals(movieName)) {
+										break;
+									}else {
+										movieList.add(mvo_test);
+									}
+								}	
+							}
+						}
+					}
 				}
 			}
 			model.addAttribute("movieList",movieList);
@@ -279,7 +310,7 @@ public class EmotionController {
 		
 		
 		// androidEmotion
-		@RequestMapping(value="/androidEmotionSearch",method= {RequestMethod.GET , RequestMethod.POST})
+		@RequestMapping(value="/androidEmotionSearch",method= {RequestMethod.GET , RequestMethod.POST}, produces ="application/text; charset=utf8")
 		@ResponseBody
 		public String searchAnd(HttpServletRequest hsr,Model model, FoodVO fdvo, @ModelAttribute MovieListVO mvlvo) {
 			String emotionT=hsr.getParameter("text");
@@ -349,7 +380,7 @@ public class EmotionController {
 			JSONArray jsonArrayF = new JSONArray();
 			
 			
-			
+			/*
 			List<FoodVO> foodList=foodService.FoodSelectListService(fdvo);
 			
 			if(foodList != null && foodList.size() > 0) {
@@ -399,8 +430,8 @@ public class EmotionController {
 					//movieList.add(NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0));	
 					MovieVO mmmvo = null;
 					mmmvo = NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0);
-					logger.info(mmmvo.getMvname());
-					logger.info(mmmvo.getMvimage());
+//					logger.info(mmmvo.getMvname());
+//					logger.info(mmmvo.getMvimage());
 					JSONObject jsonMovie = null;
 					jsonMovie = new JSONObject();
 					jsonMovie.put("movie", mmmvo.getMvname());
@@ -414,16 +445,25 @@ public class EmotionController {
 			
 			JSONObject jsonObjectE = new JSONObject();
 			JSONArray jsonArrayE = new JSONArray();
-			
-			
+			*/
+			JSONObject jsonOb = new JSONObject();
+			JSONArray jsonArr = new JSONArray();
 			String emotionResult = "";
 			try {
 				emotionResult = new String(emotionSb.getBytes("UTF-8"),"8859_1");
+				emotionSb.replace("'", "");
+				String abc[] = emotionSb.replace("'", "").split(",");
+				for(int i=0; i<abc.length; i++) {
+					System.out.println(abc[i]);
+//					jsonArr.add(new String(abc[i].getBytes("UTF-8"),"8859_1"));					
+					jsonArr.add(abc[i]);
+				}
 				
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
-			return emotionResult;
+			jsonOb.put("result",jsonArr);
+			return jsonOb.toJSONString();
 		}
 		
 		
@@ -431,8 +471,12 @@ public class EmotionController {
 		@RequestMapping(value="/androidFoodSearch",method= {RequestMethod.GET , RequestMethod.POST})
 		@ResponseBody
 		public JSONObject foodSearchAnd(HttpServletRequest request,Model model, FoodVO fdvo, @ModelAttribute MovieListVO mvlvo) {
+			logger.info("androidFoodSearch >>>>>>>>>>>>>>>>>>>> : ");
 			String andId=request.getParameter("id");
-			String emotionText=request.getParameter("emoText");
+			String emotionText=Encode.utf8(request.getParameter("emoText").toString());
+			logger.info("emotionText >>>>>>>>>>>>>>> : " + emotionText);
+			
+			
 			
 			
 			MemberVO mvo=null;
@@ -464,7 +508,7 @@ public class EmotionController {
 			
 			if(foodList != null && foodList.size() > 0) {
 				int foodNumber[]=new RandomNumbering().RandomNumber(10, foodList);
-				for(int i=0; i<foodList.size(); i++) {
+				for(int i=0; i<foodNumber.length; i++) {
 					logger.info("foodList >>>>>>>>>>>>>: " + foodList.get(foodNumber[i]).getFname());					
 					logger.info("foodList >>>>>>>>>>>>>: " + foodList.get(foodNumber[i]).getFindex());
 					JSONObject jsonfood = null;
@@ -551,20 +595,45 @@ public class EmotionController {
 			
 			JSONObject jsonObjectM = new JSONObject();
 			JSONArray jsonArrayM=new JSONArray();
-			
+			String movieName="";
+			List<MovieVO> movieList=new ArrayList<MovieVO>();
 			if(movieListData!=null&&movieListData.size()>0) {
 				int movieNumber[]=new RandomNumbering().RandomNumber(10, movieListData);
 				for(int i=0;i<movieNumber.length;i++) {
 	
 					MovieVO mmmvo = null;
-					mmmvo = NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0);
-					logger.info(mmmvo.getMvname());
-					logger.info(mmmvo.getMvimage());
-					JSONObject jsonMovie = null;
-					jsonMovie = new JSONObject();
-					jsonMovie.put("movielink", mmmvo.getMvname());
-					jsonMovie.put("movieimg",mmmvo.getMvimage());
-					jsonArrayM.add(jsonMovie);
+					mmmvo = NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0, movieListData.get(i));
+					if(mmmvo.getMvname().equals(movieListData.get(movieNumber[i]).getMvname())) {
+						logger.info(mmmvo.getMvname());
+						logger.info(mmmvo.getMvimage());
+						JSONObject jsonMovie = null;
+						jsonMovie = new JSONObject();
+						jsonMovie.put("movielink", mmmvo.getMvlink());
+						jsonMovie.put("movieimg",mmmvo.getMvimage());
+						jsonArrayM.add(jsonMovie);
+						movieList.add(mmmvo);
+					}else {
+						movieName=mmmvo.getMvname();
+						for(int j=0;mmmvo.getMvname().equals(movieListData.get(movieNumber[i]).getMvname())==false;j++) {
+							movieNumber[i]=movieNumber[i]+1;
+							if(movieListData.size()<movieNumber[i]){
+								movieNumber[i]=0;
+								if(j>movieListData.size()) {
+									break;
+								}
+							}
+							mmmvo=(NaverMovieApi.returnMovieData(movieListData.get(movieNumber[i]).getMvname(), movieListData.get(movieNumber[i]).getMvgenre(), movieListData.get(movieNumber[i]).getMvnum(), 0, movieListData.get(i)));
+							if(mmmvo.getMvname().equals(movieName)) {
+								for(int k=0;k<movieList.size();k++) {
+									if(movieList.get(k).getMvname().equals(movieName)) {
+										break;
+									}else {
+										movieList.add(mmmvo);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 			jsonObjectM.put("M", jsonArrayM);

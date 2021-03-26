@@ -103,4 +103,11 @@ public class MemberServiceImpl implements MemberService {
 		result = memberDAO.surveyInsert(mvo);
 		return result;
 	}
+	@Override
+	public MemberVO memberAddress(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		logger.info("MemberServiceImpl memberAddress >>>> : ");
+		
+		return memberDAO.memberAddress(mvo);
+	}
 }

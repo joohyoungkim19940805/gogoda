@@ -7,7 +7,7 @@ public class Encode {
 		try {
 
 			strEncode = new String(str.getBytes("8859_1"), "UTF-8");
-			System.out.println();
+			System.out.println(strEncode+"<<<");
 
 		}catch(Exception e) {}
 		
@@ -18,7 +18,8 @@ public class Encode {
 	
 	public static void main(String args[]) {
 		
-		System.out.println(allEncoding("ìì¸ ê°ë¨êµ¬ ë°¤ê³ ê°ë¡ 76-2 (ììë)"));
+		System.out.println(allEncoding("ì¸ì , ì´ë»ê² ê¸°ë¶íë¤ê³  ë°íë? ë§ë¡ë§ ê¸°ë¶ê° ìëê¸¸ ë¹ë¤. ê¶ì§ë¥¼ ë²ì´ëê¸° ìí ìë¬´ë§ ëìì¹?"));
+		//utf8("4�� ���͸�");
 	}
 	
 	public static String allEncoding(String str) {
@@ -40,16 +41,26 @@ public class Encode {
 			strEncode =new String( str.getBytes( "8859_1"), "EUC-KR"); System.out.println("8859_1= EUC-KR>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "8859_1"), "CP949"); System.out.println("8859_1= CP949>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "UTF-8"), "EUC-KR"); System.out.println("UTF-8= EUC-KR>>>"+strEncode); 
-			
+			strEncode =new String( str.getBytes( "UTF-16"), "EUC-KR"); System.out.println("UTF-8= EUC-KR>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "UTF-32"), "EUC-KR"); System.out.println("UTF-8= EUC-KR>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "KSC5601"), "8859_1"); System.out.println("KSC5601= 8859_1>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "KSC5601"), "EUC-KR"); System.out.println("KSC5601= EUC-KR>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "KSC5601"), "UTF-8"); System.out.println("KSC5601= UTF-8>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "KSC5601"), "UTF-16"); System.out.println("KSC5601= UTF-8>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "KSC5601"), "UTF-32"); System.out.println("KSC5601= UTF-8>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "EUC-KR"), "8859_1"); System.out.println("EUC-KR= 8859_1>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "EUC-KR"), "KSC5601"); System.out.println("EUC-KR= KSC5601>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "EUC-KR"), "UTF-8"); System.out.println("EUC-KR= UTF-8>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "EUC-KR"), "UTF-16"); System.out.println("EUC-KR= UTF-8>>>"+strEncode);
+			strEncode =new String( str.getBytes( "EUC-KR"), "UTF-32"); System.out.println("EUC-KR= UTF-8>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "UTF-8"), "KSC5601"); System.out.println("UTF-8= KSC5601>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "UTF-16"), "KSC5601"); System.out.println("UTF-8= KSC5601>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "UTF-8"), "8859_1"); System.out.println("UTF-8= 8859_1>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "UTF-16"), "8859_1"); System.out.println("UTF-8= 8859_1>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "UTF-32"), "8859_1"); System.out.println("UTF-8= 8859_1>>>"+strEncode); 
 			strEncode =new String( str.getBytes( "UTF-8"), "EUC-KR"); System.out.println("UTF-8= EUC-KR>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "UTF-16"), "EUC-KR"); System.out.println("UTF-8= EUC-KR>>>"+strEncode); 
+			strEncode =new String( str.getBytes( "UTF-32"), "EUC-KR"); System.out.println("UTF-8= EUC-KR>>>"+strEncode); 
 			strEncode =new String(str.getBytes( "8859_1"), "EUC-KR"); System.out.println("8859_1= EUC-KR>>>"+strEncode);
 		}catch(Exception e) {}
 		

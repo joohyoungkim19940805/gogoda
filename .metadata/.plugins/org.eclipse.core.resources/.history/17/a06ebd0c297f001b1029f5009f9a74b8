@@ -1,0 +1,53 @@
+package g.g.d.com.review.common;
+
+import g.g.d.com.review.vo.ReviewVO;
+
+public class EncodeReview {
+
+
+	public static ReviewVO encodeF(ReviewVO rvo) {
+		ReviewVO _rvo = null;
+		_rvo = new ReviewVO();
+		try {
+			String recontent = "";
+			String rephoto = "";
+			recontent = new String(rvo.getRecontent().getBytes("8859_1"),"UTF-8");
+			rephoto = new String(rvo.getRephoto().getBytes("8859_1"),"UTF-8");
+			_rvo.setKakaoid(rvo.getKakaoid());
+			_rvo.setRenum(rvo.getRenum());
+			_rvo.setRenickname(rvo.getRenickname());
+			_rvo.setRatingavg(rvo.getRatingavg());
+			_rvo.setRerating(rvo.getRerating());
+			_rvo.setAmount(rvo.getAmount());
+			_rvo.setRephoto(rephoto);
+			_rvo.setRecontent(recontent);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+			
+		return _rvo;
+	}
+	
+	public static ReviewVO encodeD(ReviewVO rvo) {
+		ReviewVO _rvo = null;
+		_rvo = new ReviewVO();
+		try {
+			String recontent = "";
+			String rephoto = "";
+			recontent = new String(rvo.getRecontent().getBytes("UTF-8"),"8859_1");
+			rephoto = new String(rvo.getRephoto().getBytes("UTF-8"),"8859_1");
+			_rvo.setKakaoid(rvo.getKakaoid());
+			_rvo.setRenum(rvo.getRenum());
+			_rvo.setRenickname(rvo.getRenickname());
+			_rvo.setRatingavg(rvo.getRatingavg());
+			_rvo.setRerating(rvo.getRerating());
+			_rvo.setAmount(rvo.getAmount());
+			_rvo.setRephoto(rephoto);
+			_rvo.setRecontent(recontent);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+			
+		return _rvo;
+	}
+}

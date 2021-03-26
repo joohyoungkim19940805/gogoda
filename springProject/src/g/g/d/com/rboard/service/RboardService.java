@@ -11,4 +11,5 @@ public interface RboardService {
 	public int rboardUpdate(RboardVO rvo);
 	public int rboardDelete(String rbnum);
 	public int rboardCntService(String bnum);
+	public List<RboardVO> rboardList2(RboardVO rvo);
 }

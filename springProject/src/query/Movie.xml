@@ -5,14 +5,14 @@
 
 
 <select id="MovieSelectListService" parameterType="mugvo" resultType="movieList">
-	SELECT * FROM MOVIETABLE WHERE MVPUBDATE>'2010' AND MVGENRE=#{mvdrama} 
+	SELECT * FROM MOVIETABLE WHERE MVPUBDATE>'2010' AND (MVGENRE=#{mvdrama} 
 									OR MVGENRE=#{mvwar} OR MVGENRE=#{mvaction} OR MVGENRE=#{mvfamily} 
 									OR	MVGENRE=#{mvadult} OR MVGENRE=#{mvcrime} OR	MVGENRE=#{mvmystery} 
 									OR	MVGENRE=#{mvanimation} OR MVGENRE=#{mvcomedy} OR MVGENRE=#{mvhorror} 
 									OR	MVGENRE=#{mvromance} OR	MVGENRE=#{mvsf} OR MVGENRE=#{mvdocumentary} 
 									OR	MVGENRE=#{mvthriller} OR MVGENRE=#{mvmusical} OR MVGENRE=#{mvopera} 
 									OR	MVGENRE=#{mvfantasy} OR	MVGENRE=#{mvadventure} OR MVGENRE=#{mvhistorical} 
-									OR	MVGENRE=#{mvwestern}
+									OR	MVGENRE=#{mvwestern})
 </select>
 
 <select id="MovieRankService" parameterType="movieList" resultType="movieList">

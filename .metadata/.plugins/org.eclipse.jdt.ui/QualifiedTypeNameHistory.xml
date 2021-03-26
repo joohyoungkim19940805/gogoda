@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.spring.board.service.BoardService"/>
-    <fullyQualifiedTypeName name="com.spring.common.vo.CommonVO"/>
-    <fullyQualifiedTypeName name="com.spring.common.page.Paging"/>
-    <fullyQualifiedTypeName name="com.spring.common.util.Util"/>
     <fullyQualifiedTypeName name="javax.servlet.jsp.tagext.TagSupport"/>
     <fullyQualifiedTypeName name="javax.servlet.jsp.JspException"/>
-    <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="org.mybatis.spring.SqlSessionTemplate"/>
     <fullyQualifiedTypeName name="com.spring.common.dao.ChabunDAO"/>
     <fullyQualifiedTypeName name="com.spring.common.util.ChabunUtil"/>
@@ -60,4 +55,9 @@
     <fullyQualifiedTypeName name="g.g.d.com.emotion.common.MovieGenreUtil"/>
     <fullyQualifiedTypeName name="g.g.d.com.emotion.common.emotionRankUtil"/>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="g.g.d.com.review.common.EncodeReview"/>
+    <fullyQualifiedTypeName name="g.g.d.com.mem.common.NaverLoginBO"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="g.g.d.com.mem.common.Encode"/>
+    <fullyQualifiedTypeName name="com.sun.media.jfxmedia.logging.Logger"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN" "http://tuckey.org/res/dtds/urlrewrite4.0.dtd">
+<urlrewrite default-match-type="wildcard"> 
+ <rule>
+  <from>/.jsp</from>
+  <to>/$1?locale=us</to>
+ </rule> 
+ <rule>
+  <from>/kr**</from>
+  <to>/$1?locale=kr</to>
+ </rule> 
+</urlrewrite>

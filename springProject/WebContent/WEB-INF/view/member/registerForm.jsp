@@ -85,7 +85,7 @@ $(document).ready(function(){
 	// id 중복확인  	
     $(document).on("click", "#midbtn", function(){
     	console.log("midbtn >>> : ");
-    	alert("midbtn >>> : "+$('#mid').val().length);
+    	//alert("midbtn >>> : "+$('#mid').val().length);
         if($('#mid').val().length>=5){ 
 	    	let idcheckURL = "idCheck.ggd";
 	    	let method = "POST";
@@ -102,7 +102,7 @@ $(document).ready(function(){
 	        });
 	         
 	        function whenSuccess(resData){
-	        	alert(resData);
+	        	//alert(resData);
 	            var sVal = resData;   
 	            if ('ID_GOOD' == sVal){
 	               alert("사용할 수 있는 아이디 입니다.");
@@ -277,7 +277,7 @@ $(document).ready(function(){
         }
 
 		if(checkMember<=11){ // 유효성 모두 통과 
-           	alert('고고다의 회원이 되어주셔서 감사합니다.'); 
+           //alert('설문에 응답하면 회원가입이 완료됩니다.'); 
            	let idcheckURL = "memberInsert.ggd";
 	    	let method = "POST";
 	    	let mname=$('#mname').val();
@@ -313,7 +313,7 @@ $(document).ready(function(){
 	    		function whenSuccess(data) {
 	    			console.log(data);
 	    			mnum=data;
-	    			alert(mnum);
+	    			//alert(mnum);
 					$.ajax({
 						type : 'POST',
 						url : 'moveSurvey.ggd',
@@ -322,7 +322,7 @@ $(document).ready(function(){
 						cache : false
 					})
 					.done(function(dataHtml){
-						alert(dataHtml);
+						//alert(dataHtml);
 						dataHtml=dataHtml+"\n<input type='hidden' id='mnum' name='mnum' value='"+mnum+"'>";
 						$('#memForm').children().remove();
 						$('#memForm').html(dataHtml);
@@ -507,8 +507,8 @@ $(document).ready(function(){
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:12%; height:12%">
 		</a>
 	</div>
 </div><br><br><br><br><br>
@@ -653,7 +653,7 @@ $(document).ready(function(){
         <div class="form-group">
           <div class="col-xs-offset-5 col-xs-10">
           <!-- *************************************** 회가입 id=추가, type=변경 --> 
-            <input name="Submit" type="button" id="submitBtn" value="회원 가입" class="btn btn-primary btn-lg">
+            <input name="Submit" type="button" id="submitBtn" value="다음 페이지" class="btn btn-primary btn-lg">
           <!--****************************************-->
           </div>
         </div>
@@ -664,7 +664,7 @@ $(document).ready(function(){
 </div>
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+  <p>Powered by <a href="../../emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
 </footer>
 </body>
 </form>

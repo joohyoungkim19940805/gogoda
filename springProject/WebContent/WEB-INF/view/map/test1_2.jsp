@@ -3,31 +3,35 @@
 <% 
 	String food = request.getParameter("food");
 	System.out.println("food >>> : " + food);
-	if(food.equals("chicken")) food = "치킨";
-	else if(food.equals("pizza")) food = "피자";
-	else if(food.equals("seolleongtang")) food = "설렁탕";
-	System.out.println("food >>> : " + food);
+
 	String mid="";
 	if(request.getAttribute("seName")!=null){
 		mid=request.getAttribute("seName").toString();
 	}
+	String addr="";
+	if(request.getAttribute("memAddr")!=null){
+		addr=request.getAttribute("memAddr").toString();
+	}
+	System.out.println("addr >>>>>>>>>> : " + addr);
 	
 %>
 <!DOCTYPE html>
 <html>
 <head>
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/emotionpage.css" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>키워드로 장소검색하고 목록으로 표출하기</title>
+    <title>GOGODA</title>
     <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:800px;}
 /* 팝업 레이어 */
 /*.popup-layer{position:absolute;top:0;left:260px;z-index: 1;padding:5px;margin:10px 0 30px 10px;width:500px;height:700px;display:block;  background:#fff;}*/
- .popup-layer{position:absolute;top:76px;left:300px;bottom:0;z-index: 1;padding:5px;margin:10px 0 30px 10px;width:500px;height:755px;display:block;  background:rgba(255, 255, 255, 1);overflow-y: auto;border-radius: 10px;}
-.popup-layer2{position:absolute;top:76px;left:800px;bottom:0;z-index: 1;padding:5px;margin:10px 0 30px 10px;width:550px;height:300px;display:block;  background:rgba(255, 255, 255, 1);overflow-y: auto;border-radius: 10px;}
+ .popup-layer{position:absolute;top:160px;left:300px;z-index: 1;padding:5px;margin:30px 0 30px 10px;width:430px;height:755px;display:block;  background:rgba(255, 255, 255, 1);overflow-y: auto;border-radius: 10px;}
+.popup-layer2{position:absolute;top:160px;left:730px;bottom:0;z-index: 1;padding:5px;margin:30px 0 30px 10px;width:470px;height:280px;display:block;  background:rgba(255, 255, 255, 1);overflow-y: auto;border-radius: 10px;}
 #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:300px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 1);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
@@ -62,10 +66,140 @@
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
 li { list-style-type : none } /* 아무 표시 없음 */
-#popupClose {position: absolute;right:0;}
+
+#insert_review_tb{
+    font-family: 'Malgun Gothic',dotum,'돋움',sans-serif;
+    font-size: 12px;    
+}
+#insert_review_td1{
+	width: 50px;
+	height: 20px;
+	text-align: center;
+	font-weight: bold;
+	background-color: #f5f5f5;
+}
+#renickname{
+	width: 150px;
+    padding: 5px;
+    margin: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+#newgeo,#nowgeo,#defaultgeo{
+    margin-bottom:14px;
+    margin-left:5px;
+	text-align:right;
+    font-size: 10px; 
+    background-color: #aaaaaa;
+    color: white;
+    border: 2px solid #aaaaaa;
+	border-radius: 4px;
+	padding: 6px 10px;
+	transition-duration: 0.4s;
+}
+#newgeo:hover, #nowgeo:hover, #defaultgeo:hover {
+
+}
+
+#reBtn{
+   text-align:right;
+   font-size: 10px;
+   background-color: #64AAFF;
+   color: white;
+   border: 2px solid #64AAFF;
+   border-radius: 4px;
+   padding: 6px 10px;
+   transition-duration: 0.4s;
+}
+#reBtn:hover {
+  background-color: white;
+  color: black;
+}
+
+#popupClose{
+   margin:10px; 
+   text-align:right;
+   font-size: 10px;
+   background-color: #555555;
+   color: white;
+   border: 2px solid #555555;
+   border-radius: 4px;
+   padding: 6px 10px;
+   transition-duration: 0.4s;
+   position: absolute;right:0;
+}
+#popupClose:hover {
+  background-color: white;
+  color: black;
+}
+
+#updateBtn, #deleteBtn, #insertBtn{
+
+   text-align:right;
+   font-size: 10px;
+   background-color: #555555;
+   color: white;
+   border: 2px solid #555555;
+   border-radius: 4px;
+   padding: 6px 10px;
+   transition-duration: 0.4s;
+}
+#updateBtn:hover, #deleteBtn:hover, #insertBtn:hover {
+  background-color: white;
+  color: black;
+}
+
+#insertForm{
+   margin:10px; 
+   text-align:right;
+   font-size: 10px;
+   background-color: #008CBA;
+   color: white;
+   border: 2px solid #008CBA;
+   border-radius: 4px;
+   padding: 6px 10px;
+   transition-duration: 0.4s;
+}
+#insertForm:hover {
+  background-color: white;
+  color: black;
+}
+
+
+#fileSelect{
+   margin:3px; 
+   text-align:right;
+   font-size: 10px;
+   background-color: #9696FF;
+   color: white;
+   border: 2px solid #9696FF;
+   border-radius: 4px;
+   padding: 6px 10px;
+   transition-duration: 0.4s;
+}
+#fileSelect:hover {
+  background-color: white;
+  color: black;
+}
+
 #rephoto{float:right;margin-bottom:10px;margin-right:10px;width:100px; height:100px;}
-.recontent{display:block;}
-#delLi{float:left;margin-top:20px;width:450px;margin-left:10px;border-bottom: 1px solid Gainsboro;padding: 0px;} 
+.recontent{
+	margin-top:5px;
+	display:block;
+}
+#delLi{
+	float:left;
+	margin-top:20px;
+	width:400px;
+	margin-top: 10px;
+	margin-left:10px;
+	font-family: 'Malgun Gothic',dotum,'돋움',sans-serif;
+	font-size: 13px;
+	border-bottom: 1px solid Gainsboro;
+	padding: 0px;} 
 #restar{width:30px;height:30px; background:rgba(255, 255, 255, 0.7);}
 
 span.star-prototype, span.star-prototype > * {
@@ -73,6 +207,9 @@ span.star-prototype, span.star-prototype > * {
     background: url("http://i.imgur.com/YsyS5y8.png") 0 -16px repeat-x;
     width: 80px;
     display: block;
+    
+    margin-bottom:7px;
+    
 }
  
 span.star-prototype > * {
@@ -104,6 +241,7 @@ span.star-prototype > * {
   display: inline-block;
   overflow: hidden;
   height: 20px;
+  margin: 3px;
 }
 .startRadio:after {
   content: "";
@@ -140,37 +278,66 @@ span.star-prototype > * {
   height: 20px;
   pointer-events: none;
 }
-#popupClose2{float:right;}
+
+#popupClose2{
+	float:right;
+	margin-right: 9px;
+    margin-top: 14px;
+	text-align:right;
+	font-size: 10px;
+	background-color: #555555;
+	color: white;
+	border: 2px solid #555555;
+	border-radius: 4px;
+	padding: 6px 10px;
+	transition-duration: 0.4s;
+}
+#popupClose2:hover {
+  background-color: white;
+  color: black;
+}
+
 #reviewForm{margin-top:15px;margin-left:20px;}
 #insertBtn{float:right;margin-top:10px;}
-#recontent{margin-left:5px;}
+#recontent{
+	margin-left:3px;
+	border:none;
+	resize:none;
+}
 
 .popup-layer > p {margin-top:300px; margin-left:70px;}
 
 #starOne{margin-left: 80px;}
 
+#cartoon{
+	background-image:url(/backImages/watercolour1.png);
+}
+
 </style>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=979d0cc4b8c4a11d3bd7378770fd582f&libraries=services"></script>
 </head>
 <body>
-<div class="">
-	<div id="maptop">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="../images/common/gogoda.png" style="width:150px; height:100px">
+<form name="loginForm" id="loginForm">
+<div class="w3-top">
+	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="max-width:12%; max-height:12%">
 		</a>
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="../logo/logo.png" style="width:150px; height:100px">
-		</a>
-	</div>
-	<div>
-
+	<div class="w3-right w3-hide-small" id="memlogin">
+		<a href="#로그인" class="w3-bar-item w3-button" id="loginbtn">로그인</a>
+		<a href="#회원 가입" class="w3-bar-item w3-button" id="meminsert">회원가입</a>
+    </div>
 	</div>
 </div>
-<div class="">
-	<input type="text" id="newText" >
-	<input type="button" id="newgio" value="검색">
-	<input type="button" id="nowgio" value="현재위치">
-	<input type="button" id="defaultgio" value="기본위치">
+</form>
+<br><br><br><br><br><br>
+<div class="" id="cartoon">
+	<input type="text" id="newText" style="margin-bottom:10px; margin-left:10px">
+	<input type="button" id="newgeo" value="검색" >
+	<input type="button" id="nowgeo" value="현재위치">
+	<input type="button" id="defaultgeo" value="기본위치">
+	
+	<img src="/backImages/cartoon3.png" id="move-img" style="width:5%; height:5%">
 </div>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -207,53 +374,67 @@ var yy = 0.0;
 var mid = "<%=mid%>";
 var geocoder = new kakao.maps.services.Geocoder();
 
+
+ 
 $(document).ready(function(){
+	function delay(item) { return new Promise(resolve => setTimeout(() => { console.log(item); resolve(); }, 10) ); }
 	
-	var circle = null;
-	// 현재 위치 위도 경도 좌표값 구하기
-	if(navigator.geolocation){
-		navigator.geolocation.getCurrentPosition(function(pos){
-			// 위도
-			xx = pos.coords.latitude;
-			console.log(xx);
-			// 경도
-			yy = pos.coords.longitude;
-			console.log(yy);
+	$(window).load(async function(){
+		var max_move=1374;
+		var left=0;
+		var right=11;
+		var switchImage=true;
+		var jump=0;
+		for(var i=0;true;i++){
+			await delay(1);
+			if(switchImage){
+				$("#move-img").css('margin-left',i+'px');
+			}
+			//if(i>=655){
+				//$("#move-img").css('margin-top',jump+'px');
+				//$("#move-img").css('margin-bottom',jump+'px');Z
+				//jump=jump+5;
+			//}
+			if(i>=max_move){
+				$("#move-img").attr("id","move-img2");
+				switchImage=false;
+				left=i;
+				i=0;
+			}
+			if(switchImage!=true){
+				left=left-1;
+				right=left;
+				$("#move-img2").css('margin-left',right+'px');
+			}
+			if(right<=10){		
+				$("#move-img2").attr("id","move-img");
+				switchImage=true;
+				right=11;
+				i=0;
+			}
+			//661px
 			
-			// 키워드로 장소를 검색합니다
-			searchPlaces();
-			//circle = null;
-			///circle.setMap(map);
-			center();
-		});
-	}else{
-		alert("해당 브라우저에서 현재 위치를 찾을 수 없습니다.");
-	}
-	
-	$(document).on("click","#nowgio",function(){
-		if(navigator.geolocation){
-			navigator.geolocation.getCurrentPosition(function(pos){
-				// 위도
-				xx = pos.coords.latitude;
-				console.log(xx);
-				// 경도
-				yy = pos.coords.longitude;
-				console.log(yy);
-				
-				// 키워드로 장소를 검색합니다
-				searchPlaces();
-				//circle = null;
-				//circle.setMap(map);
-				removeCircle();
-				center();
-			});
-		}else{
-			alert("해당 브라우저에서 현재 위치를 찾을 수 없습니다.");
+			//if(right)
+			
+			//console.log(i);
 		}
 	});
+		
+	if("${seName}"!=''){
+		$("#loginbtn").remove();
+		$("#meminsert").remove();
+		$("#memlogin").append("<a href='../../mem/memberSelect.ggd' style='color:black' id='' class='comlogin'>${seName}</a>님 환영합니다. &nbsp;&nbsp;&nbsp;");
+		$("#memlogin").append("<button type='button' class='comlogin' id='memlogout' onclick='logoutBtn()'>로그아웃</button>");
+	}
 	
-	$(document).on("click","#defaultgio",function(){
-		geocoder.addressSearch('경기도 광명시 안현로 15', function(result, status) {
+	
+	
+	var circle = null;
+	
+	defaultgeo();
+	
+	function defaultgeo(){
+		geocoder.addressSearch("<%=addr%>", function(result, status) {
 
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
@@ -262,17 +443,20 @@ $(document).ready(function(){
 		        xx = result[0].y;
 		        
 		        searchPlaces();
-		       // circle = null;
-		        removeCircle();
 		        center();
+		        setCenter();
 
 		    } 
-		});    
-	});
+		});
 	
+	}
+
+
 	
-	$(document).on("click","#newgio",function(){
-		geocoder.addressSearch($('#newText').val(), function(result, status) {
+
+	
+	$(document).on("click","#defaultgeo",function(){
+		geocoder.addressSearch("<%=addr%>", function(result, status) {
 
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
@@ -283,10 +467,14 @@ $(document).ready(function(){
 		        searchPlaces();
 		        removeCircle();
 		        center();
-
+		        setCenter();
 		    } 
-		});    
+		});
+
 	});
+	
+	
+
 	
 	var placeId = "";
 	// qwer = reBtn의 data
@@ -295,6 +483,51 @@ $(document).ready(function(){
 
 	
 });
+
+$(document).on("click","#newgeo",function(){
+	geocoder.addressSearch($('#newText').val(), function(result, status) {
+
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+
+	        yy = result[0].x;
+	        xx = result[0].y;
+	        
+	        searchPlaces();
+	        removeCircle();
+	        center();
+	        setCenter();
+	    } 
+	});   
+
+});
+
+
+$(document).on("click","#nowgeo",function(){
+	if(navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(function(pos){
+			// 위도
+			xx = pos.coords.latitude;
+			console.log(xx);
+			// 경도
+			yy = pos.coords.longitude;
+			console.log(yy);		
+			// 키워드로 장소를 검색합니다
+			searchPlaces();
+			//circle = null;
+			//circle.setMap(map);
+			removeCircle();
+
+			center();
+			setCenter();
+		});
+	}else{
+		alert("해당 브라우저에서 현재 위치를 찾을 수 없습니다.");
+	}
+});
+
+
+
 
 
 $(document).on("click","#delLi",function(){
@@ -319,8 +552,8 @@ $(document).on("click","#delLi",function(){
 		insertForm();
 		$("#renickname").val("<%=mid%>");
 		$("#renickname").prop("readonly",true);
-		$('#reviewForm').append('<input type="button" id="updateBtn" value="수정하기">');
-		$('#reviewForm').append('<input type="button" id="deleteBtn" value="삭제하기">');
+		$('#reviewForm').append('<input type="button" id="updateBtn" style="margin-top:10px;"value="수정하기">');
+		$('#reviewForm').append('<input type="button" id="deleteBtn" style="margin-left:10px; margin-top:10px;" value="삭제하기">');
 		$("#");
 		
 		let selectURL = "reviewSelect.ggd";
@@ -334,7 +567,7 @@ $(document).on("click","#delLi",function(){
 			url:selectURL,
 			type:"POST",
 			data:form,
-//			enctype: 'multipart/form-data',
+			enctype: 'application/x-www-form-urlencoded',
 			cache:false,
 			processData: false,
 	        contentType: false,	
@@ -344,6 +577,7 @@ $(document).on("click","#delLi",function(){
 		function whenSuccess(resData){
 			console.log(resData);
 			var str = resData.split(",");
+			console.log(str[2]);
 			$("#renickname").val(str[0]);
 			$("input:radio[name='rerating']:radio[value='"+str[2]+"']").attr('checked', true);	
 			$("#recontent").val(str[1]);
@@ -391,7 +625,7 @@ var markers = [];
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new kakao.maps.LatLng(xx, yy), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+        level: 4 // 지도의 확대 레벨
     };  
 
 // 지도를 생성합니다    
@@ -404,6 +638,15 @@ var ps = new kakao.maps.services.Places();
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 
+function setCenter() {            
+    // 이동할 위도 경도 위치를 생성합니다 
+    console.log(xx, yy);
+    var moveLatLon = new kakao.maps.LatLng(xx, yy);
+    
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(moveLatLon);
+    map.setLevel(4);
+}
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
@@ -415,10 +658,12 @@ function searchPlaces() {
         return false;
     }
     console.log(xx, yy)
+    
 	var options = {
 			location : new kakao.maps.LatLng(xx, yy),
 			radius : 1000
 	}
+    
     
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch( keyword, placesSearchCB, options); 
@@ -428,6 +673,7 @@ function searchPlaces() {
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
 		console.log(data);
+        $('#menu_wrap').show();
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
@@ -438,6 +684,7 @@ function placesSearchCB(data, status, pagination) {
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
         alert('검색 결과가 존재하지 않습니다.');
+        $('#menu_wrap').hide();
         return;
 
     } else if (status === kakao.maps.services.Status.ERROR) {
@@ -503,7 +750,7 @@ function displayPlaces(places) {
     menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
+   // map.setBounds(bounds);
 }
 
 
@@ -533,10 +780,6 @@ function getListItem(index, places) {
     return el;
 }
 
-$(document).on("click","#place",function(){
-	xx = 
-	searchPlaces();
-})
 
 
 
@@ -628,17 +871,17 @@ $(document).on("click", "#map", function(){
 	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
 });
 
-$(document).on("click", "#newgio", function(){
+$(document).on("click", "#newgeo", function(){
 	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
 	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
 });
 
-$(document).on("click", "#nowgio", function(){
+$(document).on("click", "#nowgeo", function(){
 	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
 	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
 });
 
-$(document).on("click", "#defaultgio", function(){
+$(document).on("click", "#defaultgeo", function(){
 	$(".popup-layer").fadeOut(function(){ $(this).remove(); });
 	$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
 });
@@ -711,11 +954,12 @@ $(document).on("click","#insertBtn",function(){
 	
 	function whenSuccess(resData){
 		// 리스트 조회 후 태그 생성 
-		alert(resData);
+		//alert(resData);
 		clearInsert();
 		$(".popup-layer *").remove();
 		reBtn(qwer);
 		$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
+		//console.log($(this).parent());
 	}
 	
 	function whenError(e){
@@ -777,6 +1021,13 @@ $(document).on("click","#updateBtn",function(){
 $(document).on("click", "#deleteBtn", function(){	
 	deleteBtn();
 });
+
+function logoutBtn(){
+	$("#loginForm").attr("action","../emotion/logout.ggd");
+	$("#loginForm").attr("method","POST");
+	$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
+	$("#loginForm").submit();
+}
 
 </script>
 </body>

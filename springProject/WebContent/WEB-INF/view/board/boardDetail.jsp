@@ -21,6 +21,21 @@
 	var butChk = 0; // 수정버튼과 삭제버튼을 구별하기 위한 변수
 	
 	$(function(){
+		
+		if("${seName}"!=''){
+			$("#loginbtn").remove();
+			$("#meminsert").remove();
+			$("#memlogin").append("<a href='../../mem/memberSelect.ggd' style='color:black' id='' class='comlogin'>${seName}</a>님 환영합니다. &nbsp;&nbsp;&nbsp;");
+			$("#memlogin").append("<button type='button' class='comlogin' id='memlogout' onclick='logoutBtn()'>로그아웃</button>");
+		}
+		
+		$(document).on("click","#loginbtn",function(){
+			$("#loginForm").attr("action","../../logincontroller/login.ggd");
+			$("#loginForm").attr("method","POST");
+			$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
+			$("#loginForm").submit();
+		});
+		
 		$("#pwdChk").hide();
 		
 		/* 첨부파일 이미지 보여주기 위한 속성 추가*/
@@ -99,28 +114,41 @@
 			});	
 		}
 	}
+	function logoutBtn(){
+		$("#loginForm").attr("action","../emotion/logout.ggd");
+		$("#loginForm").attr("method","POST");
+		$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
+		$("#loginForm").submit();
+		
+	}
 </script>
 </head>
 <body>
 
 <!-- Navbar (sit on top) -->
+<form name="loginForm" id="loginForm">
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:12%; height:12%">
 		</a>
+	<div class="w3-right w3-hide-small" id="memlogin">
+		<a href="#로그인" class="w3-bar-item w3-button" id="loginbtn">로그인</a>
+		<a href="#회원 가입" class="w3-bar-item w3-button" id="meminsert">회원가입</a>
+    </div>
 	</div>
-</div><br><br><br><br><br><br>
+</div>
+</form>
 <!-- Header -->
-<header class="display-container" style="max-width:1500px;" id="home">
-	<img class="applepie-image" src="/springProject/logo/applepie.png" alt="Applepie" width="1500" height="1000">
-	<div class="board-display">
-
-
-<div id="boardContainer" align="left">
+<header class="display-container" style="max-width:1500px; " id="home">
+   <img class="applepie-image" src="/logo/applepie.png" alt="Applepie" width="1500">
+   <img class="applepie-image" src="/logo/applepie.png" alt="Applepie" width="1500">
+   <div class="board-display">
+   
+       <div id="boardContainer" align="left">
 <!-- 
 	<div id="Detailtop">
-	<a href="../../springProject/emotion/mainpage.ggd">
+	<a href="../../emotion/mainpage.ggd">
 		<img src="../images/common/gogoda.png" style="width:170px; height:170px" />
 	</a>
 	</div>  -->
@@ -185,16 +213,14 @@
 		</table>
 	</div>
 	<%--========================== 상세 정보 보여주기 종료 =========================--%>
-	<jsp:include page="rboard.jsp"></jsp:include>
+	
 </div>
 
 	</div>
 		
 </header>
 <!-- Footer-->
-<footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
-</footer>  
+ <jsp:include page="rboard.jsp"></jsp:include>
 
 </body>
 </html>

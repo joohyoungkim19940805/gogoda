@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+public class TestMobigenStrcmp {
+
+	public static int strcmp(String x, String y) {
+		int result=0;
+		int len=0;
+		x+="\0";
+		y+="\0";
+		if (x.length()<y.length()){
+			len = x.length();
+		}else if(x.length()>y.length()) {
+			len = y.length();
+		}else {
+			try {
+			len=(x.length()+y.length())/2;
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				len=x.length();
+			}
+		}
+		//System.out.println(len);
+		for(int i=0;i<len;i++) {
+			if((int)x.charAt(i)==(int)y.charAt(i)) {
+				result=0;
+			}else {
+				if((int)x.charAt(i)<(int)y.charAt(i)) {
+					result=-1;
+					return result;
+				}
+				if((int)x.charAt(i)>(int)y.charAt(i)) {
+					//System.out.println((int)x.charAt(i));
+					//System.out.println((int)y.charAt(i));
+					result=1;
+					return result;
+				}
+			}
+		}
+		return result;
+
+	}
+	
+	public static void main(String args[]) {
+		Scanner sc= new Scanner(System.in);
+		
+		String x=sc.next();
+		String y=sc.next();
+		
+		/* ==>Test Data
+		 * String str1 = "BlockDMask";
+	     * String str2 = "Block";
+	     * String str3 = "BlockDMask";
+	     * String str4 = "BlockFMask";
+	     * String str5 = "BlockAMask";*/
+		
+		String[] x1=["abcde"];
+		String y="abc";
+		//int result=strcmp(x,y);
+		//System.out.println(result);
+		
+	    /* ==>Test Result>>>
+	     * System.out.println(strcmp(str1,str2)+" 는 1이 정답");
+	     * System.out.println(strcmp(str1,str3)+" 는 0이 정답");
+	     * System.out.println(strcmp(str1,str4)+" 는 -1이 정답");
+	     * System.out.println(strcmp(str1,str5)+" 는 1이 정답");*/
+	    
+	}
+}

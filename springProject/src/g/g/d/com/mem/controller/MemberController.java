@@ -2,6 +2,7 @@ package g.g.d.com.mem.controller;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,12 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import g.g.d.com.mem.common.ChabunService;
 import g.g.d.com.mem.common.ChabunUtil;
+import g.g.d.com.mem.common.Encode;
 import g.g.d.com.mem.common.MailSend;
 import g.g.d.com.mem.common.TempPassword;
 import g.g.d.com.mem.service.MemberService;
@@ -39,8 +39,16 @@ public class MemberController {
 	@Autowired(required=false)
 	private ChabunService chabunService;
 	
+	@RequestMapping(value="/logout",method= {RequestMethod.GET , RequestMethod.POST})
+	public String logout(HttpServletRequest hsr, Model model) {
+		logger.info("로그아웃... 메인페이지로 이동");
+		HttpSession session = hsr.getSession();
+		session.invalidate();
+		return "../../index";
+	}
+	
 	// 회원 가입 페이지로 이동
-	@RequestMapping(value="/registerForm", method = RequestMethod.POST)
+	@RequestMapping(value="/registerForm", method = {RequestMethod.POST,RequestMethod.GET})
 	public String member() {
 		logger.info("registerForm 호출 성공 >>>");
 		return "member/registerForm";
@@ -132,6 +140,7 @@ public class MemberController {
 	
 	// 회원 정보 수정
 	@RequestMapping(value="/memberUpdate", method = RequestMethod.POST)
+	@ResponseBody
 	public String memberUpdate(@ModelAttribute MemberVO mvo,HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("memberUpdate 호출 성공");
 		int result = 0;
@@ -140,9 +149,9 @@ public class MemberController {
 		result = memberService.memberUpdate(mvo);
 		logger.info("memberUpdate 호출 성공 = "+result);	
 		if (result == 1) {
-			url = "memberSelectAll.ggd"; // 수정 후 상세 페이지로 이동
+			url = "../emotion/logout.ggd"; // 수정 후 상세 페이지로 이동
 		}		
-		return "redirect:" + url;		
+		return "true";		
 	}
 /*
 	@RequestMapping(value="memberUpdate")
@@ -339,6 +348,93 @@ public class MemberController {
 		
 	}
 	
+	
+	// androidInsert mapping
+	@RequestMapping(value="/androidInsert", method=RequestMethod.POST)
+	@ResponseBody
+	public String androidInsert(MemberVO mvo) {
+		/*
+		try {
+			String aa = mvo.getMname();
+			System.out.println("aa <<<>>> : " + aa);
+			aa = new String(aa.getBytes("8859_1"), "UTF-8");
+			System.out.println("aa >>> : " + aa);
+		}catch(Exception e) {}
+		*/					
+		
+		logger.info("androidInsert >>>>>>>>>>>>> : ");
+//		logger.info("mvo.getMnum() >>>> : " + mvo.getMnum());
+		logger.info("mvo.getMname() >>>> : " + mvo.getMname());
+		logger.info("mvo.getMid() >>>> : " + mvo.getMid());
+		logger.info("mvo.getMpw() >>>> : " + mvo.getMpw());
+		logger.info("mvo.getMbirth() >>>> : " + mvo.getMbirth());
+		logger.info("mvo.getMgender() >>>> : " + mvo.getMgender());
+		logger.info("mvo.getMhp() >>>> : " + mvo.getMhp());
+		logger.info("mvo.getMemail() >>>> : " + mvo.getMemail());
+		logger.info("mvo.getMaddr() >>>> : " + mvo.getMaddr());
+		logger.info("mvo.getMaddrdetail() >>>> : " + mvo.getMaddrdetail());
+		logger.info("mvo.getPositivefood() >>> : " + mvo.getPositivefood());
+		logger.info("mvo.getNegativefood() >>> : " + mvo.getNegativefood());
+		logger.info("mvo.getMovietaste() >>> : " + mvo.getMovietaste());
+		//logger.info("maddr>>>"+mvo.getMaddr());
+		//logger.info("maddr>>>"+mvo.getMaddr());
+		mvo.setMname(Encode.utf8(mvo.getMname()));
+		mvo.setMid(Encode.utf8(mvo.getMid()));
+		mvo.setMpw(Encode.utf8(mvo.getMpw()));
+		mvo.setMbirth(Encode.utf8(mvo.getMbirth()));
+		mvo.setMgender(Encode.utf8(mvo.getMgender()));
+		mvo.setMhp(Encode.utf8(mvo.getMhp()));
+		mvo.setMemail(Encode.utf8(mvo.getMemail()));
+		mvo.setMaddr(Encode.utf8(mvo.getMaddr()));
+		mvo.setMaddrdetail(Encode.utf8(mvo.getMaddrdetail()));
+		mvo.setPositivefood(Encode.utf8(mvo.getPositivefood()));
+		mvo.setNegativefood(Encode.utf8(mvo.getNegativefood()));
+		mvo.setMovietaste(Encode.utf8(mvo.getMovietaste()));
+		
+		//logger.info("mvo.getMaddr() >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + mvo.getMaddr().getBytes());
+
+			
+		String mnum = ChabunUtil.getMemChabun("N", chabunService.getChabun().getMnum());
+		
+		mvo.setMnum(mnum);
+		logger.info("mvo.getMnum() >>>> : " + mvo.getMnum());
+		
+		logger.info("mname>>>"+mvo.getMname());
+		logger.info("maddr>>>"+mvo.getMaddr());
+		logger.info("maddrdetail>>>"+mvo.getMaddrdetail());
+		logger.info("positivefood >>> : "+mvo.getPositivefood());
+		logger.info("negativefood >>> : "+mvo.getNegativefood());
+		logger.info("movietaste >>> : "+mvo.getMovietaste());
+		//logger.info(request.getParameter("mname"));
+		//logger.info(request.getParameter("maddr"));
+		//logger.info(request.getParameter("maddrdetail"));
+
+		
+		
+		
+		int nCnt = 0;
+		int nCnt1 = 0;
+		String result = "";
+		String result1 = ""; 
+		
+		// 테이블에 레코드 입력		
+		nCnt = memberService.memberInsert(mvo);
+		nCnt1 = memberService.surveyInsert(mvo);
+		
+		if (nCnt == 1 && nCnt1 == 1) {					 	
+			result = "GOOD";
+		}else {
+			result = "BAD";
+		}
+		
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/androidDaum", method=RequestMethod.GET)
+	public String androidDaum() {
+		return "member/daum";
+	}
 	
 	
 }

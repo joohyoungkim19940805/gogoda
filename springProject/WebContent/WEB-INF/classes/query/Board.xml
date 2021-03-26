@@ -20,6 +20,9 @@
 			<if test="search=='bname'">
 				<![CDATA[AND BNAME LIKE '%'||#{keyword}||'%']]>
 			</if>
+			<if test="search==null">
+				<![CDATA[AND 1=1]]>
+			</if>
 		</trim>
 	</sql>
 	
@@ -52,7 +55,7 @@
 					</when>
 				</choose>
 			)list
-		)
+		) ORDER BY BINSERTDATE DESC
 		<where>
 			<if test="start_row != null and start_row !=''">
 				<if test="end_row != null and end_row !=''">

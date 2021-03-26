@@ -43,5 +43,7 @@
 		<property name="basePackage"><value>g.g.d.com.dao</value></property>
 	</bean>
 	
+	<!-- NaverLoginBO Class에 대한 Bean 설정 추가-->
+	<bean id="naverLoginBO" class="g.g.d.com.mem.common.NaverLoginBO"></bean>
 
 </beans>

@@ -117,4 +117,11 @@ public class MemberDAOImpl implements MemberDAO{
 		return (Integer)session.update("surveyInsert",mvo);
 	}
 
+	@Override
+	public MemberVO memberAddress(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		logger.info("MemberDAOImpl memberAddress >>> : ");
+		return (MemberVO)session.selectOne("memberAddress", mvo);
+	}
+
 }

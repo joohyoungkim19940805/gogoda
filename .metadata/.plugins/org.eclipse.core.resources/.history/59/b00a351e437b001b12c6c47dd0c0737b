@@ -1,8 +1,0 @@
-package g.g.d.com.emotion.common;
-
-public class MovieGenreUtil {
-
-	public MovieGenre(String genre) {
-		
-	}
-}

@@ -32,7 +32,7 @@ $(document).ready(function(){
 	// 비밀번호 확인 시작-----------------------------------------------------------
 	$(document).on("click", "#mpwbtn", function(){
 		console.log("midbtn >>> : ");
-		alert("mpwbtn >>> : ");
+		//alert("mpwbtn >>> : ");
 
 		let pwcheckURL = "pwCheck.ggd"
 		let method = "POST";
@@ -41,7 +41,7 @@ $(document).ready(function(){
 			mpw: $("#mpw").val(),
 		};
 		//dataParam = $("#boardUpdateForm").serialize();
-		alert("dataParam >>> : " + dataParam);
+		//alert("dataParam >>> : " + dataParam);
 		
 		$.ajax({
 			url: pwcheckURL,
@@ -54,7 +54,7 @@ $(document).ready(function(){
 		});
 		
 		function whenSuccess(resData){
-			alert("resData >>> : " + resData);
+			//alert("resData >>> : " + resData);
 			console.log(resData);
 			var sVal = resData;
 			if (resData){
@@ -75,7 +75,7 @@ $(document).ready(function(){
 			}
 		}
 		function whenError(e){
-			alert("e >>> : " + e.responseText);	
+			//alert("e >>> : " + e.responseText);	
 		}
 	});
 	// 비밀번호 확인 끝-----------------------------------------------------------
@@ -88,7 +88,7 @@ $(document).ready(function(){
 		if (mail == "") {
 			alert("메일 주소가 입력되지 않았습니다.");
 		} else {
-			alert(mail);
+			//alert(mail);
 			//returnGetData(meail);
 			//mail = mail + "@" + $(".domain").val(); // 셀렉트 박스에 @뒤 값들을 더함.
 			$.ajax({
@@ -102,20 +102,20 @@ $(document).ready(function(){
 					"key" : key
 				},
 				success : function(data) {
-					alert(data);
-					console.log(data);					
+					//alert(data);
+					//console.log(data);					
 				}
 			});			
 			alert("인증코드를 발송하였습니다.\n이메일을 확인하시기 바랍니다.");
 			$("#emcode").css("display", "block");
 			$("#code_check").css("display", "block");
 		}
-		alert(key);
+		//alert(key);
 	});
 	async function returnGetData(email){
 		let data='';
 		data=await emaulCon(email);
-		alert(data);
+		//alert(data);
 	}
 	function emaulCon(email){
 		var sendURL="";		
@@ -146,8 +146,8 @@ $(document).ready(function(){
 	//  U
 	$(document).on("click", "#btnUpdate", function(){
 		//확인 대화상자
-		if($('#mpw2').length>1){
-			if($('#mpw')==($('#mpw2'))){
+		if($('#mpw2').val().length>1){
+			if($('#mpw').val()==$('#mpw2').val()){
 			
 				if(confirm("수정하시겠습니까?")){
 					//document.form1.action = "gogodaProject/memberUpdate.ggd";
@@ -175,7 +175,7 @@ $(document).ready(function(){
 						
 			    		function whenSuccess(data) {
 							alert("다시 로그인해주세요");
-							location.href("../../springProject/emotion/logout.ggd");
+							location.href="../../../../../emotion/logout.ggd";
 			    		}
 			    		function whenError(){
 			    			
@@ -258,8 +258,8 @@ function execPostCode() {
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:12%; height:12%">
 		</a>
 	</div>
 </div><br><br><br><br><br><br><br>
@@ -407,7 +407,7 @@ function execPostCode() {
 </div>
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by&nbsp;<a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green"><b>GOGODA</b></a></p>
+  <p>Powered by&nbsp;<a href="../../emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green"><b>GOGODA</b></a></p>
 </footer>
 </body>
 </form>

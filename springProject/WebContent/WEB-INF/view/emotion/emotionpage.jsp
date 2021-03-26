@@ -20,7 +20,7 @@
 	}
 	System.out.println(movieList);
 	//System.out.print(foodList.get(0).getFnum());
-	int foodNumber[]= new RandomNumbering().RandomNumber(10, foodList);
+	int foodNumber[]= new RandomNumbering().RandomNumber(foodList.size(), foodList);
 	/*음식*/
 	StringBuffer foodIndexData=new StringBuffer();//1
 	StringBuffer foodNameData=new StringBuffer();//2
@@ -82,37 +82,17 @@
 <html>
 <meta charset="EUC-KR">
 <head>
+
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/main.css" />
-<title>testProject</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/include/css/emotionpage.css?ver=5" />
+
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+<title>GOGODA</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- 디바이스에 최적화된 크기로 출력됨 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0
       maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-
-<style type="text/css">
-	#line2 > th > span > span > a >img{width:150px; height:200px;}
-	#line3 > th > span > span > a >img{width:150px; height:200px;}
-#nameList{
-	font-size: 17px
-}
-
-#line-top {
-position: sticky;
- top: 30px;
-  height: 80px;
-  background: blue;
-}
-
-#lineList {
-    border-bottom: 1px solid Gainsboro ;
-    padding: 0px;
-}
-
-#infoList{
-	font-size: 15px;
-}
-</style>
 <!-- 
 	<link href="/css/demo.css" rel="stylesheet" type="text/css" />
 -->
@@ -219,7 +199,14 @@ position: sticky;
 
 })(jQuery);
 
+
 	$(document).ready(function () {
+		if("${seName}"!=''){
+			$("#loginbtn").remove();
+			$("#meminsert").remove();
+			$("#memlogin").append("<a href='../../mem/memberSelect.ggd' style='color:black' id='' class='comlogin'>${seName}</a>님 환영합니다. &nbsp;&nbsp;&nbsp;");
+			$("#memlogin").append("<button type='button' class='comlogin' id='memlogout' onclick='logoutBtn()'>로그아웃</button>");
+		}
 
 		var emotion="${emotionText}";
 		var emotionData=emotion.split(',');
@@ -246,14 +233,29 @@ position: sticky;
 							barColor: '#939393', value: emotionData[4].substring(emotionData[4].indexOf(':')+1,emotionData[4].length-1), orientation: 'v' });
 		$('#bar-6').jqbar({ label: emotionData[5].substring(1, emotionData[5].indexOf(':')), 
 							barColor: '#3a89c9', value: emotionData[5].substring(emotionData[5].indexOf(':')+1,emotionData[5].length-1), orientation: 'v' });
-		emo_food();
-		emo_movie();
+		emo_food(0);
+		emo_movie(0);
+		
+		
+		$('#foodPuls').click(function(){
+			var foodCount=$("td[name=foodtag]").length;
+			//alert(foodCount);
+			emo_food(foodCount);
+			$("img[name=foodimglist"+foodCount+"]").focus();
+		});
+		$('#moviePuls').click(function(){
+			var movieCount=$("td[name=movietag]").length;
+			//alert(movieCount);
+			emo_movie(movieCount);
+			$("img[name=movieimglist"+movieCount+"]").focus();
+		});
+		
 		
 	});
 		
 		
 		
-	function emo_food(){
+	function emo_food(number){
 		//var foods_emo= [["chicken", "pizza", "seolleongtang"], ["", "", ""], ["", "", ""]];
 		//var foods = foods_emo[emo];
 		var foodIndex='<%=foodIndexData%>';
@@ -279,24 +281,44 @@ position: sticky;
 		foodSource=foodSource.substring(0,foodSource.length-1).split(',');
 		
 		len = foodIndex.length;
-		for(var i=0; i<len; i++){
+		if(number>=len){
+			alert("목록이 더는 없습니다.");
+		}
+		var br="";
+		if(number>4){
+			br="<br>"
+		}
+		for(var i=number; i<len; i++){
 			var food = foodName[i];
-			var foodInfo="<td align='left'><p><b><span id='lineList'><span id='nameList'>"+foodName[i]+"</span></span></b><br><br><span id='infoList'>&nbsp;1회 제공량 : "+foodOneserving[i]+"<br>&nbsp;칼로리(100g당) : "+foodKcal[i]+"kcal<br>&nbsp;쓴맛/담백함 : "+
-						foodBitterness[i]+"/5<br>&nbsp;감칠맛 : "+foodUmami[i]+"/5<br>&nbsp;짠맛 : "+foodSalty[i]+"/5<br>&nbsp;단맛 : "+
-						foodSweetness[i]+"/5<br>&nbsp;신맛 : "+foodSourtaste[i]+"/5</span></p></td>";
+			var foodInfo
+				="<p style='text-align:left; display:inline-block';><b><span id='lineList'><span id='nameList'>"
+				+foodName[i]+"</span></span></b><br><br><span id='infoList'>&nbsp;1회 제공량 : "
+				+foodOneserving[i]+"<br>&nbsp;칼로리(100g당) : "+foodKcal[i]+"kcal<br>&nbsp;쓴맛/담백함 : "
+				+foodBitterness[i]+"/5<br>&nbsp;감칠맛 : "
+				+foodUmami[i]+"/5<br>&nbsp;짠맛 : "
+				+foodSalty[i]+"/5<br>&nbsp;단맛 : "
+				+foodSweetness[i]+"/5<br>&nbsp;신맛 : "
+				+foodSourtaste[i]+"/5</span></p>";
 			
-			var ss = "<th><span id='food_wrap'>" +
-				     	"<span id=food_wrapImg><a href='../review/test1.ggd?food="+food+"' id='foodimg' value='"+foodName[i]+"'>"+
-							"<img src='/springProject/img/"+foodIndex[i]+".jpg' align='top'></a></span>"+
-							"<span id='food_text'>"+foodInfo+"</span></th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";	
-							//'spring:url value=/resources/img/'"+foods[i]+".jpg'>"+foods[i];
-								//'/img/"+foods[i]+".jpg'>"+foods[i]+
-			$("#line2").append(ss);
-			if(i>3){break;}
+			/*var ss = "<p><td><span id='food_wrap'>" +
+				     	"<span id=food_wrapImg><a href='../review/map.ggd?food="+food+"' id='foodimg' value='"+foodName[i]+"'>"+
+							"<img src='/img/"+foodIndex[i]+".jpg' id='list-img'></a></span>"+
+							"<span id='food_text'>"+foodInfo+"</span></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>";*/	
+			var ss = "<td name='foodtag'><div id='image-margin'><span id='food_wrap'>" +
+					     	"<span id=food_wrapImg><a href='../review/map.ggd?food="+food+"' id='foodimg' value='"+foodName[i]+"'>"+
+								"<img src='/img/"+foodIndex[i]+".jpg' tabindex=0 id='list-img' name=foodimglist"+i+"></a></span>"+
+								"<span id='food_text'>"+foodInfo+"</span></div></td>";
+			$("#food-list").append(ss);
+			br="";
+			if(i>(number+3)){
+			$("#food-list").append("<br>"); 
+			$("#food-list").append("<br>"); 
+			$("#food-list").append("<br>"); 
+			break;}
 		}
 	}
-	function emo_movie(){
-
+	function emo_movie(number){
+		
 		var movieNum='<%=movieNumData%>';
 		var movieName='<%=movieNameData%>';
 		var movieLink='<%=movieLinkData%>';
@@ -318,97 +340,139 @@ position: sticky;
 		movieGenre=movieGenre.substring(0,movieGenre.length-1).split(',');
 		
 		len = movieImage.length;
-		
-		for(var i=0; i<len; i++){
+		if(number>=len){
+			alert("목록이 더는 없습니다.");
+		}
+		var br="";
+		if(number>4){
+			br="<br>"
+		}
+		for(var i=number; i<len; i++){
 			var movie = movieImage[i];
 			var oneActor=movieActor[i].split("|");
 			if(oneActor.length>1){
 				movieActor[i]=(oneActor[0]+" 외 "+oneActor.length+"인");
 			}
 			
-			var movieInfo="<td align='left'><p><span id='nameList'><b><a href='"+movieLink[i]+"' style='color:black'>"+movieName[i]+"</a></b></span><br><span id='lineList'><span id='infoList'>"+movieGenre[i]+"<br></span></span><br><span id='infoList'>제작년도 : "+moviePubDate[i]+"<br>감독 : "+
-							movieDirector[i].replaceAll("|",", ").substring(0,movieDirector[i].length-1)+"<br>출연진 : "+movieActor[i].replaceAll("|",", ").substring(0,movieActor[i].length)+"<br>평점 : "+movieUserRating[i]+"</span></p></td>";
+			var movieInfo="<p style='text-align:left; display:inline-block;'><span id='nameList'><b><a href='"+movieLink[i]+"' style='color:black'>"+movieName[i]+"</a></b></span><br><span id='lineList'><span id='infoList'>"+movieGenre[i]+"<br></span></span><br><span id='infoList'>&nbsp;제작년도 : "+moviePubDate[i]+"<br>&nbsp;감독 : "+
+							movieDirector[i].replaceAll("|",", ").substring(0,movieDirector[i].length-1)+"<br>&nbsp;출연진 : "+movieActor[i].replaceAll("|",", ").substring(0,movieActor[i].length)+"<br>&nbsp;평점 : "+movieUserRating[i]+"</span></p>";
 			
 			if(movieImage[i]==""||movieImage[i]=="-"){
 				movieImage[i]="../noimage/noimage.gif";
 			}
-			//String movieName, String movieLink ../review/test1.ggd?food=
-				var ss = "<th><span id='movie_wrap'>" +
+			if(movieLink[i]==""){
+				var ss = "<td id='back_image_movie' name='movietag'><div id='image-margin'><span id='movie_wrap'>" +
+		     	"<span id=movie_wrapImg>"+
+					"<img src='"+movieImage[i]+"'id='list-img-movie' tabindex=0 name=movieimglist"+i+"></a></span>"+
+					"<span id=movie_text>"+movieInfo+"</span></div></td>";	
+				
+			}else{
+			//String movieName, String movieLink ../review/map.ggd?food=
+				var ss = "<td id='back_image_movie' name='movietag'><div id='image-margin-movie'><span id='movie_wrap'>" +
 					     	"<span id=movie_wrapImg><a href='../emotion/moviecount.ggd?movieNum="+movieNum[i]+"&movieLink="+movieLink[i]+"' >"+
-								"<img src='"+movieImage[i]+"' align='top'></a></span>"+
-								"<span id=movie_text>"+movieInfo+"</span></th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";						
+								"<img src='"+movieImage[i]+"'id='list-img-movie' tabindex=0 name=movieimglist"+i+"></a></span>"+
+								"<span id=movie_text>"+movieInfo+"</span></div></td>";						
 								//'spring:url value=/resources/img/'"+foods[i]+".jpg'>"+foods[i];
 								//'/img/"+foods[i]+".jpg'>"+foods[i]+
+			}
 				$("#line3").append(ss);
-			if(i>3){break;}
+				br="";
+			if(i>(number+3)){
+				$("#line3").append("<br>"); 
+				$("#line3").append("<br>");
+				$("#line3").append("<br>");
+				break;
+			}
 		}
+	}
+	
+	function logoutBtn(){
+		$("#loginForm").attr("action","../emotion/logout.ggd");
+		$("#loginForm").attr("method","POST");
+		$("#loginForm").attr("enctype","application/x-www-form-urlencoded");
+		$("#loginForm").submit();
+		
 	}
 	
 </script>	
 </head>
 <body>
+<form name="loginForm" id="loginForm">
 <div class="w3-top">
 	<div class="w3-bar w3-white w3-wide w3-padding w3-card">
-		<a href="../../springProject/emotion/mainpage.ggd">
-			<img src="/springProject/logo/GOGODA-logo.png" style="width:12%; height:12%">
+		<a href="../../emotion/mainpage.ggd">
+			<img src="/logo/GOGODA-logo.png" style="width:12%; height:12%">
 		</a>
+	<div class="w3-right w3-hide-small" id="memlogin">
+		<a href="#로그인" class="w3-bar-item w3-button" id="loginbtn">로그인</a>
+		<a href="#회원 가입" class="w3-bar-item w3-button" id="meminsert">회원가입</a>
+    </div>
 	</div>
-</div><br><br><br><br><br><br><br>
-<!-- Header -->
-<header class="display-container" style="max-width:1500px;" id="home">
-	<div class="board-display">
-	
-	 	<div id="boardContainer" align="left">
-	<hr>
-	<div align="center" >
-		<h3>${seName}님의 감정 구성</h3>
-	</div>
-	<br><!-- 
-	<div align="center">
-		<h4>${textData}</h4>
-	</div>-->
-	
-	<div align="center">
-		<div id="bar-1"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<div id="bar-2"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<div id="bar-3"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<div id="bar-4"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<div id="bar-5"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<div id="bar-6"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	</div>
+</div>
+</form>
+<br><br><br><br>
+	<div id="graph" name="graph">
+		
 
+		<div align="center" >
+			<h2><b>${seName}</b>&nbsp;님의 감정 구성</h2>
+		</div>
+		<br><!-- 
+		<div align="center">
+			<h4>${textData}</h4>
+		</div>-->
+	
+		<div align="center">
+			<div id="bar-1"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div id="bar-2"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div id="bar-3"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div id="bar-4"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div id="bar-5"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div id="bar-6"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+	
 	<br><br><br><br><br><br><br>
 	<hr>
-	<br>
-	<div align="right">
-		<a href="">더보기</a>
 	</div>
-	<div>
-		<h3 align=center>음식 추천</h3>
-	</div>
-	<br>
-	<div id="line2" align="center">
+	<div id="food-back-img">
 		<br>
-	</div>
+		<div align="right">
+			<button type="button" id="foodPuls"><b style="font-family:'Do Hyeon', sans-serif; color:#3C5087;">더보기</b></button>
+		</div>
+		<div>
+			<h2 align=center><b>오늘의 메뉴<img class="apple-image" src="/logo/foodlogo.png" alt="Applepie" width="150" height="80"></b></h2>
+		</div>
+		<br>
 	
-	<hr>
-	<br>
-	<div align="right">
-		<a href="">더보기</a>
+		<div id="line2" align="center">
+			<br>
+			<ul id="food-list">
+	
+			</ul>
+		</div>
+	
+		<hr>
 	</div>
-	<div>
-		<h3 align=center>영화 추천</h3>
-	</div>
 	<br>
-	<div id="line3" align="center">
+	<div id="movie-back-img" name="movie-back-img">
+		<div align="right">
+			<button type="button" id="moviePuls"><b style="font-family:'Do Hyeon', sans-serif; color:#3C5087;">더보기</b></button>
+		</div>
+		<div>
+			<h2 align=center><b>오늘의 영화<img class="apple-image" src="/logo/movielogo.png" alt="Applepie" width="150" height="80"></b></h2>
+		</div>
 		<br>
+		<div id="line3" align="center">
+			<br>
+			<ul id="movie-list">
+	
+			</ul>
+		</div>
 	</div>
-
-
-</header>
+<br><br><br><br>
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by <a href="../../springProject/emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
+  <p>Powered by <a href="../../emotion/mainpage.ggd" title="GOGODA" target="_blank" class="w3-hover-text-green">GOGODA</a></p>
 </footer>
 </body>
 </html>

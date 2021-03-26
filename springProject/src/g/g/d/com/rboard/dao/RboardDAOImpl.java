@@ -42,5 +42,12 @@ public class RboardDAOImpl implements RboardDAO {
 	public int rboardDelete(String rbnum) {
 		return session.delete("rboardDelete", rbnum);
 	}
+	
+	// 안드로이드 글목록
+	@Override
+	public List<RboardVO> rboardList2(RboardVO rvo) {
+		return session.selectList("rboardList2", rvo);
+	}
+
 
 }

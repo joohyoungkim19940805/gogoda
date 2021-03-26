@@ -1,4 +1,16 @@
 @charset "UTF-8";
+
+#memberhover{
+	color: gray;
+	text-decoration: none;
+}
+
+#memberhover:hover{
+	color: black;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 body {
 	margin: 0;
     padding: 0;

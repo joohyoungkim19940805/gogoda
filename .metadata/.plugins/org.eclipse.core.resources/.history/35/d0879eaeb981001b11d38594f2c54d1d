@@ -1,0 +1,28 @@
+
+import java.math.BigDecimal;
+
+public class TestMobigen {
+	
+	private number;
+	
+	public static void main(String[] args) {
+		BigDecimal multiplication=new BigDecimal(1);
+		BigDecimal start=new BigDecimal(1);
+		loopFunction(multiplication, start);
+		
+	}
+	
+	public static void loopFunction(BigDecimal multiplication, BigDecimal start) {
+
+		if(Integer.valueOf(start.toString())!=101) {
+			multiplication=multiplication.multiply(start);
+			System.out.println(multiplication);
+			start.add('1');
+			//System.out.println(start);
+			loopFunction(multiplication,start);
+		}else {
+			return;
+		}
+	}
+
+}

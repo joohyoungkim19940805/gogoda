@@ -16,4 +16,6 @@ public interface MemberService {
 	public List<MemberVO> idCheck(MemberVO mvo);  // 아이디 중복 체크
 	public int pwCheck(MemberVO mvo); // 회원 정보 수정 및 삭제를 위한 pw 체크
 	public int surveyInsert(MemberVO mvo); // 설문 조사 추가
+	
+	public MemberVO memberAddress(MemberVO mvo); // 음식점 조회를 위한  default 주소 조회
 }

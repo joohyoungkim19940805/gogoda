@@ -5,12 +5,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 
+import g.g.d.com.movie.vo.MovieListVO;
 import g.g.d.com.movie.vo.MovieVO;
 
 public class NaverMovieApi {
 
-	public static MovieVO returnMovieData(String movieName, String genre, String movieNumber, int movieCnt) {
+	public static MovieVO returnMovieData(String movieName, String genre, String movieNumber, int movieCnt, MovieListVO mlvo) {
 		
 		//movieList.get(0).getMvname(),
 		String clientId = "Ms8QcIFQ4qWlcfeSxIp8";
@@ -74,14 +76,14 @@ public class NaverMovieApi {
             }
             //System.out.println(sb);
             //System.out.println("----------------------------");
-            System.out.println("영화 제목 : " + title.replaceAll("<b>", "").replaceAll("</b>",""));
-            System.out.println("영화 링크 : " + link);
-            System.out.println("영화 이미지 : " + image);
-            System.out.println("영화 제작년도 : " + pubDate);
-            System.out.println("영화 감독 : " + director.replaceAll("<b>", "").replaceAll("</b>",""));
-            System.out.println("영화 출연진 : " + actor.replaceAll("<b>", "").replaceAll("</b>",""));
-            System.out.println("영화 평점 : " + userRating);
-            System.out.println("영화 장르 : "+genre);
+            //System.out.println("영화 제목 : " + title.replaceAll("<b>", "").replaceAll("</b>",""));
+            //System.out.println("영화 링크 : " + link);
+            //System.out.println("영화 이미지 : " + image);
+            //System.out.println("영화 제작년도 : " + pubDate);
+            //System.out.println("영화 감독 : " + director.replaceAll("<b>", "").replaceAll("</b>",""));
+            //System.out.println("영화 출연진 : " + actor.replaceAll("<b>", "").replaceAll("</b>",""));
+            //System.out.println("영화 평점 : " + userRating);
+            //System.out.println("영화 장르 : "+genre);
             
             mvvo=new MovieVO();
             mvvo.setMvname(title.replaceAll("<b>", "").replaceAll("</b>",""));
@@ -100,16 +102,29 @@ public class NaverMovieApi {
         } catch (Exception e) {
             System.out.println(e);
             mvvo=new MovieVO();
-            mvvo.setMvname(movieName);
-            mvvo.setMvlink("");
-            mvvo.setMvimage("-");
-            mvvo.setMvpubDate("-");
-            mvvo.setMvdirector("-");
-            mvvo.setMvactor("-");
-            mvvo.setMvuserRating("-");
-            mvvo.setMvgenre(genre);
-            mvvo.setMvnum(movieNumber);
-            mvvo.setMoviecnt(movieCnt);
+            if(mlvo!=null) {
+            	mvvo.setMvname(movieName);
+	            mvvo.setMvlink("");
+	            mvvo.setMvimage("-");
+	            mvvo.setMvpubDate(mlvo.getMvpubdate());
+	            mvvo.setMvdirector("데이터가 없습니다..");
+	            mvvo.setMvactor("데이터가 없습니다.");
+	            mvvo.setMvuserRating("데이터가 없습니다.");
+	            mvvo.setMvgenre(genre);
+	            mvvo.setMvnum(movieNumber);
+	            mvvo.setMoviecnt(movieCnt);
+            }else {
+	            mvvo.setMvname(movieName);
+	            mvvo.setMvlink("");
+	            mvvo.setMvimage("-");
+	            mvvo.setMvpubDate("데이터가 없습니다.");
+	            mvvo.setMvdirector("데이터가 없습니다..");
+	            mvvo.setMvactor("데이터가 없습니다.");
+	            mvvo.setMvuserRating("데이터가 없습니다.");
+	            mvvo.setMvgenre(genre);
+	            mvvo.setMvnum(movieNumber);
+	            mvvo.setMoviecnt(movieCnt);
+            }
         }
 		
         return mvvo;

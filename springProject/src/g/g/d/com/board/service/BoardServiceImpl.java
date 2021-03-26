@@ -27,9 +27,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 글목록 구현
 	@Override
-	public List<BoardVO> boardList(BoardVO pvo) {
+	public List<BoardVO> boardList(BoardVO bvo) {
+		logger.info(bvo.getSearch()+"서비스<<<<<<<<<");
 		List<BoardVO> myList = null;
-		myList = boardDAO.boardList(pvo);
+		myList = boardDAO.boardList(bvo);
 		return myList;
 	}
 	

@@ -1,5 +1,5 @@
 function reBtn(data){
-	alert("콩");
+	//alert("콩");
 	qwer = data;
 	console.log(data.parentElement.parentElement.children[0].textContent);
 	var placeName = data.parentElement.parentElement.children[0].textContent;
@@ -25,7 +25,7 @@ function reBtn(data){
 
 
 function selectAll(kakaoid){
-	alert(kakaoid);
+	//alert(kakaoid);
 	let selectAllURL = "reviewListAll.ggd";
 	let method = "GET";
 	let dataParam = {
@@ -126,16 +126,14 @@ function selectList(renum, renickname, recontent, rephoto, rerating, reinsertdat
 
 function insertForm(){
 	var asdf =  '<form id="reviewForm" name="reviewForm" enctype="mutlipart/form-data">' +
-	'<table border="1">' +
+	'<table id="insert_review_tb" border="1">' +
 	'<tr>' +
-		'<td>작성자</td>' +
+		'<td id="insert_review_td1">작성자</td>' +
 		'<td><input type="text" id="renickname" name="renickname"></td>' +
-		'<td>비밀번호</td>' +
-		'<td><input type="text" id="repass" name="repass"></td>' +
-		'<td><input type="hidden" id="renumVal" name="renumVal"></td>' +
+		'<input type="hidden" id="renumVal" name="renumVal">' +
 	'</tr>' +
 	'<tr>' +
-		'<td>평점</td>' +
+		'<td id="insert_review_td1">평점</td>' +
 		'<td colspan="3">' +
 		'<div class="startRadio"> ' +
 		  '<label class="startRadio__box"> '+
@@ -182,13 +180,15 @@ function insertForm(){
 		'</td>' +
 	'</tr>' +
 	'<tr>' +
-		'<td>내용</td>' +
+		'<td id="insert_review_td1">내용</td>' +
 		'<td colspan="3"> <textarea id="recontent" name="recontent" rows="3" cols="50"></textarea>' +
-		'<div><span class="bytes">0</span>bytes</div></td>'+
+		'<div style="text-align:right; margin:3px"><span class="bytes">0</span>bytes</div></td>'+
 	'</tr>' +
 	'<tr>' +
-		'<td>사진</td>' +
-		'<td colspan="3"><input type="file" id="file" name="file"></td>' +
+		'<td id="insert_review_td1">사진</td>' +
+		'<td colspan="3">' + 
+		'<label for="file" id="fileSelect">파일선택</label>' + 
+		'<input type="file" id="file" name="file" style="display:none"></td>' +
 	'</tr>' +
 	'</table>' +
 //		'<input type="button" id="insertBtn" value="등록하기">' +
@@ -221,7 +221,7 @@ function updateBtn(){
 		});
 		
 		function whenSuccess(resData){
-			alert(resData);
+			//alert(resData);
 			reBtn(qwer);
 			$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
 		}
@@ -256,7 +256,7 @@ function deleteBtn(){
 		});
 		
 		function whenSuccess(resData){
-			alert(resData);
+			//alert(resData);
 			reBtn(qwer);
 			$(".popup-layer2").fadeOut(function(){ $(this).remove(); });
 		}

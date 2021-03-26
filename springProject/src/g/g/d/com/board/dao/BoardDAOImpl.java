@@ -3,13 +3,17 @@ package g.g.d.com.board.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import g.g.d.com.board.controller.BoardController;
 import g.g.d.com.board.vo.BoardVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
+	
+	Logger logger = Logger.getLogger(BoardDAOImpl.class);
 	
 	@Autowired(required=false)
 	private SqlSession session;
@@ -22,6 +26,8 @@ public class BoardDAOImpl implements BoardDAO {
 	// 글목록 구현
 	@Override
 	public List<BoardVO> boardList(BoardVO pvo) {
+		logger.info(pvo.getSearch()+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		
 		return session.selectList("boardList");
 	}
 	

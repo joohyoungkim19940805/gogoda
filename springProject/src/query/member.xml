@@ -148,4 +148,8 @@
 			MOVIETASTE = #{movietaste}
 		WHERE MDELETEYN = 'Y' AND MNUM = #{mnum}
 	</update>
+	
+	<select id="memberAddress" parameterType="member" resultType="member">
+		SELECT MADDR FROM MEMBERTABLE WHERE Mid = #{mid}
+	</select>
 </mapper>
