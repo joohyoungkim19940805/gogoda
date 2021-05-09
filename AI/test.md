@@ -38,4 +38,4 @@ public class BootSpringBootApplication {
 
 hh
 
-<img src="https://github.com/joohyoungkim19940805/gogoda/blob/master/springProject/WebContent/img/1.jpg?raw=true" width="45%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+<img src="/joohyoungkim19940805/gogoda/blob/master/springProject/WebContent/img/1.jpg" width="45%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
