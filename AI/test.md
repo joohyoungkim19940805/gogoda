@@ -52,6 +52,10 @@ public class BootSpringBootApplication {
     + 3단계
       + 4단계
 
+*1단
+  *2단
+    *3단
+
 <img src="https://github.com/joohyoungkim19940805/gogoda/blob/master/springProject/WebContent/img/1.jpg?raw=true" width="45%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
 
 
