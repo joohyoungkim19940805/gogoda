@@ -15,9 +15,9 @@
 > >>44
 > > >44
 
-*q
-*qq
-**Qqq
+* q
+* qq
+* * Qqq
 qqq
   qqq
   qqq
@@ -37,9 +37,9 @@ public class BootSpringBootApplication {
 루ㅜ루룰루
 - - -
 
-+hhㅗhh   
-
-*ttttt   
++ hhㅗhh   
+ㅂㅈㄷㅂㅈㄷㅂㅈㄷㅂㅈㄷ
+* ttttt   
 
 -ㅂㅈㄷㅂㅈㄷ
 
@@ -52,9 +52,9 @@ public class BootSpringBootApplication {
     + 3단계
       + 4단계
 
-*1단
-  *2단
-    *3단
+* 1단
+  * 2단
+    * 3단
 
 <img src="https://github.com/joohyoungkim19940805/gogoda/blob/master/springProject/WebContent/img/1.jpg?raw=true" width="45%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
 
