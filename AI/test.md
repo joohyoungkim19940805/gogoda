@@ -37,3 +37,5 @@ public class BootSpringBootApplication {
 - - -
 
 hh
+
+<img src="/gogoda/springProject/WebContent/img/1.jpg" width="45%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
