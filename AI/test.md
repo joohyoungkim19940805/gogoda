@@ -45,6 +45,13 @@ public class BootSpringBootApplication {
 
 제가한번 줄바꿈을 해보겠습니다.   
 얍얍얍   
-얍얍얍   
+얍얍얍  
+
+* 1단계
+  - 2단계
+    + 3단계
+      + 4단계
 
 <img src="https://github.com/joohyoungkim19940805/gogoda/blob/master/springProject/WebContent/img/1.jpg?raw=true" width="45%" height="30%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+
+
